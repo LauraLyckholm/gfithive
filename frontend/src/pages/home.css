@@ -1,0 +1,10 @@
+#logo {
+    width: 40%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
