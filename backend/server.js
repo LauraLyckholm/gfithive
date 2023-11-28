@@ -2,7 +2,8 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-// const routeName = require("./routes/routeName");
+import giftRoutes from "./routes/giftRoutes";
+// import hiveRoutes from "./routes/hiveRoutes";
 
 // ------------ VARIABLES ------------ //
 // Defines the port the app will run on
@@ -15,7 +16,9 @@ const app = express();
 // Middlewares to enable cors and json body parsing
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false })); // LOOK THIS UP
+app.use(giftRoutes);
+// app.use(hiveRoutes);
+
 // Middleware to handle error if service is down
 app.use((req, res, next) => {
   if (mongoose.connection.readyState === 1) {
@@ -30,11 +33,6 @@ app.use((req, res, next) => {
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/gifthive";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
-
-// Comment out when done with routes in /routes
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
 
 // ------------ SERVER START ------------ //
 // Starts the server

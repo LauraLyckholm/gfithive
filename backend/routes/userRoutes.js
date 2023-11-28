@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 import asyncHandler from "express-async-handler";
 import dotenv from "dotenv";
 dotenv.config();
-const listEndpoints = require("express-list-endpoints");
 
 const generateToken = (user) => {
     // Generate an JWT token for the user, containing the user's unique id, with an expiration time of 24 hours.
@@ -15,10 +14,6 @@ const generateToken = (user) => {
         expiresIn: "24h",
     });
 }
-
-router.get("/", (req, res) => {
-    res.send(listEndpoints(app));
-});
 
 // Register a user
 router.post("/register", asyncHandler(async (req, res) => {
@@ -109,3 +104,6 @@ router.post("/login", asyncHandler(async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 }));
+
+// Exports the router
+module.exports = router;
