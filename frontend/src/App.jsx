@@ -1,5 +1,6 @@
 import { Routes, BrowserRouter } from "react-router-dom";
 import { routes } from "./routes/routes";
+import { Header } from "./components/Header/Header";
 import "./App.css"
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
   return (
     // BrowserRouter is a wrapper component that makes the routing work
     <BrowserRouter>
-      {/* <Header /> */}
+      <Header />
       {/* <ScrollToTop /> */}
       <main>
         {/* Gets the defined routes from the routes-file and mounts them using Routes from React Router Dom */}
