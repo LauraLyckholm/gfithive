@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import giftRoutes from "./routes/giftRoutes";
-// import hiveRoutes from "./routes/hiveRoutes";
+
 
 // ------------ VARIABLES ------------ //
 // Defines the port the app will run on
@@ -12,12 +12,10 @@ const app = express();
 
 // ------------ MIDDLEWARE ------------ //
 // Uses the imported routes in the app
-// app.use("/", routeName);
 // Middlewares to enable cors and json body parsing
 app.use(cors());
 app.use(express.json());
-app.use(giftRoutes);
-// app.use(hiveRoutes);
+app.use("/", giftRoutes);
 
 // Middleware to handle error if service is down
 app.use((req, res, next) => {
@@ -33,6 +31,15 @@ app.use((req, res, next) => {
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/gifthive";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
+
+// ------------ APP ROUTES ------------ //
+// app.get("/home", (req, res) => {
+//   res.send("Welcome to Gifthive! Let's get started!");
+// });
+
+// app.get("/hive", (req, res) => {
+//   res.send("Welcome to your hive!");
+// });
 
 // ------------ SERVER START ------------ //
 // Starts the server

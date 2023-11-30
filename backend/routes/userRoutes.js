@@ -10,8 +10,8 @@ dotenv.config();
 
 const generateToken = (user) => {
     // Generate an JWT token for the user, containing the user's unique id, with an expiration time of 24 hours.
-    return jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "24h",
+    return jwt.sign({ id: user._id }, process.env.JWT_SECRET || "Sixten", {
+        expiresIn: "2d",
     });
 }
 
@@ -25,20 +25,18 @@ router.post("/register", asyncHandler(async (req, res) => {
         if (!username || !password) {
             res.status(400);
             throw new Error("Please fill in all required fields");
-        }
-        // Check if the user already exists in the database, by finding a user with the same username or password from the database
-        const userExists = await UserModel.findOne({
-            $or: [{ username }, { password }],
-        })
+        };
+        // Check if the user already exists in the database, by finding a user with the same username from the database
+        const userExists = await UserModel.findOne({ username });
 
         // If the user exists, send an error to the client, saying the user already exists
         if (userExists) {
             res.status(400);
             throw new Error(`User with the username ${userExists.username === username} already exists`);
-        }
+        };
 
         // Hash the users password
-        const salt = bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(10);
         const hashedPassword = bcrypt.hashSync(password, salt);
 
         // Create a new user with the username and hashed version of the users password

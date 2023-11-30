@@ -4,6 +4,7 @@ const router = express.Router();
 const { GiftModel } = require("../models/Gift");
 const { HiveModel } = require("../models/Hive");
 const listEndpoints = require("express-list-endpoints");
+// import authenticateUser from "../controllers/authController";
 import asyncHandler from "express-async-handler";
 
 // ------------ ERROR HANDLING ENDPOINT ROUTE ------------ //
