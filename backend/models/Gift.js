@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 // Schema for the gift items
 const giftItemSchema = new Schema({
     hiveId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.SchemaTypes.ObjectId,
         ref: "Hive", // Reference to the Hive schema
     },
     gift: {

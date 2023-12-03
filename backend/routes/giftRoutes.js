@@ -1,31 +1,31 @@
 // ------------ IMPORTS ------------ //
-const express = require("express");
-const router = express.Router();
-const { GiftModel } = require("../models/Gift");
-const { HiveModel } = require("../models/Hive");
-const listEndpoints = require("express-list-endpoints");
-// import authenticateUser from "../controllers/authController";
+import express from "express";
 import asyncHandler from "express-async-handler";
+import { GiftModel } from "../models/Gift";
+import { HiveModel } from "../models/Hive";
+const listEndpoints = require("express-list-endpoints");
+
+export const giftRouter = express();
 
 // ------------ ERROR HANDLING ENDPOINT ROUTE ------------ //
-router.get("/", asyncHandler(async (req, res) => {
+giftRouter.get("/", asyncHandler(async (req, res) => {
     try {
-        const endpoints = listEndpoints(router);
+        const endpoints = listEndpoints(giftRouter);
         res.json(endpoints);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "Something went wrong" });
     }
 }));
 
 // ------------ ROUTES ------------ //
-
 // This endpoint returns a maximum of 20 thoughts, sorted by `createdAt` to show the most recent thoughts first
-router.get("/gifts", asyncHandler(async (req, res) => {
+giftRouter.get("/gifts", asyncHandler(async (req, res) => {
     const gifts = await GiftModel.find().sort({ createdAt: "desc" }).exec();
     res.json(gifts);
 }));
 
-router.post("/gifts", asyncHandler(async (req, res) => {
+giftRouter.post("/gifts", asyncHandler(async (req, res) => {
     // Retrieves the information sent by the client
     const { gift, tags, bought, hiveId } = req.body;
 
@@ -50,7 +50,7 @@ router.post("/gifts", asyncHandler(async (req, res) => {
     res.json(giftItem);
 }));
 
-router.get("/hives", asyncHandler(async (req, res) => {
+giftRouter.get("/hives", asyncHandler(async (req, res) => {
     // Find all hives and populate their associated gifts
     const hives = await HiveModel.find().sort({ name: "asc" }).populate("gifts").exec();
 
@@ -58,7 +58,7 @@ router.get("/hives", asyncHandler(async (req, res) => {
 }));
 
 
-router.post("/hives", asyncHandler(async (req, res) => {
+giftRouter.post("/hives", asyncHandler(async (req, res) => {
     const { name, gifts } = req.body;
 
     // Check if a hive with the provided name already exists in the database
@@ -72,6 +72,3 @@ router.post("/hives", asyncHandler(async (req, res) => {
         res.json(newHive);
     }
 }));
-
-// Exports the router
-module.exports = router;
