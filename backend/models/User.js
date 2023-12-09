@@ -17,9 +17,9 @@ const UserSchema = new Schema(
             minlength: 7,
             match: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
         },
-        accesstoken: {
+        accessToken: {
             type: String,
-            default: () => crypto.randomBytes(128).toString("hex"),
+            default: () => crypto.randomBytes(128).toString("hex")
         },
         hive: [{
             type: mongoose.SchemaTypes.ObjectId,

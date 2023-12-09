@@ -17,6 +17,7 @@
     justify-content: center;
     align-items: center;
     margin: 20px;
+    height: 100vh;
 }
 
   /* ------------ OVERALL TYPOGRAPHY ------------ */
@@ -26,15 +27,12 @@
   
   h1 {
     font-size:  22px;
+    font-weight: 500;
   }
   
   h2 {
     font-size: 20px;
-  }
-  
-  h1,
-  h2, h3 {
-    font-weight: 500;
+    font-weight: 400;
   }
   
   p.thin {
@@ -43,25 +41,35 @@
 
 /* ------------ OVERALL ELEMENTS ------------ */
 button {
-    border: none;
+    padding: 13px 40px;
+}
+
+button, input {
+    width: 250px;
+    border-radius: var(--border-radius);
+    font-size: 18px;
     outline: none;
     cursor: pointer;
-    background: var(--primary);
-    color: var(--text);
-    border-radius: var(--border-radius);
-    padding: 15px 40px;
-    font-size: 18px;
+    border: none;
+}
+
+input {
+    padding: 17px 20px;
+}
+
+input::placeholder {
+    margin-left: 0;
 }
 
 /* ------------ MEDIA QUERIES ------------ */
 /* ------------ Tablet ------------ */
-@media (max-width: 1279px) and (min-width: 744px) {
+/*@media (max-width: 1279px) and (min-width: 744px) {
 
 
-}
+}*/
 
-/* ------------ Desktop ------------ */
+/* ------------ Desktop ------------ *//*
 @media (min-width: 1280px) {
 
 
-}
+}*/

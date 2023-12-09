@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 // Schema for the hives
-const hiveSchema = new Schema({
+const HiveSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -18,4 +18,4 @@ const hiveSchema = new Schema({
     },
 });
 
-export const HiveModel = mongoose.model("Hive", hiveSchema);
+export const Hive = mongoose.model("Hive", HiveSchema);

@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 // Schema for the gift items
-const giftItemSchema = new Schema({
+const GiftItemSchema = new Schema({
     hiveId: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Hive", // Reference to the Hive schema
@@ -22,4 +22,4 @@ const giftItemSchema = new Schema({
     },
 });
 
-export const GiftModel = mongoose.model("Gift", giftItemSchema);
+export const Gift = mongoose.model("Gift", GiftItemSchema);

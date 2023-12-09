@@ -2,7 +2,7 @@ import { User } from "../models/User";
 
 // Middleware to authenticate the user on login. Next() makes the program continue to the next middleware
 export const authenticateUser = async (req, res, next) => {
-    const user = await User.findOne({ accesstoken: req.header("Authorization") });
+    const user = await User.findOne({ accessToken: req.header("Auth") });
 
     if (user) {
         req.user = user;
