@@ -6,7 +6,7 @@ import { Dashboard } from "./pages/dashboard/Dashboard";
 import { ErrorPage } from "./pages/errorPage/ErrorPage";
 // import { routes } from "./routes/routes";
 // import { Header } from "./components/header/Header";
-import "./app.css"
+// import "./app.css"
 
 export const App = () => {
 
