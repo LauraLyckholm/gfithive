@@ -1,7 +1,7 @@
 import { useUserStore } from "../../stores/useUserStore";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Button } from "../../components/elements/Button";
+import { Button } from "../../components/elements/Button/Button";
 import "../login/login.css";
 
 export const Register = () => {

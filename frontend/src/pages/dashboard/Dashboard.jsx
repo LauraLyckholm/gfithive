@@ -1,29 +1,37 @@
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore";
-import { Button } from "../../components/elements/Button"
+import { useGiftStore } from "../../stores/useGiftStore";
+import { Button } from "../../components/elements/Button/Button"
 import "./dashboard.css"
 
 export const Dashboard = () => {
-    const { isLoggedIn, logoutUser } = useUserStore();
-    const navigate = useNavigate();
+    const { isLoggedIn, username } = useUserStore();
+    // const { fetchGifts } = useGiftStore();
 
-    const handleLogout = async () => {
-        try {
-            await logoutUser();
-            navigate("/");
-            console.clear(); // Clears the console after the logout
-        } catch (error) {
-            console.error("There was an error during logout =>", error);
-        }
-    }
+
+    const userHives = useGiftStore.getState().hives;
+    // const userGifts = useGiftStore.getState().gifts;
+
 
     return (
         <>
             {isLoggedIn ? (
                 <div className="dashboard">
-                    <iframe src="https://giphy.com/embed/YTbZzCkRQCEJa" width="480" height="360" frameBorder="0" className="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/party-excited-birthday-YTbZzCkRQCEJa"></a></p>
-                    <Link to="/logout" onClick={handleLogout}><Button className="primary" btnText="Log out" /></Link>
+                    <h1>{`Welcome to your Gifthive ${username}`}!</h1>
+                    {userHives.length - 1 ? (
+                        <p>Looks like there aren’t any hives here right now.. Get started by creating one!</p>
+                    ) : (
+                        <p>You have {userHives.length} gifts in your Gifthive.</p>
+                    )}
+                    {/* <p>
+                        {userGifts.map((gift) => {
+                            return (
+                                <div key={gift.id}>
+                                    <h2>{gift.name}</h2>
+                                </div>
+                            )
+                        })};
+                    </p> */}
                 </div>
 
             ) : (

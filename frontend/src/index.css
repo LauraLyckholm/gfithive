@@ -27,9 +27,7 @@
   /* ------------ OVERALL LAYOUT ------------ */
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 20px;
-    height: 100vh;
+    margin: 2rem;
 }
 
 /* Removes margin on all relevant tags. Body for an edge-to-edge look on sections, and headings/paragraphs to easier follow sketch */
