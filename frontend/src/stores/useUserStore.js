@@ -3,7 +3,9 @@ import { create } from "zustand";
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
 // Saves the endpoint in a variable for easy access
-const withEndpoint = (endpoint) => `${API_URL}/user-routes/${endpoint}`;
+const withEndpoint = (endpoint) => `${API_URL}/${endpoint}`;
+console.log("API_URL", API_URL);
+console.log("withEndpoint", withEndpoint("register"));
 
 // Creates a store for the user handling
 export const useUserStore = create((set, get) => ({

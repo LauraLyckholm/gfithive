@@ -1,6 +1,7 @@
 // ------------ IMPORTS ------------ //
 import express from "express";
 import cors from "cors";
+import listEndpoints from "express-list-endpoints";
 import dotenv from "dotenv";
 dotenv.config();
 import { connectToMongoDB } from "./config/db";
@@ -21,8 +22,21 @@ app.use(express.json());
 app.use(serviceDown); // Middleware to check if the database is running
 
 // ------------ APP ROUTES ------------ //
-app.use("/", giftRouter);
+// Displays endpoints
+app.get("/", (req, res) => {
+  try {
+    const endpoints = listEndpoints(app);
+    res.json({
+      message: "Welcome to the Gift Hive API",
+      endpoints
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+})
+
 app.use("/user-routes", userRouter);
+app.use("/gift-routes", giftRouter);
 
 // ------------ DATABASE CONNECTION ------------ //
 // Connection to the database through Mongoose
