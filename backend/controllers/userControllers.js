@@ -133,18 +133,6 @@ export const getDashboardController = asyncHandler(async (req, res) => {
     }
 });
 
-// Creates a route for sessions - showing logged in users. The information shown is the accessToken and the user id
-export const getActiveSessionsController = asyncHandler(async (req, res) => {
-    const { username } = req.body;
-    const user = await User.findOne({ username });
-
-    if (user && bcrypt.compare(req.body.password, user.password)) { // Compares the plaintext password from the request body with the encrypted password from the database
-        res.json({ userId: user._id, accessToken: user.accessToken }); // Returns the user id and access token if the passwords match
-    } else {
-        res.json({ notFound: true })
-    }
-});
-
 // Creates a controller function for the route that is used to get all users
 export const getUsersController = async (req, res) => {
     try {
