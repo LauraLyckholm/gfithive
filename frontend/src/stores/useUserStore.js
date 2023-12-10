@@ -3,7 +3,7 @@ import { create } from "zustand";
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
 // Saves the endpoint in a variable for easy access
-const withEndpoint = (endpoint) => `${API_URL}/${endpoint}`;
+const withEndpoint = (endpoint) => `${API_URL}/user-routes/${endpoint}`;
 
 // Creates a store for the user handling
 export const useUserStore = create((set, get) => ({
@@ -156,4 +156,22 @@ export const useUserStore = create((set, get) => ({
         // Removes the accessToken from localStorage
         localStorage.removeItem("accessToken");
     },
+
+    // Function to check if there's a stored token in localStorage, to allow for refresh of secret page
+    initAuth: () => {
+        const storedToken = localStorage.getItem("accessToken");
+
+        if (storedToken) {
+            set({
+                accessToken: storedToken,
+                isLoggedIn: true,
+            });
+        }
+    },
 }));
+
+// Initialize authentication when the store is created
+const userStore = useUserStore.getState();
+userStore.initAuth();
+
+export default userStore;
