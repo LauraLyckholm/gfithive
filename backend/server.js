@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
   try {
     const endpoints = listEndpoints(app);
     res.json({
-      message: "Welcome to the Gift Hive API",
+      message: "Welcome to the Gifthive API",
       endpoints
     });
   } catch (error) {

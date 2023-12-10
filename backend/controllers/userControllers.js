@@ -144,3 +144,13 @@ export const getActiveSessionsController = asyncHandler(async (req, res) => {
         res.json({ notFound: true })
     }
 });
+
+// Creates a controller function for the route that is used to get all users
+export const getUsersController = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
