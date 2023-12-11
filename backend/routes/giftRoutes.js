@@ -7,6 +7,7 @@ import {
     createGiftItemController,
     createHiveController
 } from "../controllers/giftControllers";
+import { authenticateUser } from "../middleware/authenticateUser";
 const listEndpoints = require("express-list-endpoints");
 
 // ------------ ROUTES ------------ //
@@ -25,7 +26,7 @@ giftRouter.get("/", asyncHandler(async (req, res) => {
 }));
 
 // ------------ ROUTES ------------ //
-giftRouter.get("/gifts", getGiftsController);
-giftRouter.get("/hives", getHivesController);
-giftRouter.post("/gifts", createGiftItemController);
-giftRouter.post("/hives", createHiveController);
+giftRouter.get("/gifts", authenticateUser, getGiftsController);
+giftRouter.get("/hives", authenticateUser, getHivesController);
+giftRouter.post("/gifts", authenticateUser, createGiftItemController);
+giftRouter.post("/hives", authenticateUser, createHiveController);
