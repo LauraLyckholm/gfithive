@@ -6,3 +6,11 @@
     text-align: center;
     gap: 2rem;
 }
+
+.form-wrapper {
+    text-align: left;
+}
+
+.disclaimer {
+    font-size: 14px;
+}

@@ -9,19 +9,48 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 export const useGiftStore = create((set) => ({
     gifts: [],
     hives: [],
-    // loading: false,
+    hiveName: "",
 
-    fetchGifts: async () => {
+    setGifts: (gifts) => set({ gifts }),
+    setHives: (hives) => set({ hives }),
+    setHiveName: (hiveName) => set({ hiveName }),
+
+    getGifts: async () => {
         try {
-            set({ loading: true });
-            const response = await fetch("gifts"); // Update the endpoint to match your backend
+            const response = await fetch(withEndpoint("gifts"), {
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
             const data = await response.json();
-            set({ gifts: data, loading: false });
+
+            set({
+                gifts: data
+            });
+
         } catch (error) {
             console.error("Error fetching gifts:", error);
-            set({ loading: false });
         }
     },
+
+    getHives: async () => {
+        try {
+            const response = await fetch(withEndpoint("hives"), {
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
+            const data = await response.json();
+
+            set({
+                hives: data
+            });
+
+        } catch (error) {
+            console.error("Error fetching hives:", error);
+        }
+    },
+
 
     addGift: async (newGift) => {
         try {
@@ -30,6 +59,7 @@ export const useGiftStore = create((set) => ({
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Auth": localStorage.getItem("accessToken"),
                 },
                 body: JSON.stringify(newGift),
             });
@@ -37,6 +67,24 @@ export const useGiftStore = create((set) => ({
             set((state) => ({ gifts: [...state.gifts, data] }));
         } catch (error) {
             console.error("Error adding gift:", error);
+        }
+    },
+
+    addHive: async (newHive) => {
+        try {
+            // Make a POST request to create a new hive
+            const response = await fetch(withEndpoint("hives"), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+                body: JSON.stringify(newHive),
+            });
+            const data = await response.json();
+            set((state) => ({ hives: [...state.hives, data] }));
+        } catch (error) {
+            console.error("Error adding hive:", error);
         }
     },
 

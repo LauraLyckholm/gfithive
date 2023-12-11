@@ -21,11 +21,11 @@ const UserSchema = new Schema(
             type: String,
             default: () => crypto.randomBytes(128).toString("hex")
         },
-        hive: [{
+        hives: [{
             type: mongoose.SchemaTypes.ObjectId,
             ref: "Hive"
         }], // Reference to Hive schema for user's hives
-        items: [{
+        gifts: [{
             type: mongoose.SchemaTypes.ObjectId,
             ref: "Gift"
         }], // Reference to Gift schema for user's gifts

@@ -3,6 +3,7 @@ import { Home } from "./pages/home/Home";
 import { Login } from "./pages/login/Login"
 import { Register } from "./pages/register/Register";
 import { Dashboard } from "./pages/dashboard/Dashboard";
+import { Faq } from "./pages/faq/Faq";
 import { ErrorPage } from "./pages/errorPage/ErrorPage";
 import { Header } from "./components/header/MainHeader";
 import "./app.css";
@@ -22,6 +23,7 @@ export const App = () => {
             <Route path="/getstarted" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/faq" element={<Faq />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </main>
