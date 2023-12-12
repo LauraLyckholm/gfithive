@@ -1,4 +1,5 @@
 import { Gift } from "../models/Gift";
+import { User } from "../models/User";
 import { Hive } from "../models/Hive";
 import asyncHandler from "express-async-handler";
 
@@ -61,6 +62,12 @@ export const createHiveController = asyncHandler(async (req, res) => {
         } else {
             // If the hive name is not found for the user, create a new hive associated with the user
             const newHive = await new Hive({ name, gifts, userId }).save();
+
+            // Update the corresponding user's list of hives
+            const user = await User.findById(userId);
+            user.hives.push(newHive._id);
+            await user.save();
+
             res.json(newHive);
         }
     } catch (error) {
