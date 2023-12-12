@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore";
 import { useGiftStore } from "../../stores/useGiftStore";
-import { Button } from "../../components/elements/Button/Button"
-import "./dashboard.css"
+import { Button } from "../../components/elements/Button/Button";
+import "./dashboard.css";
 
 export const Dashboard = () => {
     const { isLoggedIn, username } = useUserStore();
-    const { hives, hiveName, setHiveName, addHive } = useGiftStore();
+    const { hives, hiveName, setHiveName, getHives, addHive } = useGiftStore();
 
     const userHives = hives;
+    getHives(...userHives);
 
     const handleAddHive = async (event) => {
         event.preventDefault();
@@ -27,7 +28,7 @@ export const Dashboard = () => {
             {isLoggedIn ? (
                 <div className="dashboard">
                     <h1>{`Welcome to your Gifthive ${username}`}!</h1>
-                    {userHives.length - 1 ? (
+                    {userHives.length === 0 ? (
                         <main>
                             <p>Looks like there aren’t any hives here right now.. Get started by creating one!</p>
                             <form className="form-wrapper">
@@ -68,7 +69,18 @@ export const Dashboard = () => {
                             </form>
                         </main>
                     ) : (
-                        <p>You have {userHives.length} gifts in your Gifthive.</p>
+                        <>
+                            <h2>Hives:</h2>
+                            <ul>
+                                {userHives.map((hive) => {
+                                    return (
+                                        <li key={hive.id}>
+                                            <h3>{hive.name}</h3>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </>
                     )}
                     {/* <p>
                         {userGifts.map((gift) => {

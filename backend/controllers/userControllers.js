@@ -102,7 +102,8 @@ export const loginUserController = asyncHandler(async (req, res) => {
                     _id: user._id,
                     username: user.username,
                     accessToken: user.accessToken,
-                    hives: user.hives
+                    hives: user.hives,
+                    gifts: user.gifts
                 }
             })
         }
