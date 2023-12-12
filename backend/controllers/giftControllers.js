@@ -42,6 +42,13 @@ export const createGiftItemController = asyncHandler(async (req, res) => {
         hiveExists.gifts.push(giftItem._id);
         await hiveExists.save();
 
+        // Find the user and update their gifts array with the new gift's ID
+        await User.findOneAndUpdate(
+            { _id: userId },
+            { $push: { gifts: giftItem._id } },
+            { new: true }
+        );
+
         res.json(giftItem);
     } catch (error) {
         console.error("Error creating gift item:", error);

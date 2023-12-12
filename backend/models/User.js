@@ -23,12 +23,12 @@ const UserSchema = new Schema(
         },
         hives: [{
             type: mongoose.SchemaTypes.ObjectId,
-            ref: "Hive"
-        }], // Reference to Hive schema for user's hives
+            ref: "Hive",
+        }],
         gifts: [{
             type: mongoose.SchemaTypes.ObjectId,
             ref: "Gift"
-        }], // Reference to Gift schema for user's gifts
+        }]
     },
     {
         timestamps: true,
