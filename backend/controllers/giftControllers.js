@@ -17,6 +17,14 @@ export const getHivesController = asyncHandler(async (req, res) => {
     res.json(hives);
 });
 
+export const getIndividualHiveController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user._id;
+    // Find the hive associated with the provided id and populate its associated gifts
+    const hive = await Hive.findOne({ _id: id, userId }).populate("gifts").exec();
+    res.json(hive);
+});
+
 export const createGiftItemController = asyncHandler(async (req, res) => {
     // Retrieves the information sent by the client
     const { gift, tags, bought, hiveId } = req.body;

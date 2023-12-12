@@ -41,8 +41,10 @@ export const Header = () => {
 
                 <main id="page-wrap">
                     <ul className="mobile-links">
-                        <li><Link to="/"></Link>Hives</li>
+                        <Link to="/hives">Hives</Link>
+                        <Link to="/create-hive">Create a new hive</Link>
                         <Link onClick={handleLogout}><Button className="primary" btnText="Log out" /></Link>
+
                     </ul>
                 </main>
             </Menu>

@@ -4,6 +4,7 @@ import asyncHandler from "express-async-handler";
 import {
     getGiftsController,
     getHivesController,
+    getIndividualHiveController,
     createGiftItemController,
     createHiveController
 } from "../controllers/giftControllers";
@@ -28,5 +29,6 @@ giftRouter.get("/", asyncHandler(async (req, res) => {
 // ------------ ROUTES ------------ //
 giftRouter.get("/gifts", authenticateUser, getGiftsController);
 giftRouter.get("/hives", authenticateUser, getHivesController);
+giftRouter.get("/hives/:id", authenticateUser, getIndividualHiveController);
 giftRouter.post("/gifts", authenticateUser, createGiftItemController);
 giftRouter.post("/hives", authenticateUser, createHiveController);

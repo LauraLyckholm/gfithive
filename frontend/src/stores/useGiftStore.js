@@ -1,4 +1,5 @@
 import { create } from "zustand";
+// import { useUserStore } from "./useUserStore";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -10,6 +11,7 @@ export const useGiftStore = create((set) => ({
     gifts: [],
     hives: [],
     hiveName: "",
+    // userId: useUserStore.getState().userId,
 
     setGifts: (gifts) => set({ gifts }),
     setHives: (hives) => set({ hives }),
@@ -22,14 +24,19 @@ export const useGiftStore = create((set) => ({
                     "Auth": localStorage.getItem("accessToken"),
                 },
             });
-            const data = await response.json();
 
-            set({
-                gifts: data
-            });
+            if (response.ok) {
+                const data = await response.json();
+
+                set({
+                    gifts: data
+                });
+            } else {
+                console.error("Error fetching gifts");
+            }
 
         } catch (error) {
-            console.error("Error fetching gifts:", error);
+            console.error("There was an error =>", error);
         }
     },
 
@@ -40,14 +47,19 @@ export const useGiftStore = create((set) => ({
                     "Auth": localStorage.getItem("accessToken"),
                 },
             });
-            const data = await response.json();
 
-            set({
-                hives: data
-            });
+            if (response.ok) {
+                const data = await response.json();
+
+                set({
+                    hives: data
+                });
+            } else {
+                console.error("Error fetching hives");
+            }
 
         } catch (error) {
-            console.error("Error fetching hives:", error);
+            console.error("There was an error =>", error);
         }
     },
 
@@ -63,10 +75,19 @@ export const useGiftStore = create((set) => ({
                 },
                 body: JSON.stringify(newGift),
             });
+
             const data = await response.json();
-            set((state) => ({ gifts: [...state.gifts, data] }));
+
+            if (response.ok) {
+                set((state) => ({
+                    gifts: [...state.gifts, data]
+                }));
+            } else {
+                console.error("Error adding gift");
+            }
+
         } catch (error) {
-            console.error("Error adding gift:", error);
+            console.error("There was an error =>", error);
         }
     },
 
@@ -81,10 +102,19 @@ export const useGiftStore = create((set) => ({
                 },
                 body: JSON.stringify(newHive),
             });
+
             const data = await response.json();
-            set((state) => ({ hives: [...state.hives, data] }));
+
+            if (response.ok) {
+                set((state) => ({
+                    hives: [...state.hives, data]
+                }));
+            } else {
+                console.error("Error adding hive");
+            }
+
         } catch (error) {
-            console.error("Error adding hive:", error);
+            console.error("There was an error =>", error);
         }
     },
 
