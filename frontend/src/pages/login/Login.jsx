@@ -18,7 +18,7 @@ export const Login = () => {
             const isLoggedIn = useUserStore.getState().isLoggedIn;
             // If the user is logged in, the accessToken will be saved in localStorage and the user will be redirected to the dashboard
             if (isLoggedIn) {
-                navigate("/dashboard");
+                navigate("/hives");
                 return;
             }
         } catch (error) {

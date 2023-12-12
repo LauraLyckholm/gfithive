@@ -9,7 +9,7 @@ import "./mainHeader.css";
 
 // Component for the header
 export const Header = () => {
-    const { logoutUser } = useUserStore();
+    const { logoutUser, isLoggedIn } = useUserStore();
     // State to control whether the menu is open or closed
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -32,24 +32,28 @@ export const Header = () => {
                 isOpen={menuOpen}
                 onStateChange={(state) => setMenuOpen(state.isOpen)}
                 right
-                // noOverlay
                 customBurgerIcon={<img className="custom-icon" src="./hamburger.svg" alt="Hamburger menu icon" />}
                 customCrossIcon={<img className="custom-icon" src="./cross.svg" alt="Close menu icon" />}
-                closeMenuOnBlur={true} // Close menu when clicking outside of it
+                closeMenuOnBlur={true}
                 className={"mobile-nav"}
             >
-
                 <main id="page-wrap">
                     <ul className="mobile-links">
-                        <Link to="/hives">Hives</Link>
-                        <Link to="/create-hive">Create a new hive</Link>
-                        <Link onClick={handleLogout}><Button className="primary" btnText="Log out" /></Link>
-
+                        {isLoggedIn ? (
+                            <>
+                                <li><Link to="/hives">Hives</Link></li>
+                                <li><Link to="/create-hive">Create a new hive</Link></li>
+                                <li><Button className="primary" btnText="Log out" onClick={handleLogout} /></li>
+                            </>
+                        ) : (
+                            <>
+                                <li><Link to="/login">Login</Link></li>
+                                <li><Link to="/register">Register</Link></li>
+                            </>
+                        )}
                     </ul>
                 </main>
             </Menu>
         </header>
-
-
     )
 }

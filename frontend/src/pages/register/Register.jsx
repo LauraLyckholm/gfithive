@@ -16,7 +16,7 @@ export const Register = () => {
         try {
             await registerUser(username, password);
             if (username && password) {
-                navigate("/getstarted");
+                navigate("/login");
                 return;
             }
         } catch (error) {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { Button } from "../../components/elements/Button/Button";
-import "../dashboard/dashboard.css";
+import "../hives/hives.css";
 
 export const CreateHive = () => {
     const { hiveName, setHiveName, addHive } = useGiftStore();
