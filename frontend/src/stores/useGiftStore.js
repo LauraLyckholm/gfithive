@@ -11,7 +11,6 @@ export const useGiftStore = create((set) => ({
     gifts: [],
     hives: [],
     hiveName: "",
-    // userId: useUserStore.getState().userId,
 
     setGifts: (gifts) => set({ gifts }),
     setHives: (hives) => set({ hives }),
@@ -62,7 +61,6 @@ export const useGiftStore = create((set) => ({
             console.error("There was an error =>", error);
         }
     },
-
 
     addGift: async (newGift) => {
         try {
@@ -116,6 +114,26 @@ export const useGiftStore = create((set) => ({
         } catch (error) {
             console.error("There was an error =>", error);
         }
+    },
+
+    init: () => {
+        const storedGifts = localStorage.getItem("gifts");
+        const storedHives = localStorage.getItem("hives");
+        const storedUniqueHive = localStorage.getItem("uniqueHive");
+
+        if (storedGifts) set({ gifts: JSON.parse(storedGifts) });
+        if (storedHives) set({ hives: JSON.parse(storedHives) });
+        if (storedUniqueHive) set({ uniqueHive: JSON.parse(storedUniqueHive) });
+    },
+
+    // Method to set state and persist data to local storage
+    setAndPersist: (fn) => {
+        set(fn);
+
+        // Persist relevant state to local storage after updating
+        localStorage.setItem("gifts", JSON.stringify(fn().gifts));
+        localStorage.setItem("hives", JSON.stringify(fn().hives));
+        localStorage.setItem("uniqueHive", JSON.stringify(fn().uniqueHive));
     },
 
     // updateGift: async (updatedGift) => {

@@ -27,7 +27,6 @@
   /* ------------ OVERALL LAYOUT ------------ */
     display: flex;
     justify-content: center;
-    margin: 2rem;
 }
 
 /* Removes margin on all relevant tags. Body for an edge-to-edge look on sections, and headings/paragraphs to easier follow sketch */
@@ -43,6 +42,16 @@ p {
   p {
     font-size: 18px;
     font-weight: 300;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
   
   h1 {
@@ -79,6 +88,11 @@ input {
 
 input::placeholder {
     margin-left: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }
 
 /* ------------ MEDIA QUERIES ------------ */

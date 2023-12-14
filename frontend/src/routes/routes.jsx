@@ -15,7 +15,7 @@ const routes = (
         <Route path="/register" element={<Register />} />
         <Route path="/hives" element={<AllHives />} />
         <Route path="/create-hive" element={<CreateHive />} />
-        <Route path="/hive/:id" element={<UniqueHive />} />
+        <Route path="/hives/:id" element={<UniqueHive />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="*" element={<ErrorPage />} />
     </>

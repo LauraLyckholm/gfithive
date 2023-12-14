@@ -29,8 +29,9 @@ export const AllHives = () => {
                                 {hives.map((hive) => {
                                     return (
                                         <li key={hive._id}>
-                                            <Link to="/"><p>{hive.name}</p></Link>
+                                            <Link to={`/hives/${hive._id}`}><p>{hive.name}</p></Link>
                                         </li>
+
                                     )
                                 })}
                             </ul>

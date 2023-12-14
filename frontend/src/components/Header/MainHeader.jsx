@@ -6,9 +6,12 @@ import { Button } from "../elements/Button/Button";
 import { useUserStore } from "../../stores/useUserStore";
 // import { DesktopNavLinks } from "./Navigation/DesktopNavLinks";
 import "./mainHeader.css";
+import hamburgerIcon from "../../assets/hamburger.svg";
+import crossIcon from "../../assets/cross.svg";
+import beeImage from "../../assets/bee.svg";
 
 // Component for the header
-export const Header = () => {
+export const MainHeader = () => {
     const { logoutUser, isLoggedIn } = useUserStore();
     // State to control whether the menu is open or closed
     const [menuOpen, setMenuOpen] = useState(false);
@@ -28,12 +31,17 @@ export const Header = () => {
 
     return (
         <header className="site-header" id="outer-container">
+            <div className="logo">
+                <Link to="/">
+                    <img src={beeImage} alt="Gifthive Logo" />
+                </Link>
+            </div>
             <Menu
                 isOpen={menuOpen}
                 onStateChange={(state) => setMenuOpen(state.isOpen)}
                 right
-                customBurgerIcon={<img className="custom-icon" src="./hamburger.svg" alt="Hamburger menu icon" />}
-                customCrossIcon={<img className="custom-icon" src="./cross.svg" alt="Close menu icon" />}
+                customBurgerIcon={<img className="custom-icon" src={hamburgerIcon} alt="Hamburger menu icon" />}
+                customCrossIcon={<img className="custom-icon" src={crossIcon} alt="Close menu icon" />}
                 closeMenuOnBlur={true}
                 className={"mobile-nav"}
             >

@@ -1,10 +1,15 @@
 .site-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   background-color: var(--primary-white);
-  top: 0;
-  /* Makes sure the HeaderContainer is always on top of other elements */
-  /* z-index: 1; */
+}
+
+.logo {
+  width: 33px;
+}
+
+#outer-container {
+  margin-top: 1.5rem;
 }
 
 .bm-morph-shape {
@@ -22,14 +27,8 @@
 }
 
 .bm-item-list {
-  left: -135px!important; // Using important to override react-burger-menu's default left position
+  left: -95px!important; // Using important to override react-burger-menu's default left position
 }
-
-/* .logo {
-  font-family: var(--logo-font);
-  font-size: 1.375rem;
-} */
-
 
 .bm-menu-wrap {
   top: 0;
