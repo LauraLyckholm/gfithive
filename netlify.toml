@@ -1,9 +1,9 @@
 [build]
 command= "npm run build"
-base = "frontend"
-publish = "dist" 
+  base = "frontend"
+  publish = "dist"
 
 [[redirects]]
 from = "/*"
-to = "index.html"
+to = "/index.html"
 status = 200
