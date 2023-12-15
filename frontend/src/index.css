@@ -95,6 +95,31 @@ ul {
     padding: 0;
 }
 
+
+/* ------- */
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--primary-white);
+}
+
+#outer-container {
+  margin-top: 1.5rem;
+}
+
+.logo {
+  width: 33px;
+}
+
+/* ------- */
+
+
 /* ------------ MEDIA QUERIES ------------ */
 /* ------------ Tablet ------------ */
 /*@media (max-width: 1279px) and (min-width: 744px) {

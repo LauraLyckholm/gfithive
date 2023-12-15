@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes } from "react-router-dom";
 import routes from "./routes/routes";
-import "./app.css";
 
 export const App = () => {
 
