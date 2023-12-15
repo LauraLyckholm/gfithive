@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes } from "react-router-dom";
 import routes from "./routes/routes";
-import { MainHeader } from "./components/header/MainHeader";
+import { Header } from "./components/header/Header";
 import "./app.css";
 
 export const App = () => {
@@ -8,7 +8,7 @@ export const App = () => {
   return (
     // BrowserRouter is a wrapper component that makes the routing work
     <BrowserRouter>
-      <MainHeader />
+      <Header />
       <section className="main-wrapper">
         {/* <ScrollToTop /> */}
         <main className="main">
