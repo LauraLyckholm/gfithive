@@ -6,6 +6,7 @@
   --primary: #FFC440;
   --text: #331616;
   --background: #F7F6F0;
+  --brown: #7A4141;
   --placeholder-text: #00000080;
 
   /* Font */
@@ -23,10 +24,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
-  
-  /* ------------ OVERALL LAYOUT ------------ */
-    display: flex;
-    justify-content: center;
 }
 
 /* Removes margin on all relevant tags. Body for an edge-to-edge look on sections, and headings/paragraphs to easier follow sketch */
@@ -37,6 +34,17 @@ h3,
 p {
   margin: 0;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  min-height: 100vh;
+  max-width: 484px;
+  padding: 0 1rem;
+}
+
 
   /* ------------ OVERALL TYPOGRAPHY ------------ */
   p {
@@ -98,9 +106,12 @@ ul {
 
 /* ------- */
 .main-wrapper {
+  flex-grow: 1; /* Allow the main-wrapper to grow and take available vertical space */
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  justify-content: center; /* Vertically center the content */
+  align-items: center; /* Horizontally center the content */
+  margin: 0 auto;
 }
 
 .site-header {
@@ -115,6 +126,14 @@ ul {
 
 .logo {
   width: 33px;
+}
+
+.disclaimer {
+  font-size: 14px;
+}
+
+.disclaimer .bold {
+  font-weight: 500;
 }
 
 /* ------- */

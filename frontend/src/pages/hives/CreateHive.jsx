@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { Button } from "../../components/elements/Button/Button";
 import "../hives/hives.css";
@@ -58,7 +57,6 @@ export const CreateHive = () => {
                 <div className="loginAndRegisterBtns">
                     <Button className={"primary"} handleOnClick={handleAddHive} btnText={"Start a new hive"} />
                 </div>
-                <p className="disclaimer">Curious on how it works? Buzz over to our <Link to="/faq">FAQ!</Link></p>
             </form>
         </main>
     )

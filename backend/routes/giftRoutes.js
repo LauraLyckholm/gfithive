@@ -6,7 +6,8 @@ import {
     getHivesController,
     getIndividualHiveController,
     createGiftItemController,
-    createHiveController
+    createHiveController,
+    deleteHiveController
 } from "../controllers/giftControllers";
 import { authenticateUser } from "../middleware/authenticateUser";
 const listEndpoints = require("express-list-endpoints");
@@ -32,3 +33,4 @@ giftRouter.get("/hives", authenticateUser, getHivesController);
 giftRouter.get("/hives/:id", authenticateUser, getIndividualHiveController);
 giftRouter.post("/gifts", authenticateUser, createGiftItemController);
 giftRouter.post("/hives", authenticateUser, createHiveController);
+giftRouter.delete("/hives/:id", authenticateUser, deleteHiveController);

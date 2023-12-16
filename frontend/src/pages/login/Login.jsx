@@ -2,6 +2,7 @@ import { useUserStore } from "../../stores/useUserStore";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
+import { HiveImage } from "../../components/elements/BeehiveImage/HiveImage";
 import "./login.css";
 
 export const Login = () => {
@@ -28,8 +29,7 @@ export const Login = () => {
 
     return (
         <>
-            <h1>Welcome here!</h1>
-            <h2>Please sign in to see the content 🧡</h2>
+            <HiveImage />
             <form className="form-wrapper">
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
@@ -53,7 +53,11 @@ export const Login = () => {
                 </div>
                 <div className="loginAndRegisterBtns">
                     <Button className={"primary"} handleOnClick={handleLogin} btnText={"Login"} />
-                    <Link to="/register"><Button className={"secondary"} btnText={"Register"} /></Link>
+                    <div className="new-here-text">
+                        <p className="disclaimer">First time here?</p>
+                        <p className="disclaimer"><Link className="disclaimer bold" to="/register">Register</Link> for an account!</p>
+                    </div>
+                    {/* <Link to="/register"><Button className={"secondary"} btnText={"Register"} /></Link> */}
                 </div>
             </form>
         </>

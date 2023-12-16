@@ -2,6 +2,7 @@ import { useUserStore } from "../../stores/useUserStore";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
+import { HiveImage } from "../../components/elements/BeehiveImage/HiveImage";
 import "../login/login.css";
 
 export const Register = () => {
@@ -26,6 +27,7 @@ export const Register = () => {
 
     return (
         <>
+            <HiveImage />
             <h1>New here?</h1>
             <h2>No worries, just create a new account to be able to join the community!</h2>
             <form className="form-wrapper">

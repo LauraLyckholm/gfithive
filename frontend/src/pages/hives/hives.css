@@ -14,3 +14,9 @@
 .disclaimer {
     font-size: 14px;
 }
+
+.list-item-pair {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}

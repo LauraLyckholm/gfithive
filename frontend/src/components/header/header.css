@@ -1,16 +1,16 @@
-.site-header {
+/* .site-header {
   display: flex;
   justify-content: space-between;
   background-color: var(--primary-white);
 }
 
-.logo {
-  width: 33px;
-}
-
 #outer-container {
   margin-top: 1.5rem;
 }
+
+.logo {
+  width: 33px;
+} */
 
 .bm-morph-shape {
   fill: transparent;

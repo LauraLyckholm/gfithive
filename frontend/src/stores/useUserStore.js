@@ -116,6 +116,8 @@ export const useUserStore = create((set, get) => ({
                 })
                 // Saves the accessToken in localStorage
                 localStorage.setItem("accessToken", data.response.accessToken);
+                localStorage.setItem("username", username);
+
             } else {
                 set({
                     username: "",
@@ -154,7 +156,7 @@ export const useUserStore = create((set, get) => ({
             isLoggedIn: false
         });
         // Removes the accessToken from localStorage
-        localStorage.removeItem("accessToken");
+        localStorage.clear();
     },
 
     // Function to check if there's a stored token in localStorage, to allow for refresh of secret page
