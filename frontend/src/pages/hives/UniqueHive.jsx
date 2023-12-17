@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
@@ -11,6 +12,7 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 export const UniqueHive = () => {
     const { id } = useParams();
     const [hive, setHive] = useState(null);
+    const { getHives, deleteGift } = useGiftStore();
 
     useEffect(() => {
         const handleHiveFetch = async () => {
@@ -41,6 +43,16 @@ export const UniqueHive = () => {
         handleHiveFetch();
     }, [id, hive]);
 
+    const handleDelete = async (hiveId) => {
+
+        try {
+            await deleteGift(hiveId);
+            getHives();
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    };
+
     return (
         <section>
             {hive && hive.gifts ? (
@@ -50,6 +62,7 @@ export const UniqueHive = () => {
                         return (
                             <ul key={gift._id}>
                                 <li>{gift.gift}</li>
+                                <p onClick={() => handleDelete(gift._id)}>Delete</p>
                             </ul>
                         );
                     })}

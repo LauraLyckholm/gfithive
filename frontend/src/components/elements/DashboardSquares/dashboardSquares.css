@@ -1,0 +1,5 @@
+.dashboard-square {
+    border-radius: var(--border-radius);
+    background-color: #ffffff;
+    padding: 13px;
+}

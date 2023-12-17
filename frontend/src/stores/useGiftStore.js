@@ -116,6 +116,25 @@ export const useGiftStore = create((set) => ({
         }
     },
 
+    deleteGift: async (giftId) => {
+        try {
+            // Make a DELETE request to remove a hive
+            await fetch(withEndpoint(`gifts/${giftId}`), {
+                method: "DELETE",
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
+
+            set((state) => ({
+                gifts: state.gifts.filter((gift) => gift._id !== giftId),
+            }));
+
+        } catch (error) {
+            console.error("Error deleting gift:", error);
+        }
+    },
+
     deleteHive: async (hiveId) => {
         try {
             // Make a DELETE request to remove a hive

@@ -13,22 +13,28 @@ export const useUserStore = create((set, get) => ({
     password: "",
     accessToken: null,
     isLoggedIn: false,
+    loading: false,
+    errorMessage: "",
 
     // Sets the values of the state variables to the values being passed in
     setUsername: (username) => set({ username }),
     setPassword: (password) => set({ password }),
     setAccessToken: (accessToken) => set({ accessToken }),
     setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn: isLoggedIn }),
+    setLoading: (loading) => set({ loading: loading }),
+    setErrorMessage: (errorMessage) => set({ errorMessage: errorMessage }),
 
     // Creates a function for registering a user
     registerUser: async (username, password) => {
         // Checks if the username or password is empty, and if so, alerts the user and returns
         if (!username || !password) {
-            alert("Please enter both username and password");
+            set({ errorMessage: "Please enter both username and password" });
             return;
         }
 
         try {
+            set({ loading: true });
+
             const response = await fetch(withEndpoint("register"), {
                 method: "POST", // Uses the POST method
                 headers: {
@@ -43,6 +49,18 @@ export const useUserStore = create((set, get) => ({
 
             // If the response is not ok, throw an error
             if (!response.ok) {
+                const data = await response.json();
+                set({
+                    loading: false,
+                    errorMessage: "Registration failed, please try again"
+                })
+                if (data.error) {
+                    if (data.error.includes("unique")) {
+                        set({ errorMessage: "Username already exists. Please choose another one." });
+                    } else {
+                        set({ errorMessage: data.error });
+                    }
+                }
                 throw new Error(`${response.status} ${response.statusText}`);
             }
 
@@ -53,7 +71,8 @@ export const useUserStore = create((set, get) => ({
             // In case of a successfull fetch, sets the state variables to the values from the response
             if (successfullFetch) {
                 set({
-                    username: username
+                    username: username,
+                    loading: false
                 })
             }
 
@@ -66,14 +85,16 @@ export const useUserStore = create((set, get) => ({
 
         } catch (error) {
             // If the error message is 400, the username already exists, so an alert is shown and the fields are emptied
-            if (error.message == 400) {
-                alert("Username already exists, please choose another one");
-                set({
-                    username: "",
-                    password: ""
-                })
-            }
+
+            set({
+                username: "",
+                password: "",
+                loading: false,
+                errorMessage: "Username already exists, please choose another one"
+            })
+
             console.error("There was an error =>", error);
+
         }
     },
 
@@ -81,11 +102,13 @@ export const useUserStore = create((set, get) => ({
     loginUser: async (username, password) => {
         // Checks if the username or password is empty, and if so, alerts the user and returns
         if (!username || !password) {
-            alert("Please enter both username and password");
+            set({ errorMessage: "Please enter both username and password" });
             return;
         }
 
         try {
+            set({ loading: true });
+
             const response = await fetch(withEndpoint("login"), {
                 method: "POST", // Uses the POST method
                 headers: {
@@ -100,6 +123,19 @@ export const useUserStore = create((set, get) => ({
 
             // If the response is not ok, throw an error
             if (!response.ok) {
+                set({ loading: false });
+
+                if (response.status === 401) {
+                    // Unauthorized error (Wrong username or password)
+                    set({ errorMessage: "Wrong username or password, please try again" });
+                } else if (response.status === 404) {
+                    // User not found error (Username not found)
+                    set({ errorMessage: "Username not found, please try again" });
+                } else {
+                    // Other HTTP errors
+                    set({ errorMessage: "Something went wrong, please try again" });
+                }
+
                 throw new Error(`${response.status} ${response.statusText}`);
             }
 
@@ -123,6 +159,8 @@ export const useUserStore = create((set, get) => ({
                     username: "",
                     accessToken: null,
                     isLoggedIn: false,
+                    loading: false,
+                    errorMessage: "Login failed, please try again"
                 });
             }
 
@@ -131,16 +169,18 @@ export const useUserStore = create((set, get) => ({
 
         } catch (error) {
             if (error.message == 401) {
-                alert("Wrong username or password, please try again");
                 set({
                     username: "",
-                    password: ""
+                    password: "",
+                    loading: false,
+                    errorMessage: "Wrong username or password, please try again"
                 })
             } else if (error.message == 404) {
-                alert("Username not found, please try again");
                 set({
                     username: "",
-                    password: ""
+                    password: "",
+                    loading: false,
+                    errorMessage: "Username not found, please try again"
                 })
             }
             console.error("There was an error =>", error);

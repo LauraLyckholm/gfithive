@@ -91,30 +91,47 @@ export const createHiveController = asyncHandler(async (req, res) => {
     }
 });
 
-export const deleteHiveController = asyncHandler(async (req, res) => {
+export const deleteGiftController = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const userId = req.user._id;
 
     try {
         // Find the hive associated with the provided id and userId
-        const hive = await Hive.findOne({ _id: id, userId });
+        await Gift.findByIdAndDelete(id)
+            .then((result) => {
+                if (result) {
+                    res.json({
+                        message: "Gift deleted successfully",
+                        deletedHive: result
+                    });
+                } else {
+                    res.status(404).json({ error: "Gift not found or unauthorized." });
+                }
+            });
+    } catch (error) {
+        console.error("Error deleting gift:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
-        // If the hive doesn't exist or doesn't belong to the user, send an error message
-        if (!hive) {
-            return res.status(404).json({ error: "Hive not found or unauthorized." });
-        }
+export const deleteHiveController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
 
-        // Delete the hive
-        await hive.delete();
-
-        // Find the user and remove the hive from their list of hives
-        const user = await User.findById(userId);
-        user.hives.pull(id);
-        await user.save();
-
-        res.json(hive);
+    try {
+        // Find the hive associated with the provided id and userId
+        await Hive.findByIdAndDelete(id)
+            .then((result) => {
+                if (result) {
+                    res.json({
+                        message: "Hive deleted successfully",
+                        deletedHive: result
+                    });
+                } else {
+                    res.status(404).json({ error: "Hive not found or unauthorized." });
+                }
+            })
     } catch (error) {
         console.error("Error deleting hive:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
+

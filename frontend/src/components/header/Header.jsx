@@ -32,9 +32,15 @@ export const Header = () => {
     return (
         <header className="site-header" id="outer-container">
             <div className="logo">
-                <Link to="/">
-                    <img src={beeImage} alt="Gifthive Logo" />
-                </Link>
+                {isLoggedIn ?
+                    <Link to="/dashboard">
+                        <img src={beeImage} alt="Gifthive Logo" />
+                    </Link> :
+                    <Link to="/login">
+                        <img src={beeImage} alt="Gifthive Logo" />
+                    </Link>
+                }
+
             </div>
             <Menu
                 right
@@ -51,6 +57,7 @@ export const Header = () => {
                             <>
                                 <li><Link to="/hives">Hives</Link></li>
                                 <li><Link to="/create-hive">Create a new hive</Link></li>
+                                <li><Link to="/faq">FAQ</Link></li>
                                 <li><Button className="primary" btnText="Log out" handleOnClick={handleLogout} /></li>
                             </>
                         ) : (

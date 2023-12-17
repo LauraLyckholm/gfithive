@@ -2,23 +2,29 @@ import { useUserStore } from "../../stores/useUserStore";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-import { HiveImage } from "../../components/elements/BeehiveImage/HiveImage";
+import { HiveImage } from "../../components/elements/Images/HiveImage";
+import Lottie from "lottie-react";
+import loadingSpinner from "../../assets/loading-spinner.json";
 import "../login/login.css";
 
 export const Register = () => {
     const navigate = useNavigate();
 
-    // Destructures the function loginUser from the useUserStore hook
-    const { registerUser, username, setUsername, password, setPassword } = useUserStore();
+    // Destructures the function loginUser and some other states from the useUserStore hook
+    const { registerUser, username, setUsername, password, setPassword, loading, errorMessage, successfullFetch } = useUserStore();
 
+    // Function to handle the login using the loginUser function from the useUserStore hook
     const handleRegister = async (event) => {
         event.preventDefault();
 
         try {
             await registerUser(username, password);
-            if (username && password) {
+            // If the fetch was successfull, the user will be redirected to the login page, otherwise an error message will be displayed
+            if (successfullFetch) {
                 navigate("/login");
                 return;
+            } else {
+                errorMessage;
             }
         } catch (error) {
             console.error("There was an error during signup =>", error);
@@ -27,34 +33,42 @@ export const Register = () => {
 
     return (
         <>
-            <HiveImage />
-            <h1>New here?</h1>
-            <h2>No worries, just create a new account to be able to join the community!</h2>
-            <form className="form-wrapper">
-                <div className="form-group">
-                    <label htmlFor="username">Username</label>
-                    <input
-                        type="text"
-                        id="username"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required />
-                </div>
-                <div className="loginAndRegisterBtns">
-                    <Button className={"secondary"} handleOnClick={handleRegister} btnText={"Register"} />
-                    <Link to="/"><Button className={"primary"} btnText={"Start over"} /></Link>
-                </div>
-            </form>
+            {/* Shows a spinning animation when the data is loading */}
+            {loading ? <Lottie animationData={loadingSpinner} className="spinner" /> :
+                <>
+                    <HiveImage />
+                    <form className="form-wrapper">
+                        <div className="form-group">
+                            <label htmlFor="username">Username</label>
+                            <input
+                                type="text"
+                                id="username"
+                                placeholder="Username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required />
+                        </div>
+                        <div className="loginAndRegisterBtns">
+                            {/* Error message displays here */}
+                            <p className="error-message disclaimer">{errorMessage}</p>
+                            <Button className={"primary"} handleOnClick={handleRegister} btnText={"Register"} />
+                            <div className="light-pair-text">
+                                <p className="disclaimer">Changed your mind?</p>
+                                <p className="disclaimer">Go back <Link className="disclaimer bold" to="/">home</Link>.</p>
+                            </div>
+                        </div>
+                    </form >
+                </>
+            }
         </>
     )
 }

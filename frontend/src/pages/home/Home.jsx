@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-import { HiveImage } from "../../components/elements/BeehiveImage/HiveImage";
+import { HiveImage } from "../../components/elements/Images/HiveImage";
+import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 import Logo from "../../assets/gifthive-logo.png";
 import "./home.css";
 
+// Component for the home page
 export const Home = () => {
 
     return (
@@ -16,7 +18,7 @@ export const Home = () => {
                 </div>
                 <div className="content">
                     <Link to="/login"><Button className="primary" btnText="Get started" /></Link>
-                    <p className="disclaimer">Curious on how it works? Buzz over to our <Link className="bold" to="/faq">FAQ!</Link></p>
+                    <LinkToFAQ />
                 </div>
             </section>
         </>
