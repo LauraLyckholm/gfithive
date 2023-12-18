@@ -1,0 +1,22 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.form-wrapper {
+    text-align: left;
+}
+
+.disclaimer {
+    font-size: 14px;
+}
+
+.list-item-pair {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}

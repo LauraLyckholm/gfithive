@@ -55,7 +55,7 @@ export const Header = () => {
                     <ul className="mobile-links">
                         {isLoggedIn ? (
                             <>
-                                <li><Link to="/hives">Hives</Link></li>
+                                <li><Link to="/dashboard">Dashboard</Link></li>
                                 <li><Link to="/create-hive">Create a new hive</Link></li>
                                 <li><Link to="/faq">FAQ</Link></li>
                                 <li><Button className="primary" btnText="Log out" handleOnClick={handleLogout} /></li>

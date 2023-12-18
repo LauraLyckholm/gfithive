@@ -25,7 +25,7 @@ export const Login = () => {
 
             // If the user gets logged in, the user will be redirected to the dashboard, otherwise an error message will be displayed
             if (isLoggedIn) {
-                navigate("/hives");
+                navigate("/dashboard");
                 return;
             } else {
                 errorMessage;

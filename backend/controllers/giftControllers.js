@@ -83,6 +83,7 @@ export const createHiveController = asyncHandler(async (req, res) => {
             user.hives.push(newHive._id);
             await user.save();
 
+            // Send the created hive's data in the response
             res.json(newHive);
         }
     } catch (error) {
@@ -90,6 +91,7 @@ export const createHiveController = asyncHandler(async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
 
 export const deleteGiftController = asyncHandler(async (req, res) => {
     const { id } = req.params;
@@ -115,23 +117,30 @@ export const deleteGiftController = asyncHandler(async (req, res) => {
 
 export const deleteHiveController = asyncHandler(async (req, res) => {
     const { id } = req.params;
+    const userId = req.user._id; // Get the user's ID
 
     try {
         // Find the hive associated with the provided id and userId
-        await Hive.findByIdAndDelete(id)
-            .then((result) => {
-                if (result) {
-                    res.json({
-                        message: "Hive deleted successfully",
-                        deletedHive: result
-                    });
-                } else {
-                    res.status(404).json({ error: "Hive not found or unauthorized." });
-                }
-            })
+        const deletedHive = await Hive.findByIdAndDelete(id);
+
+        if (!deletedHive) {
+            return res.status(404).json({ error: "Hive not found or unauthorized." });
+        }
+
+        // Update the user's list of hives by removing the deleted hive's ID
+        await User.findByIdAndUpdate(userId, {
+            $pull: { hives: deletedHive._id }
+        });
+
+        // Send a response indicating successful deletion
+        res.json({
+            message: "Hive deleted successfully",
+            deletedHive: deletedHive
+        });
     } catch (error) {
         console.error("Error deleting hive:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
 

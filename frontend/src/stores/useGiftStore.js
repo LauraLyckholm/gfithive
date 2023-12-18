@@ -8,13 +8,15 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 
 // Creates a store for the gift hive handling
 export const useGiftStore = create((set) => ({
-    gifts: [],
+    gift: [],
     hives: [],
     hiveName: "",
+    giftName: "",
 
-    setGifts: (gifts) => set({ gifts }),
+    setGift: (gift) => set({ gift }),
     setHives: (hives) => set({ hives }),
     setHiveName: (hiveName) => set({ hiveName }),
+    setGiftName: (giftName) => set({ giftName }),
 
     getGifts: async () => {
         try {
@@ -28,7 +30,7 @@ export const useGiftStore = create((set) => ({
                 const data = await response.json();
 
                 set({
-                    gifts: data
+                    gift: data
                 });
             } else {
                 console.error("Error fetching gifts");
@@ -39,6 +41,7 @@ export const useGiftStore = create((set) => ({
         }
     },
 
+    // Function for getting all hives
     getHives: async () => {
         try {
             const response = await fetch(withEndpoint("hives"), {
@@ -62,6 +65,7 @@ export const useGiftStore = create((set) => ({
         }
     },
 
+    // Function for adding a gift
     addGift: async (newGift) => {
         try {
             // Make a POST request to create a new gift
@@ -78,7 +82,7 @@ export const useGiftStore = create((set) => ({
 
             if (response.ok) {
                 set((state) => ({
-                    gifts: [...state.gifts, data]
+                    gift: [...state.gift, data]
                 }));
             } else {
                 console.error("Error adding gift");
@@ -89,6 +93,7 @@ export const useGiftStore = create((set) => ({
         }
     },
 
+    // Function for adding a hive
     addHive: async (newHive) => {
         try {
             // Make a POST request to create a new hive
@@ -105,7 +110,7 @@ export const useGiftStore = create((set) => ({
 
             if (response.ok) {
                 set((state) => ({
-                    hives: [...state.hives, data]
+                    hives: [...state.hives, data],
                 }));
             } else {
                 console.error("Error adding hive");
@@ -116,6 +121,7 @@ export const useGiftStore = create((set) => ({
         }
     },
 
+    // Function for deleting a gift
     deleteGift: async (giftId) => {
         try {
             // Make a DELETE request to remove a hive
@@ -135,6 +141,7 @@ export const useGiftStore = create((set) => ({
         }
     },
 
+    // Function for deleting a hive
     deleteHive: async (hiveId) => {
         try {
             // Make a DELETE request to remove a hive
@@ -154,6 +161,7 @@ export const useGiftStore = create((set) => ({
         }
     },
 
+    // Function for initializing the store
     init: () => {
         const storedGifts = localStorage.getItem("gifts");
         const storedHives = localStorage.getItem("hives");

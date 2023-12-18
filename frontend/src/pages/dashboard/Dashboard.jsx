@@ -4,10 +4,12 @@ import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { useUserStore } from "../../stores/useUserStore";
 import { WelcomeSquare } from "../../components/elements/DashboardSquares/WelcomeSquare";
+import { CreateNewHive } from "../../components/elements/InputFields/CreateNewHive";
+import "./dashboard.css";
 
-export const AllHives = () => {
+export const Dashboard = () => {
     const { hives, getHives, deleteHive } = useGiftStore(); // Destructures the function getHives from the useGiftStore hook
-    const { accessToken, isLoggedIn, username, logoutUser } = useUserStore(); // Destructures the function logoutUser from the useUserStore hook
+    const { accessToken, isLoggedIn, username } = useUserStore(); // Destructures the function logoutUser from the useUserStore hook
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
 
     // Fetches the hives when the component mounts
@@ -34,12 +36,6 @@ export const AllHives = () => {
         }
     };
 
-    // Function to handle the logout using the logoutUser function from the useUserStore hook
-    const handleLogout = () => {
-        // Call the logoutUser function to log the user out
-        logoutUser();
-    };
-
     const hivesLength = hives.length;
 
     return (
@@ -47,12 +43,8 @@ export const AllHives = () => {
             <WelcomeSquare loggedInUser={loggedInUser} hivesLength={hivesLength} />
             {isLoggedIn ? (
                 <div className="dashboard">
-                    <h1>{`Welcome to your Gifthive ${loggedInUser}`}!</h1>
                     {hivesLength === 0 ? (
-                        <div>
-
-                            <Link to="/create-hive"><Button className={"primary"} btnText={"Start a new hive"} /></Link>
-                        </div>
+                        <CreateNewHive />
                     ) : (
                         <>
                             <h2>Your hives:</h2>
@@ -68,7 +60,6 @@ export const AllHives = () => {
                             </ul>
                         </>
                     )}
-                    <Button className="primary" btnText="Logout" onClick={handleLogout} />
                 </div>
             ) : (
                 <div className="dashboard">

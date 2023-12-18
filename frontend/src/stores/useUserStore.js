@@ -15,6 +15,7 @@ export const useUserStore = create((set, get) => ({
     isLoggedIn: false,
     loading: false,
     errorMessage: "",
+    userId: "",
 
     // Sets the values of the state variables to the values being passed in
     setUsername: (username) => set({ username }),
@@ -23,6 +24,7 @@ export const useUserStore = create((set, get) => ({
     setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn: isLoggedIn }),
     setLoading: (loading) => set({ loading: loading }),
     setErrorMessage: (errorMessage) => set({ errorMessage: errorMessage }),
+    setUserId: (userId) => set({ userId: userId }),
 
     // Creates a function for registering a user
     registerUser: async (username, password) => {
@@ -99,7 +101,7 @@ export const useUserStore = create((set, get) => ({
     },
 
     // Creates a function for logging in a user
-    loginUser: async (username, password) => {
+    loginUser: async (username, password, userId) => {
         // Checks if the username or password is empty, and if so, alerts the user and returns
         if (!username || !password) {
             set({ errorMessage: "Please enter both username and password" });
@@ -118,6 +120,7 @@ export const useUserStore = create((set, get) => ({
                 body: JSON.stringify({
                     username,
                     password,
+                    userId
                 }),
             });
 
@@ -149,10 +152,12 @@ export const useUserStore = create((set, get) => ({
                     username: username,
                     accessToken: data.response.accessToken,
                     isLoggedIn: true,
+                    userId: data.response._id,
                 })
                 // Saves the accessToken in localStorage
                 localStorage.setItem("accessToken", data.response.accessToken);
                 localStorage.setItem("username", username);
+                localStorage.setItem("userId", data.response._id);
 
             } else {
                 set({
@@ -193,7 +198,8 @@ export const useUserStore = create((set, get) => ({
             username: "",
             password: "",
             accessToken: null,
-            isLoggedIn: false
+            isLoggedIn: false,
+            userId: "",
         });
         // Removes the accessToken from localStorage
         localStorage.clear();

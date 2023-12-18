@@ -70,8 +70,8 @@ export const UniqueHive = () => {
             ) : (
                 <p>Loading...</p>
             )}
-            <Link to="/hives">
-                <Button className={"primary"} btnText={"Back to hives"} />
+            <Link to="/dashboard">
+                <Button className={"primary"} btnText={"Back to dashboard"} />
             </Link>
         </section>
     );

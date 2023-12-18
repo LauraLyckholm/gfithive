@@ -124,7 +124,11 @@ export const loginUserController = asyncHandler(async (req, res) => {
 export const getDashboardController = asyncHandler(async (req, res) => {
     const { username, hives } = req.user; // gets the username from the authenticated user
     try {
-        res.send(`Welcome to your Dashboard, ${username}! You have ${hives.length} hives. Hives: ${hives}`);
+        res.json({
+            message: `Welcome to your Dashboard, ${username}!`,
+            hivesCount: hives.length,
+            hives: hives // Or you can transform this data as needed
+        });
     } catch (err) {
         res.status(400).json({
             success: false,
