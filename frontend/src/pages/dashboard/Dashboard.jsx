@@ -6,9 +6,12 @@ import { useUserStore } from "../../stores/useUserStore";
 import { WelcomeSquare } from "../../components/elements/DashboardSquares/WelcomeSquare";
 import { CreateNewHive } from "../../components/elements/InputFields/CreateNewHive";
 import "./dashboard.css";
+import { GridSquares } from "../../components/elements/DashboardSquares/GridSquares";
+import hiveIcon from "../../assets/hiveIcon.svg";
+import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 
 export const Dashboard = () => {
-    const { hives, getHives, deleteHive } = useGiftStore(); // Destructures the function getHives from the useGiftStore hook
+    const { hives, getHives } = useGiftStore(); // Destructures the function getHives from the useGiftStore hook
     const { accessToken, isLoggedIn, username } = useUserStore(); // Destructures the function logoutUser from the useUserStore hook
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
 
@@ -16,25 +19,16 @@ export const Dashboard = () => {
     useEffect(() => {
         getHives();
         setLoggedInUser(localStorage.getItem("username"));
+        // setHives(localStorage.getItem("hives"));
     }, [hives, accessToken, getHives, username, isLoggedIn])
 
-    // Clears hives data when the user logs out
-    useEffect(() => {
-        if (!isLoggedIn) {
-            // Clear hives data when the user logs out
-            getHives([]);
-        }
-    }, [isLoggedIn, getHives]);
-
-    // Function to handle the delete using the deleteHive function from the useGiftStore hook
-    const handleDelete = async (hiveId) => {
-        try {
-            await deleteHive(hiveId);
-            getHives();
-        } catch (error) {
-            console.error("There was an error =>", error);
-        }
-    };
+    // // Clears hives data when the user logs out
+    // useEffect(() => {
+    //     if (!isLoggedIn) {
+    //         // Clear hives data when the user logs out
+    //         getHives([]);
+    //     }
+    // }, [isLoggedIn, getHives]);
 
     const hivesLength = hives.length;
 
@@ -47,17 +41,10 @@ export const Dashboard = () => {
                         <CreateNewHive />
                     ) : (
                         <>
-                            <h2>Your hives:</h2>
-                            <ul>
-                                {hives.map((hive) => {
-                                    return (
-                                        <li className="list-item-pair" key={hive._id}>
-                                            <Link to={`/hives/${hive._id}`}><p>{hive.name}</p></Link>
-                                            <p onClick={() => handleDelete(hive._id)}>Delete</p>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
+                            <div className="grid-squares">
+                                <Link to="/hives"><GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesLength} text={"hives"} /></Link>
+                            </div>
+                            <LinkToFAQ />
                         </>
                     )}
                 </div>

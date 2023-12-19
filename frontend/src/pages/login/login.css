@@ -17,7 +17,7 @@ h2 {
     gap: 5px;
 }
 
-.loginAndRegisterBtns {
+.btns {
     display: flex;
     flex-direction: column;
     align-items: center;

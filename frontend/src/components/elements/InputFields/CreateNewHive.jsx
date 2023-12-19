@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
 
+
 export const CreateNewHive = () => {
     const { hiveName, setHiveName, addHive } = useGiftStore();
 
@@ -21,7 +22,7 @@ export const CreateNewHive = () => {
 
             // if (createdHive) {
             //     const newGift = {
-            //         gift: gift,
+            //         gift: giftName,
             //         hiveId: createdHive._id,
             //     };
             //     await addGift(newGift);
@@ -30,7 +31,7 @@ export const CreateNewHive = () => {
             // console.log(`Gifts in hive ${hiveName} with hiveid ${createdHive}: ${gift}`);
             // navigate("/hive/${id}")
             setHiveName("");
-            // setGift("");
+            // setGiftname("");
         } catch (error) {
             console.error("There was an error =>", error);
         }

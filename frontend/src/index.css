@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Roboto:wght@300;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&family=Roboto:wght@300;500&display=swap');
 
 /* ------------ CUSTOM PROPERTIES AND OVERALL STYLING ------------ */
 :root {
@@ -6,6 +6,7 @@
   --primary: #FFC440;
   --text: #331616;
   --background: #F7F6F0;
+  --circle-color: 255, 196, 64, 0.57;
   --brown: #7A4141;
   --placeholder-text: #00000080;
 
@@ -82,7 +83,6 @@ button {
 }
 
 button, input {
-    width: 250px;
     border-radius: var(--border-radius);
     font-size: 18px;
     outline: none;
@@ -92,6 +92,7 @@ button, input {
 
 input {
     padding: 17px 20px;
+    max-width: 100%;
 }
 
 input::placeholder {

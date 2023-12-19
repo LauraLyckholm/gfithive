@@ -11,7 +11,7 @@ export const Register = () => {
     const navigate = useNavigate();
 
     // Destructures the function loginUser and some other states from the useUserStore hook
-    const { registerUser, username, setUsername, password, setPassword, loading, errorMessage, successfullFetch } = useUserStore();
+    const { registerUser, username, setUsername, password, setPassword, loading, errorMessage, setErrorMessage, successfullFetch } = useUserStore();
 
     // Function to handle the login using the loginUser function from the useUserStore hook
     const handleRegister = async (event) => {
@@ -22,6 +22,7 @@ export const Register = () => {
             // If the fetch was successfull, the user will be redirected to the login page, otherwise an error message will be displayed
             if (successfullFetch) {
                 navigate("/login");
+                setErrorMessage("");
                 return;
             } else {
                 errorMessage;
@@ -57,7 +58,7 @@ export const Register = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required />
                         </div>
-                        <div className="loginAndRegisterBtns">
+                        <div className="btns">
                             {/* Error message displays here */}
                             <p className="error-message disclaimer">{errorMessage}</p>
                             <Button className={"primary"} handleOnClick={handleRegister} btnText={"Register"} />

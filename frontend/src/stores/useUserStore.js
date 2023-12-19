@@ -152,6 +152,7 @@ export const useUserStore = create((set, get) => ({
                     username: username,
                     accessToken: data.response.accessToken,
                     isLoggedIn: true,
+                    loading: false,
                     userId: data.response._id,
                 })
                 // Saves the accessToken in localStorage

@@ -3,6 +3,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import {
     getGiftsController,
+    getHiveGiftsController,
     getHivesController,
     getIndividualHiveController,
     createGiftItemController,
@@ -30,6 +31,7 @@ giftRouter.get("/", asyncHandler(async (req, res) => {
 
 // ------------ ROUTES ------------ //
 giftRouter.get("/gifts", authenticateUser, getGiftsController);
+giftRouter.get("/gifts/:id", authenticateUser, getHiveGiftsController);
 giftRouter.get("/hives", authenticateUser, getHivesController);
 giftRouter.get("/hives/:id", authenticateUser, getIndividualHiveController);
 giftRouter.post("/gifts", authenticateUser, createGiftItemController);

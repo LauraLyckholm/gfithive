@@ -12,7 +12,7 @@ export const Login = () => {
     const navigate = useNavigate();
 
     // Destructures the function loginUser and some other states from the useUserStore hook
-    const { loginUser, username, setUsername, password, setPassword, loading, errorMessage } = useUserStore();
+    const { loginUser, username, setUsername, password, setPassword, loading, errorMessage, setErrorMessage } = useUserStore();
 
     // Function to handle the login using the loginUser function from the useUserStore hook
     const handleLogin = async (event) => {
@@ -26,6 +26,7 @@ export const Login = () => {
             // If the user gets logged in, the user will be redirected to the dashboard, otherwise an error message will be displayed
             if (isLoggedIn) {
                 navigate("/dashboard");
+                setErrorMessage("");
                 return;
             } else {
                 errorMessage;
@@ -33,6 +34,11 @@ export const Login = () => {
         } catch (error) {
             console.error("There was an error =>", error);
         }
+    }
+
+    // Function to handle the removal of the errormessage when the user clicks on the register link
+    const handleSetErrorMessage = () => {
+        setErrorMessage("");
     }
 
     return (
@@ -64,12 +70,12 @@ export const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required />
                         </div>
-                        <div className="loginAndRegisterBtns">
+                        <div className="btns">
                             <p className="error-message disclaimer">{errorMessage}</p>
                             <Button className={"primary"} handleOnClick={handleLogin} btnText={"Login"} />
                             <div className="light-pair-text">
                                 <p className="disclaimer">First time here?</p>
-                                <p className="disclaimer"><Link className="disclaimer bold" to="/register">Register</Link> for an account!</p>
+                                <p className="disclaimer"><Link onClick={handleSetErrorMessage} className="disclaimer bold" to="/register">Register</Link> for an account!</p>
                             </div>
                         </div>
                     </form>

@@ -8,19 +8,19 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 
 // Creates a store for the gift hive handling
 export const useGiftStore = create((set) => ({
-    gift: [],
+    gifts: [],
     hives: [],
     hiveName: "",
     giftName: "",
 
-    setGift: (gift) => set({ gift }),
+    setGifts: (gifts) => set({ gifts }),
     setHives: (hives) => set({ hives }),
     setHiveName: (hiveName) => set({ hiveName }),
     setGiftName: (giftName) => set({ giftName }),
 
-    getGifts: async () => {
+    getGifts: async (hiveId) => {
         try {
-            const response = await fetch(withEndpoint("gifts"), {
+            const response = await fetch(withEndpoint(`gifts/${hiveId}`), {
                 headers: {
                     "Auth": localStorage.getItem("accessToken"),
                 },
@@ -28,9 +28,9 @@ export const useGiftStore = create((set) => ({
 
             if (response.ok) {
                 const data = await response.json();
-
+                console.log("data", data);
                 set({
-                    gift: data
+                    gifts: data
                 });
             } else {
                 console.error("Error fetching gifts");
@@ -56,6 +56,7 @@ export const useGiftStore = create((set) => ({
                 set({
                     hives: data
                 });
+                localStorage.setItem("hives", JSON.stringify(data));
             } else {
                 console.error("Error fetching hives");
             }
@@ -82,7 +83,7 @@ export const useGiftStore = create((set) => ({
 
             if (response.ok) {
                 set((state) => ({
-                    gift: [...state.gift, data]
+                    gifts: [...state.gifts, data]
                 }));
             } else {
                 console.error("Error adding gift");
@@ -161,26 +162,26 @@ export const useGiftStore = create((set) => ({
         }
     },
 
-    // Function for initializing the store
-    init: () => {
-        const storedGifts = localStorage.getItem("gifts");
-        const storedHives = localStorage.getItem("hives");
-        const storedUniqueHive = localStorage.getItem("uniqueHive");
+    // // Function for initializing the store
+    // init: () => {
+    //     const storedGifts = localStorage.getItem("gifts");
+    //     const storedHives = localStorage.getItem("hives");
+    //     const storedUniqueHive = localStorage.getItem("uniqueHive");
 
-        if (storedGifts) set({ gifts: JSON.parse(storedGifts) });
-        if (storedHives) set({ hives: JSON.parse(storedHives) });
-        if (storedUniqueHive) set({ uniqueHive: JSON.parse(storedUniqueHive) });
-    },
+    //     if (storedGifts) set({ gifts: JSON.parse(storedGifts) });
+    //     if (storedHives) set({ hives: JSON.parse(storedHives) });
+    //     if (storedUniqueHive) set({ uniqueHive: JSON.parse(storedUniqueHive) });
+    // },
 
-    // Method to set state and persist data to local storage
-    setAndPersist: (fn) => {
-        set(fn);
+    // // Method to set state and persist data to local storage
+    // setAndPersist: (fn) => {
+    //     set(fn);
 
-        // Persist relevant state to local storage after updating
-        localStorage.setItem("gifts", JSON.stringify(fn().gifts));
-        localStorage.setItem("hives", JSON.stringify(fn().hives));
-        localStorage.setItem("uniqueHive", JSON.stringify(fn().uniqueHive));
-    },
+    //     // Persist relevant state to local storage after updating
+    //     localStorage.setItem("gifts", JSON.stringify(fn().gifts));
+    //     localStorage.setItem("hives", JSON.stringify(fn().hives));
+    //     localStorage.setItem("uniqueHive", JSON.stringify(fn().uniqueHive));
+    // },
 
     // updateGift: async (updatedGift) => {
     //     try {
@@ -221,3 +222,8 @@ export const useGiftStore = create((set) => ({
     //     set({ loading: isLoading });
     // },
 }));
+
+// const giftStore = useGiftStore.getState();
+// giftStore.initAuth();
+
+// export default giftStore;
