@@ -8,42 +8,67 @@ import { CreateNewHive } from "../../components/elements/InputFields/CreateNewHi
 import "./dashboard.css";
 import { GridSquares } from "../../components/elements/DashboardSquares/GridSquares";
 import hiveIcon from "../../assets/hiveIcon.svg";
+import giftIcon from "../../assets/giftIcon.svg";
+import sharedIcon from "../../assets/sharedIcon.svg";
+import deadlineIcon from "../../assets/deadlineIcon.svg";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 
 export const Dashboard = () => {
-    const { hives, getHives } = useGiftStore(); // Destructures the function getHives from the useGiftStore hook
-    const { accessToken, isLoggedIn, username } = useUserStore(); // Destructures the function logoutUser from the useUserStore hook
+    const { getHives } = useGiftStore(); // Destructures the function getHives from the useGiftStore hook
+    const { isLoggedIn, getDashboard, dashboard } = useUserStore(); // Destructures the function logoutUser from the useUserStore hook
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
+    // const hivesLength = hives.length;
+    const hivesAmount = dashboard.hivesCount;
+    const giftsAmount = dashboard.giftsCount;
 
     // Fetches the hives when the component mounts
     useEffect(() => {
         getHives();
+        getDashboard();
         setLoggedInUser(localStorage.getItem("username"));
         // setHives(localStorage.getItem("hives"));
-    }, [hives, accessToken, getHives, username, isLoggedIn])
+    }, [])
 
-    // // Clears hives data when the user logs out
-    // useEffect(() => {
-    //     if (!isLoggedIn) {
-    //         // Clear hives data when the user logs out
-    //         getHives([]);
-    //     }
-    // }, [isLoggedIn, getHives]);
 
-    const hivesLength = hives.length;
+
+
+    // fetch("https://gifthive.onrender.com/gift-routes/", ")
 
     return (
         <>
-            <WelcomeSquare loggedInUser={loggedInUser} hivesLength={hivesLength} />
+            <WelcomeSquare loggedInUser={loggedInUser} hivesLength={hivesAmount} />
+
+            {/* <ul>
+                {gifts.map((gift) => {
+                    return (
+                        <li key={gift._id}>
+                            <p>{gift.gift}</p>
+                        </li>
+                    )
+                })}
+            </ul> */}
+
             {isLoggedIn ? (
                 <div className="dashboard">
-                    {hivesLength === 0 ? (
+                    {hivesAmount === 0 ? (
                         <CreateNewHive />
                     ) : (
                         <>
-                            <div className="grid-squares">
-                                <Link to="/hives"><GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesLength} text={"hives"} /></Link>
-                            </div>
+                            <section className="grid-squares">
+                                <>
+                                    <Link className="link-square" to="/hives"><GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} /></Link>
+                                </>
+                                <>
+                                    <GridSquares icon={giftIcon} loggedInUser={loggedInUser} amount={giftsAmount} text={giftsAmount < 2 ? "gift" : "gifts"} />
+                                </>
+                                <>
+                                    <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount="0" text="shared hives" />
+                                </>
+                                <>
+                                    <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
+                                </>
+
+                            </section>
                             <LinkToFAQ />
                         </>
                     )}

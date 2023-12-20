@@ -16,6 +16,7 @@ export const useUserStore = create((set, get) => ({
     loading: false,
     errorMessage: "",
     userId: "",
+    dashboard: {},
 
     // Sets the values of the state variables to the values being passed in
     setUsername: (username) => set({ username }),
@@ -25,6 +26,27 @@ export const useUserStore = create((set, get) => ({
     setLoading: (loading) => set({ loading: loading }),
     setErrorMessage: (errorMessage) => set({ errorMessage: errorMessage }),
     setUserId: (userId) => set({ userId: userId }),
+    setDashboard: (dashboard) => set({ dashboard: dashboard }),
+
+    getDashboard: async () => {
+        try {
+            const response = await fetch(withEndpoint("dashboard"), {
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("data", data);
+                set({
+                    dashboard: data
+                });
+            }
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    },
 
     // Creates a function for registering a user
     registerUser: async (username, password) => {
@@ -74,7 +96,7 @@ export const useUserStore = create((set, get) => ({
             if (successfullFetch) {
                 set({
                     username: username,
-                    loading: false
+                    loading: false,
                 })
             }
 
@@ -159,6 +181,7 @@ export const useUserStore = create((set, get) => ({
                 localStorage.setItem("accessToken", data.response.accessToken);
                 localStorage.setItem("username", username);
                 localStorage.setItem("userId", data.response._id);
+                localStorage.setItem("isLoggedIn", true);
 
             } else {
                 set({

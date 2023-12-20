@@ -8,38 +8,61 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 
 // Creates a store for the gift hive handling
 export const useGiftStore = create((set) => ({
-    gifts: [],
+    // gifts: [],
     hives: [],
     hiveName: "",
     giftName: "",
 
-    setGifts: (gifts) => set({ gifts }),
+    // setGifts: (gifts) => set({ gifts }),
     setHives: (hives) => set({ hives }),
     setHiveName: (hiveName) => set({ hiveName }),
     setGiftName: (giftName) => set({ giftName }),
 
-    getGifts: async (hiveId) => {
-        try {
-            const response = await fetch(withEndpoint(`gifts/${hiveId}`), {
-                headers: {
-                    "Auth": localStorage.getItem("accessToken"),
-                },
-            });
+    // getGifts: async (hiveId) => {
+    //     try {
+    //         const response = await fetch(withEndpoint(`gifts/${hiveId}`), {
+    //             headers: {
+    //                 "Auth": localStorage.getItem("accessToken"),
+    //             },
+    //         });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log("data", data);
-                set({
-                    gifts: data
-                });
-            } else {
-                console.error("Error fetching gifts");
-            }
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             console.log("data", data);
+    //             set({
+    //                 gifts: data
+    //             });
+    //         } else {
+    //             console.error("Error fetching gifts");
+    //         }
 
-        } catch (error) {
-            console.error("There was an error =>", error);
-        }
-    },
+    //     } catch (error) {
+    //         console.error("There was an error =>", error);
+    //     }
+    // },
+
+    // getGifts: async () => {
+    //     try {
+    //         const response = await fetch(withEndpoint("gifts"), {
+    //             headers: {
+    //                 "Auth": localStorage.getItem("accessToken"),
+    //             },
+    //         });
+
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             console.log("data", data);
+    //             set({
+    //                 gifts: data
+    //             });
+    //         } else {
+    //             console.error("Error fetching gifts");
+    //         }
+
+    //     } catch (error) {
+    //         console.error("There was an error =>", error);
+    //     }
+    // },
 
     // Function for getting all hives
     getHives: async () => {
@@ -122,6 +145,35 @@ export const useGiftStore = create((set) => ({
         }
     },
 
+    updateHiveName: async (updatedHive) => {
+        try {
+            // Make a PUT request to update an existing hive
+            const response = await fetch(withEndpoint(`hives/${updatedHive.id}`), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+                body: JSON.stringify(updatedHive),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                set((state) => ({
+                    hives: state.hives.map((hive) =>
+                        hive.id === updatedHive.id ? { ...hive, ...data } : hive
+                    ),
+                }));
+            } else {
+                console.error("Error updating hive");
+            }
+
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    },
+
     // Function for deleting a gift
     deleteGift: async (giftId) => {
         try {
@@ -134,8 +186,9 @@ export const useGiftStore = create((set) => ({
             });
 
             set((state) => ({
-                gifts: state.gifts.filter((gift) => gift._id !== giftId),
+                gifts: state.hives.gifts.filter((gift) => gift._id !== giftId),
             }));
+            console.log("giftId", giftId);
 
         } catch (error) {
             console.error("Error deleting gift:", error);

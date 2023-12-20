@@ -3,6 +3,8 @@ import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
+import trashcanIcon from "../../assets/trash.svg";
+
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -60,9 +62,9 @@ export const UniqueHive = () => {
                     <h2>{hive.name}</h2>
                     {hive.gifts.map((gift) => {
                         return (
-                            <ul key={gift._id}>
+                            <ul className="list-item-pair" key={gift._id}>
                                 <li>{gift.gift}</li>
-                                <p onClick={() => handleDelete(gift._id)}>Delete</p>
+                                <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />
                             </ul>
                         );
                     })}
@@ -70,9 +72,10 @@ export const UniqueHive = () => {
             ) : (
                 <p>Loading...</p>
             )}
-            <Link to="/dashboard">
-                <Button className={"primary"} btnText={"Back to dashboard"} />
-            </Link>
+            <div className="btns">
+                <Link to="/add-gift"><Button className="primary" btnText="Add gift" /></Link>
+                <Link to="/dashboard"><Button className="secondary" btnText="Back to dashboard" /></Link>
+            </div>
         </section>
     );
 };

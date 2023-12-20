@@ -20,7 +20,8 @@ export const Login = () => {
 
         try {
             await loginUser(username, password);
-            const isLoggedIn = useUserStore.getState().isLoggedIn;
+            const loggedInValue = localStorage.getItem("isLoggedIn");
+            const isLoggedIn = loggedInValue === "true";
             // If the user is logged in, the accessToken will be saved in localStorage and the user will be redirected to the dashboard
 
             // If the user gets logged in, the user will be redirected to the dashboard, otherwise an error message will be displayed

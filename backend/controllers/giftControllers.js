@@ -100,23 +100,60 @@ export const createHiveController = asyncHandler(async (req, res) => {
     }
 });
 
-
-export const deleteGiftController = asyncHandler(async (req, res) => {
+export const updateHiveName = asyncHandler(async (req, res) => {
     const { id } = req.params;
+    const { name } = req.body;
+    const userId = req.user._id;
 
     try {
         // Find the hive associated with the provided id and userId
-        await Gift.findByIdAndDelete(id)
-            .then((result) => {
-                if (result) {
-                    res.json({
-                        message: "Gift deleted successfully",
-                        deletedHive: result
-                    });
-                } else {
-                    res.status(404).json({ error: "Gift not found or unauthorized." });
-                }
-            });
+        const hive = await Hive.findOne({ _id: id, userId });
+
+        if (!hive) {
+            return res.status(404).json({ error: "Hive not found or unauthorized." });
+        }
+
+        // Update the hive's name
+        hive.name = name;
+        await hive.save();
+
+        res.json(hive);
+    } catch (error) {
+        console.error("Error updating hive name:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+export const deleteGiftController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user._id;
+
+    try {
+        // Find the hive associated with the provided id and userId
+        const deletedGift = await Gift.findByIdAndDelete(id);
+
+        if (!deletedGift) {
+            return res.status(404).json({ error: "Gift not found or unauthorized." });
+        }
+
+        // Update the user's list of gifts in the hive by removing the deleted gifts's ID
+
+        // PERHAPS REMOVE ONE OF THESE (HIVE)
+        // await Hive.findByIdAndUpdate(userId,
+        //     {
+        //         $pull: { hives: deletedGift._id }
+        //     });
+
+        await User.findByIdAndUpdate(userId,
+            { $pull: { gifts: deletedGift._id } },
+            { new: true } // Return the updated document
+        );
+
+        res.json({
+            message: "Gift deleted successfully",
+            deletedGift: deletedGift
+        });
+
     } catch (error) {
         console.error("Error deleting gift:", error);
         res.status(500).json({ error: "Internal server error" });

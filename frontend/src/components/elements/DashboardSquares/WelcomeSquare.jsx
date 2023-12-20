@@ -4,7 +4,7 @@ import "./dashboardSquares.css";
 export const WelcomeSquare = ({ loggedInUser, hivesLength }) => {
 
     return (
-        <div className="dashboard-square">
+        <div className="dashboard-square welcome-square">
             <img src={UserIcon} alt="" />
             {!loggedInUser ? "No user logged in" :
                 <>

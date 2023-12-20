@@ -1,7 +1,10 @@
 .dashboard-square {
     border-radius: var(--border-radius);
     background-color: #ffffff;
-    padding: 13px;
-    /* max-width: 645px; */
+    padding: 1rem;
+}
+
+.welcome-square {
+    width: -webkit-fill-available;
 }
 

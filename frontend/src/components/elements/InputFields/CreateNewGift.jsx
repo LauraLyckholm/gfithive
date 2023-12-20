@@ -1,24 +1,22 @@
-// import { useState } from "react";
-import { Link } from "react-router-dom";
+
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
 
-
-export const CreateNewHive = () => {
-    const { hiveName, setHiveName, addHive } = useGiftStore();
+export const CreateNewGift = () => {
+    const { giftName, setGiftName, addGift } = useGiftStore();
 
     // const userId = localStorage.getItem("userId");
 
-    const handleAddHive = async (event) => {
+    const handleAddGift = async (event) => {
         event.preventDefault();
 
         try {
-            const newHive = {
-                name: hiveName
+            const newGift = {
+                name: giftName
             };
 
-            const createdHive = await addHive(newHive);
-            console.log(createdHive);
+            const createdGift = await addGift(newGift);
+            console.log(createdGift);
 
             // if (createdHive) {
             //     const newGift = {
@@ -30,7 +28,7 @@ export const CreateNewHive = () => {
 
             // console.log(`Gifts in hive ${hiveName} with hiveid ${createdHive}: ${gift}`);
             // navigate("/hive/${id}")
-            setHiveName("");
+            setGiftName("");
             // setGiftname("");
         } catch (error) {
             console.error("There was an error =>", error);
@@ -46,18 +44,8 @@ export const CreateNewHive = () => {
                         type="text"
                         id="hiveName"
                         placeholder="e.g. Mom"
-                        value={hiveName}
-                        onChange={(e) => setHiveName(e.target.value)}
-                        required />
-                </div>
-                <div className="form-group disabled">
-                    <label htmlFor="gift">Create your first gift idea</label>
-                    <input
-                        type="text"
-                        id="gift"
-                        placeholder="e.g. Honey"
-                        // value={giftName}
-                        // onChange={(e) => setGiftname(e.target.value)}
+                        value={giftName}
+                        onChange={(e) => setGiftName(e.target.value)}
                         required />
                 </div>
                 <div className="form-group disabled">
@@ -72,7 +60,7 @@ export const CreateNewHive = () => {
                 </div>
             </form>
 
-            <Link to="/dashboard"><Button handleOnClick={handleAddHive} className={"primary"} btnText={"Start a new hive"} /></Link>
+            <Button handleOnClick={handleAddGift} className={"primary"} btnText={"Add gift"} />
         </div>
     )
 }

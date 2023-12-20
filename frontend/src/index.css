@@ -80,6 +80,7 @@ p {
 /* ------------ OVERALL ELEMENTS ------------ */
 button {
     padding: 13px 40px;
+    width: 250px;
 }
 
 button, input {
@@ -112,7 +113,7 @@ ul {
   flex-direction: column;
   justify-content: center; /* Vertically center the content */
   align-items: center; /* Horizontally center the content */
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .site-header {
@@ -133,8 +134,14 @@ ul {
   font-size: 14px;
 }
 
-.disclaimer .bold {
+.bold {
   font-weight: 500;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+
 }
 
 /* ------- */

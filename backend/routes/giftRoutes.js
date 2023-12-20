@@ -8,6 +8,7 @@ import {
     getIndividualHiveController,
     createGiftItemController,
     createHiveController,
+    updateHiveName,
     deleteGiftController,
     deleteHiveController
 } from "../controllers/giftControllers";
@@ -36,5 +37,6 @@ giftRouter.get("/hives", authenticateUser, getHivesController);
 giftRouter.get("/hives/:id", authenticateUser, getIndividualHiveController);
 giftRouter.post("/gifts", authenticateUser, createGiftItemController);
 giftRouter.post("/hives", authenticateUser, createHiveController);
+giftRouter.put("/hives/:id", authenticateUser, updateHiveName);
 giftRouter.delete("/gifts/:id", authenticateUser, deleteGiftController);
 giftRouter.delete("/hives/:id", authenticateUser, deleteHiveController);
