@@ -29,9 +29,6 @@ export const Dashboard = () => {
         // setHives(localStorage.getItem("hives"));
     }, [])
 
-
-
-
     // fetch("https://gifthive.onrender.com/gift-routes/", ")
 
     return (
