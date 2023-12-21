@@ -1,6 +1,6 @@
 // ------------ IMPORTS ------------ //
-import express from "express";
-import cors from "cors";
+// import express from "express";
+// import cors from "cors";
 import listEndpoints from "express-list-endpoints";
 import dotenv from "dotenv";
 dotenv.config();
@@ -12,12 +12,17 @@ import { userRouter } from "./routes/userRoutes";
 // ------------ VARIABLES ------------ //
 // Defines the port the app will run on
 const port = process.env.PORT;
+
+const cors = require("cors");
+const express = require("express");
 const app = express();
+
 const corsOptions = {
   origin: "https://gifthive.netlify.app",
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // Enable credentials (cookies, authorization headers, etc.)
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
 };
+
 
 // ------------ MIDDLEWARE ------------ //
 // Uses the imported routes in the app
