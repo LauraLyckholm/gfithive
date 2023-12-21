@@ -13,11 +13,16 @@ import { userRouter } from "./routes/userRoutes";
 // Defines the port the app will run on
 const port = process.env.PORT;
 const app = express();
+const corsOptions = {
+  origin: "https://gifthive.netlify.app",
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Enable credentials (cookies, authorization headers, etc.)
+};
 
 // ------------ MIDDLEWARE ------------ //
 // Uses the imported routes in the app
 // Middlewares to enable cors and json body parsing
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(serviceDown); // Middleware to check if the database is running
 
