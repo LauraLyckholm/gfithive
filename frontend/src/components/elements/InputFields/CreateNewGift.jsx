@@ -1,9 +1,13 @@
 
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
+import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const CreateNewGift = () => {
     const { giftName, setGiftName, addGift } = useGiftStore();
+    const { id } = useParams();
+    const hiveId = id;
 
     // const userId = localStorage.getItem("userId");
 
@@ -12,10 +16,10 @@ export const CreateNewGift = () => {
 
         try {
             const newGift = {
-                name: giftName
+                gift: giftName,
             };
 
-            const createdGift = await addGift(newGift);
+            const createdGift = await addGift(newGift, hiveId);
             console.log(createdGift);
 
             // if (createdHive) {
@@ -30,6 +34,12 @@ export const CreateNewGift = () => {
             // navigate("/hive/${id}")
             setGiftName("");
             // setGiftname("");
+            Swal.fire({
+                title: "Weee!",
+                text: "Gift successfully added! 🎁",
+                icon: "success",
+                confirmButtonText: "Let's add another!"
+            })
         } catch (error) {
             console.error("There was an error =>", error);
         }
@@ -39,16 +49,16 @@ export const CreateNewGift = () => {
         <div>
             <form className="form-wrapper">
                 <div className="form-group">
-                    <label htmlFor="hiveName">Hivename</label>
+                    <label htmlFor="giftName">Gift</label>
                     <input
                         type="text"
-                        id="hiveName"
-                        placeholder="e.g. Mom"
+                        id="giftName"
+                        placeholder="e.g. New phone"
                         value={giftName}
                         onChange={(e) => setGiftName(e.target.value)}
                         required />
                 </div>
-                <div className="form-group disabled">
+                <div className="form-group">
                     <label htmlFor="tags">Add tags (separated by comma)</label>
                     <input
                         type="text"

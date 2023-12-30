@@ -144,6 +144,24 @@ ul {
 
 }
 
+.swal2-styled:not([hover]) {
+  padding: 7px 19px;
+  border-radius: var(--border-radius);
+  background: var(--primary);
+  font-size: 18px;
+  border: 2px solid var(--primary);
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: 400;
+}
+
+.swal2-styled:hover {
+  background: var(--primary);
+  font-weight: 400;
+  color: var(--text);
+}
+
+
 /* ------- */
 
 

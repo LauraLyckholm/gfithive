@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_BACKEND_API;
 const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 
 // Creates a store for the gift hive handling
-export const useGiftStore = create((set) => ({
+export const useGiftStore = create((set, get) => ({
     // gifts: [],
     hives: [],
     hiveName: "",
@@ -90,8 +90,15 @@ export const useGiftStore = create((set) => ({
     },
 
     // Function for adding a gift
-    addGift: async (newGift) => {
+    addGift: async (newGift, hiveId) => {
         try {
+            // Ensure that hiveId is included in the newGift object
+            const giftData = {
+                ...newGift,
+                hiveId: hiveId
+            };
+
+            console.log("giftData", newGift);
             // Make a POST request to create a new gift
             const response = await fetch(withEndpoint("gifts"), {
                 method: "POST",
@@ -99,7 +106,7 @@ export const useGiftStore = create((set) => ({
                     "Content-Type": "application/json",
                     "Auth": localStorage.getItem("accessToken"),
                 },
-                body: JSON.stringify(newGift),
+                body: JSON.stringify(giftData),
             });
 
             const data = await response.json();
@@ -108,14 +115,16 @@ export const useGiftStore = create((set) => ({
                 set((state) => ({
                     gifts: [...state.gifts, data]
                 }));
-            } else {
-                console.error("Error adding gift");
+            } else if (!response.ok) {
+                console.error("Error adding gift:", data);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
         } catch (error) {
             console.error("There was an error =>", error);
         }
     },
+
 
     // Function for adding a hive
     addHive: async (newHive) => {
@@ -136,6 +145,9 @@ export const useGiftStore = create((set) => ({
                 set((state) => ({
                     hives: [...state.hives, data],
                 }));
+
+                await get().getHives();
+
             } else {
                 console.error("Error adding hive");
             }

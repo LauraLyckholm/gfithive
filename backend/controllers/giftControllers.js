@@ -21,7 +21,7 @@ export const getHiveGiftsController = asyncHandler(async (req, res) => {
 export const getHivesController = asyncHandler(async (req, res) => {
     const userId = req.user._id;
     // Find all hives and populate their associated gifts in ascending order
-    const hives = await Hive.find({ userId }).sort({ name: "asc" }).populate("gifts").exec();
+    const hives = await Hive.find({ userId }).sort({ createdAt: "desc" }).populate("gifts").exec();
     res.json(hives);
 });
 
@@ -180,7 +180,7 @@ export const deleteHiveController = asyncHandler(async (req, res) => {
         // Send a response indicating successful deletion
         res.json({
             message: "Hive deleted successfully",
-            deletedHive: deletedHive
+            deletedHive: deletedHive,
         });
     } catch (error) {
         console.error("Error deleting hive:", error);

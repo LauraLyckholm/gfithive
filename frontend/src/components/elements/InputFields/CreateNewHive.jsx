@@ -1,11 +1,11 @@
 // import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
 
-
 export const CreateNewHive = () => {
     const { hiveName, setHiveName, addHive } = useGiftStore();
+    const navigate = useNavigate();
 
     // const userId = localStorage.getItem("userId");
 
@@ -32,10 +32,13 @@ export const CreateNewHive = () => {
             // navigate("/hive/${id}")
             setHiveName("");
             // setGiftname("");
+            // Refreshes the page after adding a new hive
+            navigate("/hives");
         } catch (error) {
             console.error("There was an error =>", error);
         }
     }
+
 
     return (
         <div>
@@ -72,7 +75,9 @@ export const CreateNewHive = () => {
                 </div>
             </form>
 
-            <Link to="/dashboard"><Button handleOnClick={handleAddHive} className={"primary"} btnText={"Start a new hive"} /></Link>
+            <Link to="/dashboard">
+                <Button handleOnClick={handleAddHive} className={"primary"} btnText={"Start a new hive"} />
+            </Link>
         </div>
     )
 }

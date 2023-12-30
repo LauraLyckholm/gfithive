@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import Swal from "sweetalert2";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -47,6 +48,7 @@ export const useUserStore = create((set, get) => ({
             console.error("There was an error =>", error);
         }
     },
+
 
     // Creates a function for registering a user
     registerUser: async (username, password) => {
@@ -101,11 +103,23 @@ export const useUserStore = create((set, get) => ({
             }
 
             // Alerts to the user that the username has been registered
-            alert(successfullFetch ? `The user ${data.response.username} has been created` : `The username ${data.response.username} couldn't be registered`);
+            if (successfullFetch) {
+                Swal.fire({
+                    title: "Welcome to Gifthive!",
+                    text: `The user ${data.response.username} has been created - time to log in 😍!`,
+                    icon: "success",
+                    confirmButtonText: "Log in!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect or navigate to the login page when the "Log in" button is clicked
+                        window.location.href = "/login"; // Change the URL as needed
+                    }
+                });
+            }
 
-            set({
-                password: "" // Sets the password to empty, indicating to the user that they can now try logging in
-            })
+            // set({
+            //     password: "" // Sets the password to empty, indicating to the user that they can now try logging in
+            // })
 
         } catch (error) {
             // If the error message is 400, the username already exists, so an alert is shown and the fields are emptied
@@ -118,7 +132,6 @@ export const useUserStore = create((set, get) => ({
             })
 
             console.error("There was an error =>", error);
-
         }
     },
 

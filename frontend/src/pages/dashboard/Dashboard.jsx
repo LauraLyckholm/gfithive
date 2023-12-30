@@ -27,7 +27,7 @@ export const Dashboard = () => {
         getDashboard();
         setLoggedInUser(localStorage.getItem("username"));
         // setHives(localStorage.getItem("hives"));
-    }, [])
+    }, [getDashboard, getHives])
 
     // fetch("https://gifthive.onrender.com/gift-routes/", ")
 
