@@ -4,6 +4,7 @@ import { Button } from "../../components/elements/Button/Button";
 import trashcanIcon from "../../assets/trash.svg";
 import update from "../../assets/update.svg"
 import "./hives.css";
+import Swal from "sweetalert2";
 
 export const Hives = () => {
     const { getHives, deleteHive, updateHiveName } = useGiftStore();
@@ -33,12 +34,31 @@ export const Hives = () => {
 
     // Function to handle the delete using the deleteHive function from the useGiftStore hook
     const handleDelete = async (hiveId) => {
-        try {
-            await deleteHive(hiveId);
-            getHives();
-        } catch (error) {
-            console.error("There was an error =>", error);
-        }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, keep it",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    deleteHive(hiveId);
+                    getHives();
+                } catch (error) {
+                    console.error("There was an error =>", error);
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    "Cancelled",
+                    "Your hive is safe 🐝",
+                    "error"
+                )
+            }
+        });
+
+
     };
 
     return (

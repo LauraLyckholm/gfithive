@@ -144,7 +144,7 @@ ul {
 
 }
 
-.swal2-styled:not([hover]) {
+.swal2-confirm:not([hover]) {
   padding: 7px 19px;
   border-radius: var(--border-radius);
   background: var(--primary);
@@ -155,8 +155,25 @@ ul {
   font-weight: 400;
 }
 
-.swal2-styled:hover {
+.swal2-confirm:hover {
   background: var(--primary);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.swal2-cancel:not([hover]) {
+  padding: 7px 19px;
+  border-radius: var(--border-radius);
+  background-color: transparent;
+  font-size: 18px;
+  border: 2px solid var(--text);
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: 400;
+}
+
+.swal2-cancel:hover {
+  background-color: transparent;
   font-weight: 400;
   color: var(--text);
 }

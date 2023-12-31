@@ -74,7 +74,7 @@ export const UniqueHive = () => {
             )}
             <div className="btns">
                 <Link to={`/hives/${id}/add-gift`}><Button className="primary" btnText="Add gift" /></Link>
-                <Link to="/dashboard"><Button className="secondary" btnText="Back to dashboard" /></Link>
+                <Link to="/hives"><Button className="secondary" btnText="Back to hives" /></Link>
             </div>
         </section>
     );

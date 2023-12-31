@@ -74,10 +74,14 @@ export const CreateNewHive = () => {
                         required />
                 </div>
             </form>
-
-            <Link to="/dashboard">
-                <Button handleOnClick={handleAddHive} className={"primary"} btnText={"Start a new hive"} />
-            </Link>
+            <div className="btns">
+                <Link to="/dashboard">
+                    <Button handleOnClick={handleAddHive} className={"primary"} btnText={"Start a new hive"} />
+                </Link>
+                <Link to={`/hives`}>
+                    <Button className={"secondary"} btnText={"Back to hives"} />
+                </Link>
+            </div>
         </div>
     )
 }

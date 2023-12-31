@@ -1,7 +1,7 @@
 
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export const CreateNewGift = () => {
@@ -58,7 +58,7 @@ export const CreateNewGift = () => {
                         onChange={(e) => setGiftName(e.target.value)}
                         required />
                 </div>
-                <div className="form-group">
+                <div className="form-group disabled">
                     <label htmlFor="tags">Add tags (separated by comma)</label>
                     <input
                         type="text"
@@ -70,7 +70,12 @@ export const CreateNewGift = () => {
                 </div>
             </form>
 
-            <Button handleOnClick={handleAddGift} className={"primary"} btnText={"Add gift"} />
+            <div className="btns">
+                <Button handleOnClick={handleAddGift} className={"primary"} btnText={"Add gift"} />
+                <Link to={`/hives/${hiveId}`}>
+                    <Button className={"secondary"} btnText={"Back to hive"} />
+                </Link>
+            </div>
         </div>
     )
 }
