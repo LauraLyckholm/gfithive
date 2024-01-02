@@ -44,13 +44,13 @@ export const UniqueHive = () => {
         handleHiveFetch();
     }, [id, hive]);
 
-    const handleUpdateGift = async (giftId) => {
-        // const newHiveName = prompt("Enter new hive name");
+    const handleUpdateGift = async (giftId, currentGiftName) => {
         const { value: updatedGift } = await Swal.fire({
             title: "Update gift",
             input: "text",
             inputLabel: "What would you like to change your gifts name to be(e)? 🐝",
-            inputPlaceholder: "e.g. Mom",
+            inputValue: currentGiftName,
+            // inputPlaceholder: "e.g. Mom",
             showCancelButton: true,
             inputValidator: (value) => {
                 if (!value) {
@@ -109,7 +109,7 @@ export const UniqueHive = () => {
                         return (
                             <ul className="list-item-pair" key={gift._id}>
                                 <li>{gift.gift}</li>
-                                <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id)} />
+                                <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id, gift.gift)} />
                                 <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />
                             </ul>
                         );

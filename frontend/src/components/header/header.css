@@ -18,6 +18,7 @@
 
 .bm-overlay {
   background: transparent!important; // Using important to override react-burger-menu's default background color on the overlay
+  position: absolute;
   left: 0;
 }
 
@@ -35,28 +36,58 @@
   /* position: fixed; */
 }
 
+.bm-icon {
+  margin-top: 8px;
+}
+
 .custom-icon {
 /* z-index: 2; Puts the icon is below the menu */
+margin: 0 15px;
 }
 
 .bm-burger-button {
   position: relative;
   width: 27px;
-} 
+}
+
+.bm-cross-button {
+  position: absolute; 
+  width: 24px; 
+  height: 24px; 
+  left: 10px; 
+}
+
+/* #react-burger-cross-btn {
+  margin: 15px !important;
+} */
 
 .mobile-nav {
   background-color: #ffffff;
   /* height: 100svh; */
 }
 
-.mobile-nav ul{
-  margin-top: 1rem;
+.main-list {
+  margin-top: 10rem;
+}
+
+.mobile-nav ul  {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   list-style: none;
 }
 
+.minor-list {
+  margin-top: 1rem;
+  margin-left: 2rem;
+}
+
 .mobile-nav ul li{
   margin-top: 1rem;
+}
+
+.honey-image {
+position: absolute;
+top: -7px;
+right: 26px;
 }

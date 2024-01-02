@@ -4,15 +4,18 @@ import { elastic as Menu } from "react-burger-menu"; // Import the Menu componen
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "../elements/Button/Button";
 import { useUserStore } from "../../stores/useUserStore";
+import { useGiftStore } from "../../stores/useGiftStore";
 // import { DesktopNavLinks } from "./Navigation/DesktopNavLinks";
 import "./header.css";
 import hamburgerIcon from "../../assets/hamburger.svg";
 import crossIcon from "../../assets/cross.svg";
 import beeImage from "../../assets/bee.svg";
+import honeyImage from "../../assets/honey.svg";
 
 // Component for the header
 export const Header = () => {
     const { logoutUser, isLoggedIn } = useUserStore();
+    const { hives } = useGiftStore();
     // State to control whether the menu is open or closed
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -47,16 +50,27 @@ export const Header = () => {
                 isOpen={menuOpen}
                 onStateChange={(state) => setMenuOpen(state.isOpen)}
                 closeMenuOnBlur={true}
-                customBurgerIcon={<img className="custom-icon" src={hamburgerIcon} alt="Hamburger menu icon" />}
+                customBurgerIcon={<img src={hamburgerIcon} alt="Hamburger menu icon" />}
                 customCrossIcon={<img className="custom-icon" src={crossIcon} alt="Close menu icon" />}
                 className={"mobile-nav"}
             >
                 <main id="page-wrap">
-                    <ul className="mobile-links">
+                    <img className="honey-image" src={honeyImage} alt="Image of honey dripping down the menu" />
+                    <ul className="mobile-links main-list">
                         {isLoggedIn ? (
                             <>
                                 <li><Link to="/dashboard">Dashboard</Link></li>
-                                <li><Link to="/create-hive">Create a new hive</Link></li>
+                                <li><Link to="/hives">All hives</Link>
+                                    <ul className="minor-list">
+                                        {hives.map((hive) => {
+                                            return (
+                                                <li key={hive._id}>
+                                                    <Link to={`/hives/${hive._id}`}>{hive.name}</Link>
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </li>
                                 <li><Link to="/faq">FAQ</Link></li>
                                 <li><Button className="primary" btnText="Log out" handleOnClick={handleLogout} /></li>
                             </>
