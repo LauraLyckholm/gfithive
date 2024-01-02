@@ -19,18 +19,34 @@ export const Hives = () => {
     };
 
     const handleUpdateHiveName = async (hiveId) => {
-        const newHiveName = prompt("Enter new hive name");
+        // const newHiveName = prompt("Enter new hive name");
+        const { value: newHiveName } = await Swal.fire({
+            title: "Update hive name",
+            input: "text",
+            inputLabel: "What would you like to change your hives name to be(e)? 🐝",
+            inputPlaceholder: "e.g. Mom",
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return "You need to write something!";
+                }
+            },
+        });
 
         if (newHiveName) {
             try {
                 await updateHiveName({ id: hiveId, name: newHiveName });
                 getHives();
-
             } catch (error) {
                 console.error("There was an error =>", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
             }
         }
-    }
+    };
 
     // Function to handle the delete using the deleteHive function from the useGiftStore hook
     const handleDelete = async (hiveId) => {
@@ -57,8 +73,6 @@ export const Hives = () => {
                 )
             }
         });
-
-
     };
 
     return (
@@ -68,10 +82,11 @@ export const Hives = () => {
                 {savedHives.map((hive) => {
                     return (
                         <li className="list-item-pair" key={hive._id}>
-                            <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateHiveName(hive._id)} />
+
                             <Link to={`/hives/${hive._id}`}><p className="bold">{hive.name}</p></Link>
                             <p className="italic-text">{showGiftAmount(hive)} gifts</p>
                             <p className="italic-text disabled">0 due</p>
+                            <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateHiveName(hive._id)} />
                             <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(hive._id)} />
                         </li>
                     );

@@ -38,7 +38,7 @@ export const CreateNewGift = () => {
                 title: "Weee!",
                 text: "Gift successfully added! 🎁",
                 icon: "success",
-                confirmButtonText: "Let's add another!"
+                confirmButtonText: "Let's add another!",
             })
         } catch (error) {
             console.error("There was an error =>", error);

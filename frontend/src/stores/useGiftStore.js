@@ -8,7 +8,7 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 
 // Creates a store for the gift hive handling
 export const useGiftStore = create((set, get) => ({
-    // gifts: [],
+    gifts: [],
     hives: [],
     hiveName: "",
     giftName: "",
@@ -157,6 +157,36 @@ export const useGiftStore = create((set, get) => ({
         }
     },
 
+    updateGift: async (updatedGift) => {
+        try {
+            // Make a PUT request to update an existing gift
+            const response = await fetch(withEndpoint(`gifts/${updatedGift.id}`), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+                body: JSON.stringify(updatedGift),
+            });
+
+            const data = await response.json();
+            console.log("data", data);
+
+            if (response.ok) {
+                set((state) => ({
+                    gifts: state.gifts.map((gift) =>
+                        gift.id === updatedGift.id ? { ...gift, ...data } : gift
+                    ),
+                }));
+            } else {
+                console.error("Error updating gift");
+            }
+
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    },
+
     updateHiveName: async (updatedHive) => {
         try {
             // Make a PUT request to update an existing hive
@@ -185,6 +215,7 @@ export const useGiftStore = create((set, get) => ({
             console.error("There was an error =>", error);
         }
     },
+
 
     // Function for deleting a gift
     deleteGift: async (giftId) => {

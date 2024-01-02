@@ -72,6 +72,31 @@ export const createGiftItemController = asyncHandler(async (req, res) => {
     }
 });
 
+export const updateGiftItemController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { gift, tags, bought } = req.body;
+
+    try {
+        // Find the gift associated with the provided id and userId
+        const giftItem = await Gift.findOne({ _id: id });
+
+        if (!giftItem) {
+            return res.status(404).json({ error: "Gift not found or unauthorized." });
+        }
+
+        // Update the gift's data
+        giftItem.gift = gift;
+        giftItem.tags = tags;
+        giftItem.bought = bought;
+        await giftItem.save();
+
+        res.json(giftItem);
+    } catch (error) {
+        console.error("Error updating gift item:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 export const createHiveController = asyncHandler(async (req, res) => {
     const { name, gifts } = req.body;
     const userId = req.user._id;
