@@ -52,6 +52,7 @@ export const UniqueHive = () => {
             input: "text",
             inputLabel: "What would you like to change your gifts name to be(e)? 🐝",
             inputValue: currentGiftName,
+            confirmButtonText: "Save",
             showCancelButton: true,
             inputValidator: (value) => {
                 if (!value) {

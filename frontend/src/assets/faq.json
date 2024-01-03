@@ -41,6 +41,11 @@
     },
     {
         "id": 9,
+        "question": "Is it possible to change the name and info of a gift later?",
+        "answer": "Yes! Simply click on the 'Update-icon' after the giftname. Then, enter the new information and click 'Save'."
+    },
+    {
+        "id": 10,
         "question": "Can I remove my account?",
         "answer": "At the moment, you can only delete your account my contacting us at laura.lyckholm@gmail.com"
     }
