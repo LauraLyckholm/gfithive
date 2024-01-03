@@ -3,7 +3,7 @@ import { useUserStore } from "../../stores/useUserStore";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-import { HiveImage } from "../../components/elements/Images/HiveImage";
+// import { HiveImage } from "../../components/elements/Images/HiveImage";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import "./login.css";
@@ -49,7 +49,7 @@ export const Login = () => {
                 <Lottie animationData={loadingSpinner} className="spinner" />
             ) : (
                 <>
-                    <HiveImage />
+                    {/* <HiveImage /> */}
                     <form className="form-wrapper">
                         <div className="form-group">
                             <label htmlFor="username">Username</label>

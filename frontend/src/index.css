@@ -42,10 +42,9 @@ p {
   justify-content: center;
   margin: 0 auto;
   min-height: 100vh;
-  max-width: 372px;
+  max-width: 744px;
   padding: 0 1rem;
 }
-
 
   /* ------------ OVERALL TYPOGRAPHY ------------ */
   p {
@@ -66,6 +65,7 @@ p {
   h1 {
     font-size:  22px;
     font-weight: 500;
+    margin-bottom: 1rem;
   }
   
   h2 {
@@ -83,6 +83,14 @@ button {
     width: 250px;
 }
 
+.btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
 button, input {
     border-radius: var(--border-radius);
     font-size: 18px;
@@ -93,7 +101,6 @@ button, input {
 
 input {
     padding: 17px 20px;
-    max-width: 100%;
 }
 
 input::placeholder {
@@ -111,19 +118,32 @@ ul {
   flex-grow: 1; /* Allow the main-wrapper to grow and take available vertical space */
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Vertically center the content */
+  /* justify-content: center; Vertically center the content */
   align-items: center; /* Horizontally center the content */
   /* margin: 0 auto; */
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 5px;
 }
 
 .site-header {
   display: flex;
   justify-content: space-between;
   background-color: var(--primary-white);
-}
-
-#outer-container {
   margin-top: 1.5rem;
+  margin-bottom: 3.5rem;
 }
 
 .logo {
@@ -142,6 +162,21 @@ ul {
   opacity: 0.5;
   cursor: not-allowed;
 
+}
+
+.primary {
+  background: var(--primary);
+  color: var(--text);
+  border: 2px solid var(--primary);
+}
+
+.secondary {
+  background-color: transparent;
+  border: 2px solid var(--text);
+}
+
+.logOut {
+  margin-top: 2rem;
 }
 
 .swal2-confirm:not([hover]) {
@@ -183,14 +218,22 @@ ul {
 
 
 /* ------------ MEDIA QUERIES ------------ */
+
+/* ------------ Tablet and up ------------ */
+@media (min-width: 744px) {
+  .btns {
+  margin-top: 3.5rem;
+  flex-direction: row;
+  justify-content: center;
+  }
+}
+
 /* ------------ Tablet ------------ */
-/*@media (max-width: 1279px) and (min-width: 744px) {
+/* @media (max-width: 1279px) and (min-width: 744px) {
 
+} */
 
-}*/
+/* ------------ Desktop ------------ */
+/* @media (min-width: 1280px) {
 
-/* ------------ Desktop ------------ *//*
-@media (min-width: 1280px) {
-
-
-}*/
+} */

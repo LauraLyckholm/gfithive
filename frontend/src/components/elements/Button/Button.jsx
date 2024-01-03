@@ -1,5 +1,3 @@
-import "./button.css";
-
 export const Button = ({ className, handleOnClick, btnText }) => {
 
     return (

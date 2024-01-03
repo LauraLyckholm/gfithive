@@ -104,13 +104,15 @@ export const UniqueHive = () => {
         <section>
             {hive && hive.gifts ? (
                 <div>
-                    <h1>{hive.name}</h1>
+                    <h1>Gift hive for {hive.name}</h1>
                     {hive.gifts.map((gift) => {
                         return (
                             <ul className="list-item-pair" key={gift._id}>
                                 <li>{gift.gift}</li>
-                                <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id, gift.gift)} />
-                                <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />
+                                <div className="icon-pair">
+                                    <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id, gift.gift)} />
+                                    <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />
+                                </div>
                             </ul>
                         );
                     })}

@@ -81,7 +81,7 @@ export const Hives = () => {
             <ul>
                 {savedHives.map((hive) => {
                     return (
-                        <li className="list-item-pair" key={hive._id}>
+                        <li className="grid-list-items" key={hive._id}>
                             <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateHiveName(hive._id)} />
                             <Link to={`/hives/${hive._id}`}><p className="bold">{hive.name}</p></Link>
                             <p className="italic-text">{showGiftAmount(hive)} gifts</p>

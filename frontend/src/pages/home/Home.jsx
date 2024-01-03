@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-import { HiveImage } from "../../components/elements/Images/HiveImage";
+// import { HiveImage } from "../../components/elements/Images/HiveImage";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 import { useUserStore } from "../../stores/useUserStore";
 import Logo from "../../assets/gifthive-logo.png";
@@ -18,7 +18,7 @@ export const Home = () => {
         <>
             {!isLoggedIn ?
                 <>
-                    <HiveImage />
+                    {/* <HiveImage /> */}
                     <section className="main-content">
                         <div className="content">
                             <h1>Welcome to</h1>

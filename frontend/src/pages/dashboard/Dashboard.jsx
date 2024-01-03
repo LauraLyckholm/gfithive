@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-import { useGiftStore } from "../../stores/useGiftStore";
+// import { useGiftStore } from "../../stores/useGiftStore";
 import { useUserStore } from "../../stores/useUserStore";
 import { WelcomeSquare } from "../../components/elements/DashboardSquares/WelcomeSquare";
 import { CreateNewHive } from "../../components/elements/InputFields/CreateNewHive";
@@ -14,7 +14,7 @@ import deadlineIcon from "../../assets/deadlineIcon.svg";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 
 export const Dashboard = () => {
-    const { getHives } = useGiftStore(); // Destructures the function getHives from the useGiftStore hook
+    // const { getHives } = useGiftStore(); // Destructures the function getHives from the useGiftStore hook
     const { isLoggedIn, getDashboard, dashboard } = useUserStore(); // Destructures the function logoutUser from the useUserStore hook
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
     // const hivesLength = hives.length;
@@ -23,17 +23,17 @@ export const Dashboard = () => {
 
     // Fetches the hives when the component mounts
     useEffect(() => {
-        getHives();
+        // getHives();
         getDashboard();
         setLoggedInUser(localStorage.getItem("username"));
         // setHives(localStorage.getItem("hives"));
-    }, [getDashboard, getHives])
+    }, [getDashboard])
 
     // fetch("https://gifthive.onrender.com/gift-routes/", ")
 
     return (
         <>
-            <WelcomeSquare loggedInUser={loggedInUser} hivesLength={hivesAmount} />
+            <WelcomeSquare message={dashboard.message} loggedInUser={loggedInUser} hivesLength={hivesAmount} />
 
             {/* <ul>
                 {gifts.map((gift) => {

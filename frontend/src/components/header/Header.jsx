@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { MobileMenu } from "./MobileMenu";
 import { elastic as Menu } from "react-burger-menu"; // Import the Menu component
 import { useNavigate, Link } from "react-router-dom";
@@ -15,11 +15,16 @@ import honeyImage from "../../assets/honey.svg";
 // Component for the header
 export const Header = () => {
     const { logoutUser, isLoggedIn } = useUserStore();
-    const { hives } = useGiftStore();
+    const { hives, getHives } = useGiftStore();
     // State to control whether the menu is open or closed
     const [menuOpen, setMenuOpen] = useState(false);
-
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            getHives();
+        }
+    }, [getHives, isLoggedIn]);
 
     const handleLogout = async () => {
         try {
@@ -32,8 +37,12 @@ export const Header = () => {
         }
     }
 
+    const closeMenu = () => {
+        setMenuOpen(false);
+    }
+
     return (
-        <header className="site-header" id="outer-container">
+        <header className="site-header">
             <div className="logo">
                 {isLoggedIn ?
                     <Link to="/dashboard">
@@ -53,36 +62,40 @@ export const Header = () => {
                 customBurgerIcon={<img src={hamburgerIcon} alt="Hamburger menu icon" />}
                 customCrossIcon={<img className="custom-icon" src={crossIcon} alt="Close menu icon" />}
                 className={"mobile-nav"}
+                width={"300px"}
             >
                 <main id="page-wrap">
                     <img className="honey-image" src={honeyImage} alt="Image of honey dripping down the menu" />
-                    <ul className="mobile-links main-list">
-                        {isLoggedIn ? (
-                            <>
-                                <li><Link to="/dashboard">Dashboard</Link></li>
-                                <li><Link to="/hives">All hives</Link>
+
+                    {isLoggedIn ? (
+                        <>
+                            <ul className="main-list">
+                                <li><Link to="/dashboard" className="main-list-link" onClick={closeMenu}>Dashboard</Link></li>
+                                <li><Link to="/hives" className="main-list-link">All hives</Link>
                                     <ul className="minor-list">
                                         {hives.map((hive) => {
                                             return (
                                                 <li key={hive._id}>
-                                                    <Link to={`/hives/${hive._id}`}>{hive.name}</Link>
+                                                    <Link to={`/hives/${hive._id}`} onClick={closeMenu}>{hive.name}</Link>
                                                 </li>
                                             )
                                         })}
                                     </ul>
                                 </li>
-                                <li><Link to="/faq">FAQ</Link></li>
-                                <li><Button className="primary" btnText="Log out" handleOnClick={handleLogout} /></li>
-                            </>
-                        ) : (
-                            <>
-                                <li><Link to="/login">Login</Link></li>
-                                <li><Link to="/register">Register</Link></li>
-                            </>
-                        )}
-                    </ul>
+                                <li><Link to="/faq" className="main-list-link" onClick={closeMenu}>FAQ</Link></li>
+                            </ul>
+
+                            <Button className="primary" btnText="Log out" handleOnClick={handleLogout} />
+                        </>
+                    ) : (
+                        <ul className="main-list">
+                            <li><Link to="/login">Login</Link></li>
+                            <li><Link to="/register">Register</Link></li>
+                        </ul>
+                    )}
+
                 </main>
             </Menu>
-        </header>
+        </header >
     )
 }

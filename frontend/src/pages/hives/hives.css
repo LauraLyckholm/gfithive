@@ -1,15 +1,14 @@
 .dashboard {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     text-align: center;
     gap: 1rem;
 }
 
-.form-wrapper {
+/* .form-wrapper {
     text-align: left;
-}
+} */
 
 .disclaimer {
     font-size: 14px;
@@ -22,12 +21,18 @@
     margin: 0.5rem 0;
 }
 
-.btns {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.grid-list-items {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr 1fr 1fr 1.5rem;
     gap: 1rem;
-    margin-top: 1rem;
+    margin: 0.5rem 0;
+}
+
+.icon-pair {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
 }
 
 .italic-text {
@@ -36,5 +41,6 @@
 
 
 .icon {
-    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
 }
