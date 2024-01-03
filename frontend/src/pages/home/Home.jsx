@@ -6,18 +6,17 @@ import { useUserStore } from "../../stores/useUserStore";
 import Logo from "../../assets/gifthive-logo.png";
 import "./home.css";
 import { Dashboard } from "../dashboard/Dashboard";
-import { useEffect } from "react";
 
 // Component for the home page
 export const Home = () => {
     const { isLoggedIn } = useUserStore();
 
-    useEffect(() => { }, [isLoggedIn]);
-
     return (
         <>
-            {!isLoggedIn ?
-                <>
+            {/* If the user is logged in it shows the dashboard, otherwise prompts the user to log in */}
+            {isLoggedIn ?
+                <Dashboard />
+                : <>
                     {/* <HiveImage /> */}
                     <section className="main-content">
                         <div className="content">
@@ -29,7 +28,7 @@ export const Home = () => {
                             <LinkToFAQ />
                         </div>
                     </section>
-                </> : <Dashboard />
+                </>
             }
         </>
     )

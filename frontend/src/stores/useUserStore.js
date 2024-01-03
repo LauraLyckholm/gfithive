@@ -29,6 +29,7 @@ export const useUserStore = create((set, get) => ({
     setUserId: (userId) => set({ userId: userId }),
     setDashboard: (dashboard) => set({ dashboard: dashboard }),
 
+    // Creates a function for getting the dashboard from the backend
     getDashboard: async () => {
         try {
             const response = await fetch(withEndpoint("dashboard"), {
@@ -39,7 +40,6 @@ export const useUserStore = create((set, get) => ({
 
             if (response.ok) {
                 const data = await response.json();
-                console.log("data", data);
                 set({
                     dashboard: data
                 });
@@ -52,14 +52,15 @@ export const useUserStore = create((set, get) => ({
 
     // Creates a function for registering a user
     registerUser: async (username, password) => {
-        // Checks if the username or password is empty, and if so, alerts the user and returns
+        // Checks if the username or password is empty, and if so, shows an error message
         if (!username || !password) {
             set({ errorMessage: "Please enter both username and password" });
             return;
         }
 
+        // If the above check is passed, the registration process continues
         try {
-            set({ loading: true });
+            set({ loading: true }); // Sets loading to true to show a loading indicator
 
             const response = await fetch(withEndpoint("register"), {
                 method: "POST", // Uses the POST method
@@ -117,20 +118,14 @@ export const useUserStore = create((set, get) => ({
                 });
             }
 
-            // set({
-            //     password: "" // Sets the password to empty, indicating to the user that they can now try logging in
-            // })
-
         } catch (error) {
-            // If the error message is 400, the username already exists, so an alert is shown and the fields are emptied
-
+            // If something goes wrong in the registration process, an error is thrown and the fields are set to empty
             set({
                 username: "",
                 password: "",
                 loading: false,
                 errorMessage: "Username already exists, please choose another one"
             })
-
             console.error("There was an error =>", error);
         }
     },
@@ -164,13 +159,13 @@ export const useUserStore = create((set, get) => ({
                 set({ loading: false });
 
                 if (response.status === 401) {
-                    // Unauthorized error (Wrong username or password)
+                    // Unauthorized error
                     set({ errorMessage: "Wrong username or password, please try again" });
                 } else if (response.status === 404) {
-                    // User not found error (Username not found)
+                    // User not found error
                     set({ errorMessage: "Username not found, please try again" });
                 } else {
-                    // Other HTTP errors
+                    // Other errors
                     set({ errorMessage: "Something went wrong, please try again" });
                 }
 
@@ -229,6 +224,7 @@ export const useUserStore = create((set, get) => ({
         }
     },
 
+    // Creates a function for logging out a user
     logoutUser: () => {
         // Removes the accessToken from the store and sets isLoggedIn to false. Also empties the username and password fields
         set({

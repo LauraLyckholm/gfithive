@@ -2,6 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
+import Swal from "sweetalert2";
 
 export const CreateNewHive = () => {
     const { hiveName, setHiveName, addHive } = useGiftStore();
@@ -17,21 +18,16 @@ export const CreateNewHive = () => {
                 name: hiveName
             };
 
-            const createdHive = await addHive(newHive);
-            console.log(createdHive);
+            await addHive(newHive);
 
-            // if (createdHive) {
-            //     const newGift = {
-            //         gift: giftName,
-            //         hiveId: createdHive._id,
-            //     };
-            //     await addGift(newGift);
-            // }
-
-            // console.log(`Gifts in hive ${hiveName} with hiveid ${createdHive}: ${gift}`);
-            // navigate("/hive/${id}")
+            // Alerts to the user that the hive has been created
+            await Swal.fire({
+                title: "Weee!",
+                text: "Hive successfully created! 🐝",
+                icon: "success",
+                confirmButtonText: "Back to my hives!",
+            })
             setHiveName("");
-            // setGiftname("");
             // Refreshes the page after adding a new hive
             navigate("/hives");
         } catch (error) {

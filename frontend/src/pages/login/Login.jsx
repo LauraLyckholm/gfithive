@@ -74,10 +74,10 @@ export const Login = () => {
                         <div className="btns">
                             <p className="error-message disclaimer">{errorMessage}</p>
                             <Button className={"primary"} handleOnClick={handleLogin} btnText={"Login"} />
-                            <div className="light-pair-text">
-                                <p className="disclaimer">First time here?</p>
-                                <p className="disclaimer"><Link onClick={handleSetErrorMessage} className="disclaimer bold" to="/register">Register</Link> for an account!</p>
-                            </div>
+                        </div>
+                        <div className="light-pair-text">
+                            <p className="disclaimer">First time here?</p>
+                            <p className="disclaimer"><Link onClick={handleSetErrorMessage} className="disclaimer bold" to="/register">Register</Link> for an account!</p>
                         </div>
                     </form>
                 </>

@@ -1,5 +1,4 @@
 import { useUserStore } from "../../stores/useUserStore";
-// import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 // import { HiveImage } from "../../components/elements/Images/HiveImage";
@@ -7,8 +6,8 @@ import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import "../login/login.css";
 
+// Component for the registration page
 export const Register = () => {
-    // const navigate = useNavigate();
 
     // Destructures the function loginUser and some other states from the useUserStore hook
     const { registerUser, username, setUsername, password, setPassword, loading, errorMessage, setErrorMessage, successfullFetch } = useUserStore();
@@ -21,7 +20,6 @@ export const Register = () => {
             await registerUser(username, password);
             // If the fetch was successfull, the user will be redirected to the login page, otherwise an error message will be displayed
             if (successfullFetch) {
-                // navigate("/login");
                 setErrorMessage("");
                 return;
             } else {

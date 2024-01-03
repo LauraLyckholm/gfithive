@@ -1,16 +1,16 @@
-
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+// Component for creating a new gift
 export const CreateNewGift = () => {
     const { giftName, setGiftName, addGift } = useGiftStore();
     const { id } = useParams();
     const hiveId = id;
+    const navigate = useNavigate();
 
-    // const userId = localStorage.getItem("userId");
-
+    // function to handle adding a new gift
     const handleAddGift = async (event) => {
         event.preventDefault();
 
@@ -18,9 +18,7 @@ export const CreateNewGift = () => {
             const newGift = {
                 gift: giftName,
             };
-
-            const createdGift = await addGift(newGift, hiveId);
-            console.log(createdGift);
+            await addGift(newGift, hiveId);
 
             // if (createdHive) {
             //     const newGift = {
@@ -33,13 +31,21 @@ export const CreateNewGift = () => {
             // console.log(`Gifts in hive ${hiveName} with hiveid ${createdHive}: ${gift}`);
             // navigate("/hive/${id}")
             setGiftName("");
-            // setGiftname("");
+            // Alerts to the user that the gift has been created and gives them the choice to either add another gift or go back to their hive
             Swal.fire({
                 title: "Weee!",
                 text: "Gift successfully added! 🎁",
                 icon: "success",
+                showCancelButton: true,
                 confirmButtonText: "Let's add another!",
-            })
+                cancelButtonText: "Back to my hive",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setGiftName("");
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    navigate(`/hives/${hiveId}`);
+                }
+            });
         } catch (error) {
             console.error("There was an error =>", error);
         }

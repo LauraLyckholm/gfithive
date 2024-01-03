@@ -6,18 +6,21 @@ import { Button } from "../../components/elements/Button/Button";
 import update from "../../assets/update.svg"
 import Swal from "sweetalert2";
 import trashcanIcon from "../../assets/trash.svg";
-
+import Lottie from "lottie-react";
+import loadingSpinner from "../../assets/loading-spinner.json";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
 // Saves the endpoint in a variable for easy access
 const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 
+// Component for the unique hive page
 export const UniqueHive = () => {
     const { id } = useParams();
     const [hive, setHive] = useState(null);
     const { getHives, deleteGift, updateGift } = useGiftStore();
 
+    // Fetches the hives when the component mounts, and saves the data to a local state for the hives
     useEffect(() => {
         const handleHiveFetch = async () => {
             try {
@@ -29,10 +32,7 @@ export const UniqueHive = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-
                     setHive(data);
-
-                    // localStorage.setItem(`uniqueHiveData_${data._id}`, JSON.stringify(data));
                 } else {
                     console.error("Error fetching hive with that id");
                 }
@@ -44,13 +44,14 @@ export const UniqueHive = () => {
         handleHiveFetch();
     }, [id, hive]);
 
+    // Function to handle the update using the updateHiveName function from the useGiftStore
     const handleUpdateGift = async (giftId, currentGiftName) => {
+        // Utilizes the SweetAlert2 library to display a popup with an input field
         const { value: updatedGift } = await Swal.fire({
             title: "Update gift",
             input: "text",
             inputLabel: "What would you like to change your gifts name to be(e)? 🐝",
             inputValue: currentGiftName,
-            // inputPlaceholder: "e.g. Mom",
             showCancelButton: true,
             inputValidator: (value) => {
                 if (!value) {
@@ -59,6 +60,7 @@ export const UniqueHive = () => {
             },
         });
 
+        // If the user has entered a new name for the gift, the gift will be updated
         if (updatedGift) {
             try {
                 await updateGift({ id: giftId, gift: updatedGift, tags: [], bought: false });
@@ -74,6 +76,7 @@ export const UniqueHive = () => {
         }
     };
 
+    // Function to handle the delete using the deleteGift function from the useGiftStore hook
     const handleDelete = async (hiveId) => {
         Swal.fire({
             title: "Are you sure?",
@@ -102,23 +105,26 @@ export const UniqueHive = () => {
 
     return (
         <section>
-            {hive && hive.gifts ? (
+            {/* If there is a hive recognized the user is shown the hives. */}
+            {hive ? (
                 <div>
                     <h1>Gift hive for {hive.name}</h1>
-                    {hive.gifts.map((gift) => {
-                        return (
-                            <ul className="list-item-pair" key={gift._id}>
-                                <li>{gift.gift}</li>
-                                <div className="icon-pair">
-                                    <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id, gift.gift)} />
-                                    <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />
-                                </div>
-                            </ul>
-                        );
-                    })}
+                    {hive.gifts.length === 0 ? "Empty hive, get started by adding a gift below!" :
+                        hive.gifts.map((gift) => {
+                            return (
+                                <ul className="list-item-pair" key={gift._id}>
+                                    <li>{gift.gift}</li>
+                                    <div className="icon-pair">
+                                        <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id, gift.gift)} />
+                                        <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />
+                                    </div>
+                                </ul>
+                            );
+                        })
+                    }
                 </div>
             ) : (
-                <p>Loading...</p>
+                <Lottie animationData={loadingSpinner} className="spinner" />
             )}
             <div className="btns">
                 <Link to={`/hives/${id}/add-gift`}><Button className="primary" btnText="Add gift" /></Link>

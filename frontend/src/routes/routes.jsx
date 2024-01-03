@@ -2,14 +2,15 @@ import { Route } from "react-router-dom";
 import { Home } from "../pages/home/Home";
 import { Login } from "../pages/login/Login";
 import { Register } from "../pages/register/Register";
-import { UniqueHive } from "../pages/hives/UniqueHive";
-import { Faq } from "../pages/faq/Faq";
-import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { Dashboard } from "../pages/dashboard/Dashboard";
 import { Hives } from "../pages/hives/Hives";
+import { UniqueHive } from "../pages/hives/UniqueHive";
 import { CreateNewHive } from "../components/elements/InputFields/CreateNewHive";
 import { CreateNewGift } from "../components/elements/InputFields/CreateNewGift";
+import { Faq } from "../pages/faq/Faq";
+import { ErrorPage } from "../pages/errorPage/ErrorPage";
 
+// Creates the routes for the application
 const routes = (
     <>
         <Route path="/" element={<Home />} />
