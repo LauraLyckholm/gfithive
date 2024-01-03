@@ -13,40 +13,26 @@ import sharedIcon from "../../assets/sharedIcon.svg";
 import deadlineIcon from "../../assets/deadlineIcon.svg";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 
+// Component for the dashboard
 export const Dashboard = () => {
-    // const { getHives } = useGiftStore(); // Destructures the function getHives from the useGiftStore hook
     const { isLoggedIn, getDashboard, dashboard } = useUserStore(); // Destructures the function logoutUser from the useUserStore hook
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
-    // const hivesLength = hives.length;
-    const hivesAmount = dashboard.hivesCount;
-    const giftsAmount = dashboard.giftsCount;
+    const hivesAmount = dashboard.hivesCount; // Saves the amount of hives in a variable
+    const giftsAmount = dashboard.giftsCount; // Saves the amount of gifts in a variable
 
     // Fetches the hives when the component mounts
     useEffect(() => {
-        // getHives();
         getDashboard();
         setLoggedInUser(localStorage.getItem("username"));
-        // setHives(localStorage.getItem("hives"));
     }, [getDashboard])
-
-    // fetch("https://gifthive.onrender.com/gift-routes/", ")
 
     return (
         <>
+            {/* Displays first the welcome-square, and then the link to the hives and the dashboard info in the coming squares */}
             <WelcomeSquare message={dashboard.message} loggedInUser={loggedInUser} hivesLength={hivesAmount} />
-
-            {/* <ul>
-                {gifts.map((gift) => {
-                    return (
-                        <li key={gift._id}>
-                            <p>{gift.gift}</p>
-                        </li>
-                    )
-                })}
-            </ul> */}
-
             {isLoggedIn ? (
                 <div className="dashboard">
+                    {/* If there aren't any hives, the user is prompted to create one */}
                     {hivesAmount === 0 ? (
                         <CreateNewHive />
                     ) : (
@@ -71,6 +57,7 @@ export const Dashboard = () => {
                     )}
                 </div>
             ) : (
+                // If the user isn't logged in, the user is prompted to log in
                 <div className="dashboard">
                     <p>You need to log in to see the content</p>
                     <Link to="/login"><Button className="primary" btnText="Log in" /></Link>

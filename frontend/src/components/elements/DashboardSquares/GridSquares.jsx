@@ -1,15 +1,17 @@
 import "./dashboardSquares.css";
 
+// Component for the grid squares
 export const GridSquares = ({ icon, loggedInUser, amount, text }) => {
     return (
         <div className="dashboard-square">
             <img src={icon} alt="" />
-            {!loggedInUser ? "No user logged in" :
-                <>
-                    <p>
-                        {`${amount} ${text}`}
-                    </p>
-                </>}
+            {loggedInUser ? <>
+                <p>
+                    {`${amount} ${text}`}
+                </p>
+            </> :
+                null
+            }
         </div>
     )
 }

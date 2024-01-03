@@ -1,3 +1,4 @@
+// Component for the Button element
 export const Button = ({ className, handleOnClick, btnText }) => {
 
     return (

@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-// import { MobileMenu } from "./MobileMenu";
 import { elastic as Menu } from "react-burger-menu"; // Import the Menu component
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "../elements/Button/Button";
 import { useUserStore } from "../../stores/useUserStore";
 import { useGiftStore } from "../../stores/useGiftStore";
-// import { DesktopNavLinks } from "./Navigation/DesktopNavLinks";
 import "./header.css";
 import hamburgerIcon from "../../assets/hamburger.svg";
 import crossIcon from "../../assets/cross.svg";
@@ -20,12 +18,14 @@ export const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
 
+    // Fetches the hives if the user is logged in
     useEffect(() => {
         if (isLoggedIn) {
             getHives();
         }
     }, [getHives, isLoggedIn]);
 
+    // Function to handle the logout using the logoutUser function from the useUserStore hook
     const handleLogout = async () => {
         try {
             await logoutUser();
@@ -37,6 +37,7 @@ export const Header = () => {
         }
     }
 
+    // Function to close the menu when the user clicks on a link
     const closeMenu = () => {
         setMenuOpen(false);
     }
@@ -54,6 +55,7 @@ export const Header = () => {
                 }
 
             </div>
+            {/* Configures the React Burger Menu */}
             <Menu
                 right
                 isOpen={menuOpen}

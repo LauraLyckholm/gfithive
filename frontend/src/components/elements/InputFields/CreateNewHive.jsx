@@ -8,8 +8,7 @@ export const CreateNewHive = () => {
     const { hiveName, setHiveName, addHive } = useGiftStore();
     const navigate = useNavigate();
 
-    // const userId = localStorage.getItem("userId");
-
+    // function to handle adding a new hive
     const handleAddHive = async (event) => {
         event.preventDefault();
 
@@ -20,7 +19,7 @@ export const CreateNewHive = () => {
 
             await addHive(newHive);
 
-            // Alerts to the user that the hive has been created
+            // Alerts to the user that the hive has been created, awaits it so that the user isn't redicted before the alert is closed
             await Swal.fire({
                 title: "Weee!",
                 text: "Hive successfully created! 🐝",
@@ -34,7 +33,6 @@ export const CreateNewHive = () => {
             console.error("There was an error =>", error);
         }
     }
-
 
     return (
         <div>
