@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "question": "What is Gifthive?",
+        "answer": "Gifthive is the one and only place you need, to save all gift ideas for your loved ones. You can add, manage, and view all of your gift ideas in one place, so that you never forget what you where supposed to get dad for Father's day, or your sister on her next birthday!"
+    },
+    {
+        "id": 2,
+        "question": "How do I get started?",
+        "answer": "Getting started is easy! First, create an account, then log in to access all the features. You can add, manage, and view your data through the user-friendly dashboard."
+    },
+    {
+        "id": 3,
+        "question": "Do I need to create an account?",
+        "answer": "Yes. In order to use the app, you must create an account. This allows you to save your data and access it from anywhere."
+    },
+    {
+        "id": 4,
+        "question": "What is a hive?",
+        "answer": "A hive is the collection holding all of the gift ideas for one person. You could also say that each hive represents a person in your life. You can create as many hives as you want and add as many items as you want to each hive."
+    },
+    {
+        "id": 5,
+        "question": "How do I add a new hive?",
+        "answer": "If it's you first time logging in, you will be prompted to create a new hive as soon as you are logged in. If you already have a hive, you can create a new one by clicking the 'Add Hive' button on the dashboard, or when browsing through 'All hives'. Then, enter the hive name and click 'Start a new hive'."
+    },
+    {
+        "id": 6,
+        "question": "Can I change the name of the hive later?",
+        "answer": "Yes! You can easily change the name of the hive by clicking the 'Update-icon' next to the hivename. Then, enter the new name and click 'Save'."
+    },
+    {
+        "id": 7,
+        "question": "How do I delete a hive?",
+        "answer": "To delete a hive, click the 'Trashcan-icon' on the item's card. Then, click 'Delete' to confirm."
+    },
+    {
+        "id": 8,
+        "question": "How do I see the gifts that are inside a hive?",
+        "answer": "Click on the hives name and you are taken to a detailspage, showing you which gifts are inside the hive."
+    },
+    {
+        "id": 9,
+        "question": "Can I remove my account?",
+        "answer": "At the moment, you can only delete your account my contacting us at laura.lyckholm@gmail.com"
+    }
+]

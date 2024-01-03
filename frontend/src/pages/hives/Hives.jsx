@@ -31,6 +31,7 @@ export const Hives = () => {
             input: "text",
             inputLabel: "What would you like to change your hives name to be(e)? 🐝",
             inputPlaceholder: "e.g. Mom",
+            confirmButtonText: "Save",
             showCancelButton: true,
             inputValidator: (value) => {
                 if (!value) {
