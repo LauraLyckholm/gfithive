@@ -1,7 +1,7 @@
 import { useUserStore } from "../../stores/useUserStore";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-// import { HiveImage } from "../../components/elements/Images/HiveImage";
+// import { HiveImage } from "../../components/elements/ImageComponents/HiveImage";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import "../login/login.css";

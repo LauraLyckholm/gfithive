@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import update from "../../assets/update.svg";
-// import { customSwal } from "../../mixins/swalMixins";
 import { customSwal } from "../../mixins/swalMixins";
 import trashcanIcon from "../../assets/trash.svg";
 import Lottie from "lottie-react";
@@ -65,7 +64,8 @@ export const UniqueHive = () => {
         // If the user has entered a new name for the gift, the gift will be updated
         if (updatedGift) {
             try {
-                await updateGift({ id: giftId, gift: updatedGift, tags: [], bought: false });
+                await updateGift({ id: giftId, gift: updatedGift, tags: [] });
+                // await updateGift({ id: giftId, gift: updatedGift, tags: [], bought: false });
                 getHives();
             } catch (error) {
                 console.error("There was an error =>", error);
@@ -75,6 +75,16 @@ export const UniqueHive = () => {
                     text: "Something went wrong!",
                 });
             }
+        }
+    };
+
+    const handleSetAsBought = async (giftId, newBoughtStatus) => {
+        try {
+            await updateGift({ id: giftId, bought: newBoughtStatus });
+            console.log("Setting gift as bought, ID:", giftId);
+            // getHives();
+        } catch (error) {
+            console.error("There was an error =>", error);
         }
     };
 
@@ -115,7 +125,17 @@ export const UniqueHive = () => {
                         hive.gifts.map((gift) => {
                             return (
                                 <ul className="list-item-pair" key={gift._id}>
-                                    <li>{gift.gift}</li>
+                                    <div className="icon-pair">
+                                        <label className="container">
+                                            <input
+                                                type="checkbox"
+                                                defaultChecked={gift.bought}
+                                                onClick={() => handleSetAsBought(gift._id, !gift.bought)}
+                                            />
+                                            <div className="checkmark"></div>
+                                        </label>
+                                        <li>{gift.gift}</li>
+                                    </div>
                                     <div className="icon-pair">
                                         <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id, gift.gift)} />
                                         <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />

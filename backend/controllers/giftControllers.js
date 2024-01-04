@@ -77,18 +77,13 @@ export const updateGiftItemController = asyncHandler(async (req, res) => {
     const { gift, tags, bought } = req.body;
 
     try {
-        // Find the gift associated with the provided id and userId
-        const giftItem = await Gift.findOne({ _id: id });
+        // Find the gift associated with the provided id and update the gift's information
+        const giftItem = await Gift.findByIdAndUpdate({ _id: id }, { gift, tags, bought }, { new: true });
+        console.log(giftItem);
 
         if (!giftItem) {
             return res.status(404).json({ error: "Gift not found or unauthorized." });
         }
-
-        // Update the gift's data
-        giftItem.gift = gift;
-        giftItem.tags = tags;
-        giftItem.bought = bought;
-        await giftItem.save();
 
         res.json(giftItem);
     } catch (error) {
@@ -132,15 +127,11 @@ export const updateHiveName = asyncHandler(async (req, res) => {
 
     try {
         // Find the hive associated with the provided id and userId
-        const hive = await Hive.findOne({ _id: id, userId });
+        const hive = await Hive.findByIdAndUpdate({ _id: id, userId }, { name }, { new: true });
 
         if (!hive) {
             return res.status(404).json({ error: "Hive not found or unauthorized." });
         }
-
-        // Update the hive's name
-        hive.name = name;
-        await hive.save();
 
         res.json(hive);
     } catch (error) {
