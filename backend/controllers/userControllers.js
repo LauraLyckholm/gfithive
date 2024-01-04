@@ -143,11 +143,54 @@ export const getDashboardController = asyncHandler(async (req, res) => {
 });
 
 // Creates a controller function for the route that is used to get all users
-export const getUsersController = async (req, res) => {
+export const getUsersController = asyncHandler(async (req, res) => {
     try {
         const users = await User.find();
         res.status(200).json(users);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
-};
+});
+
+// Creates a function that makes it possible to update the users information
+export const updateUserController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { username, password } = req.body;
+
+    try {
+        // Find the user associated with the provided id and update the user's information
+        const user = await User.findByIdAndUpdate({ _id: id }, { username, password }, { new: true });
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found or unauthorized." });
+        }
+
+        res.json(user);
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ error: "Username already exists" });
+        }
+
+        console.error("Error updating user:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// Creates a controller function for deleting a user account
+export const deleteUserController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find the user associated with the provided id
+        const user = await User.findByIdAndDelete(id);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found or unauthorized." });
+        }
+
+        res.json(`User with username ${user.username} deleted successfully`);
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});

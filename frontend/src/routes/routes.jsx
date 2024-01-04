@@ -9,6 +9,7 @@ import { CreateNewHive } from "../components/elements/InputFields/CreateNewHive"
 import { CreateNewGift } from "../components/elements/InputFields/CreateNewGift";
 import { Faq } from "../pages/faq/Faq";
 import { ErrorPage } from "../pages/errorPage/ErrorPage";
+import { Account } from "../pages/account/Account";
 
 // Creates the routes for the application
 const routes = (
@@ -21,6 +22,7 @@ const routes = (
         <Route path="/hives/:id" element={<UniqueHive />} />
         <Route path="/add-hive" element={<CreateNewHive />} />
         <Route path="/hives/:id/add-gift" element={<CreateNewGift />} />
+        <Route path="/account" element={<Account />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="*" element={<ErrorPage />} />
     </>

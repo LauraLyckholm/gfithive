@@ -6,7 +6,9 @@ import {
     registerUserController,
     loginUserController,
     getDashboardController,
-    getUsersController
+    getUsersController,
+    updateUserController,
+    deleteUserController
 } from "../controllers/userControllers";
 import listEndpoints from "express-list-endpoints";
 
@@ -28,3 +30,5 @@ userRouter.post("/register", registerUserController);
 userRouter.post("/login", loginUserController);
 userRouter.get("/dashboard", authenticateUser, getDashboardController); // The authenticateUser middleware is used to check if the user is logged in
 userRouter.get("/users", getUsersController);
+userRouter.put("/users/:id", authenticateUser, updateUserController);
+userRouter.delete("/users/:id", authenticateUser, deleteUserController);

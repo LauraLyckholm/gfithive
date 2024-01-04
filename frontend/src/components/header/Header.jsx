@@ -71,20 +71,21 @@ export const Header = () => {
 
                     {isLoggedIn ? (
                         <>
-                            <ul className="main-list">
-                                <li><Link to="/dashboard" className="main-list-link" onClick={closeMenu}>Dashboard</Link></li>
+                            <ul className="main-list" onClick={closeMenu}>
+                                <li><Link to="/dashboard" className="main-list-link">Dashboard</Link></li>
                                 <li><Link to="/hives" className="main-list-link">All hives</Link>
                                     <ul className="minor-list">
                                         {hives.map((hive) => {
                                             return (
                                                 <li key={hive._id}>
-                                                    <Link to={`/hives/${hive._id}`} onClick={closeMenu}>{hive.name}</Link>
+                                                    <Link to={`/hives/${hive._id}`}>{hive.name}</Link>
                                                 </li>
                                             )
                                         })}
                                     </ul>
                                 </li>
-                                <li><Link to="/faq" className="main-list-link" onClick={closeMenu}>FAQ</Link></li>
+                                <li><Link to="/faq" className="main-list-link">FAQ</Link></li>
+                                <li><Link to="/account" className="main-list-link">Account</Link></li>
                             </ul>
 
                             <Button className="primary" btnText="Log out" handleOnClick={handleLogout} />

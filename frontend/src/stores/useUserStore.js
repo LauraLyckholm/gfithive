@@ -238,6 +238,94 @@ export const useUserStore = create((set, get) => ({
         localStorage.clear();
     },
 
+    // Creates a function that makes it possible to update a username and password
+    updateUser: async (username, password, userId) => {
+        try {
+            const response = await fetch(withEndpoint(`users/${userId}`), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const successfullFetch = data.success;
+
+                if (successfullFetch) {
+                    set({
+                        username: username,
+                        loading: false,
+                    })
+                }
+
+                // Alerts to the user that the username has been updated
+                if (successfullFetch) {
+                    customSwal.fire({
+                        title: "Username updated",
+                        text: `Your username has been updated to ${data.response.username}!`,
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect or navigate to the login page when the "OK" button is clicked
+                            window.location.href = "/dashboard"; // Change the URL as needed
+                        }
+                    });
+                }
+
+            } else {
+                console.error("Error updating username");
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+        } catch (error) {
+            customSwal.fire({
+                title: "Username update failed",
+                text: `${error}`,
+                icon: "error",
+                confirmButtonText: "OK",
+            });
+            console.error("There was an error =>", error);
+        }
+    },
+
+    // Creates a function for deleting a user
+    deleteUser: async (userId) => {
+        try {
+            // Makes a DELETE request to the backend to remove a user
+            await fetch(withEndpoint(`users/${userId}`), {
+                method: "DELETE",
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
+
+            // Removes the deleted user from the store
+            set((state) => ({
+                users: state.users.filter((user) => user._id !== userId),
+            }));
+
+            // Here I call the getUsers function to update the users in the store
+            await get().getUsers();
+
+            customSwal.fire({
+                title: "User deleted",
+                icon: "success",
+                confirmButtonText: "OK",
+            }); // Shows a confirmation message to the user
+            console.log("The following userId was deleted:", userId);
+
+        } catch (error) {
+            console.error("Error deleting user:", error);
+        }
+    },
+
     // Function to check if there's a stored token in localStorage, to allow for refresh of secret page
     initAuth: () => {
         const storedToken = localStorage.getItem("accessToken");
