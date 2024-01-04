@@ -5,7 +5,7 @@ import { customSwal } from "../../../mixins/swalMixins";
 
 // Component for creating a new gift
 export const CreateNewGift = () => {
-    const { giftName, setGiftName, addGift } = useGiftStore();
+    const { giftName, setGiftName, addGift, tags, setTags } = useGiftStore();
     const { id } = useParams();
     const hiveId = id;
     const navigate = useNavigate();
@@ -17,20 +17,11 @@ export const CreateNewGift = () => {
         try {
             const newGift = {
                 gift: giftName,
+                tags: [tags]
             };
             await addGift(newGift, hiveId);
-
-            // if (createdHive) {
-            //     const newGift = {
-            //         gift: giftName,
-            //         hiveId: createdHive._id,
-            //     };
-            //     await addGift(newGift);
-            // }
-
-            // console.log(`Gifts in hive ${hiveName} with hiveid ${createdHive}: ${gift}`);
-            // navigate("/hive/${id}")
             setGiftName("");
+
             // Alerts to the user that the gift has been created and gives them the choice to either add another gift or go back to their hive
             customSwal.fire({
                 title: "Weee!",
@@ -64,14 +55,14 @@ export const CreateNewGift = () => {
                         onChange={(e) => setGiftName(e.target.value)}
                         required />
                 </div>
-                <div className="form-group disabled">
+                <div className="form-group">
                     <label htmlFor="tags">Add tags (separated by comma)</label>
                     <input
                         type="text"
                         id="tags"
                         placeholder="e.g. christmas, 2023"
-                        // value={tags}
-                        // onChange={(e) => setTags(e.target.value)}
+                        value={tags}
+                        onChange={(e) => setTags(e.target.value)}
                         required />
                 </div>
             </form>

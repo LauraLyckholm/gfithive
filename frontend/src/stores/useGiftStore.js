@@ -14,12 +14,14 @@ export const useGiftStore = create((set, get) => ({
     hiveName: "",
     giftName: "",
     bought: false,
+    tags: [],
 
     setGifts: (gifts) => set({ gifts }),
     setHives: (hives) => set({ hives }),
     setHiveName: (hiveName) => set({ hiveName }),
     setGiftName: (giftName) => set({ giftName }),
     setBought: (bought) => set({ bought }),
+    setTags: (tags) => set({ tags }),
 
     // Function for getting all hives from the backend
     getHives: async () => {
@@ -132,7 +134,6 @@ export const useGiftStore = create((set, get) => ({
             });
 
             const data = await response.json();
-            console.log(data);
 
             // If the request is successful, the gift is updated in the store
             if (response.ok) {

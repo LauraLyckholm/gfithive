@@ -3,6 +3,8 @@ import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
 import update from "../../assets/update.svg";
 import { customSwal } from "../../mixins/swalMixins";
 import trashcanIcon from "../../assets/trash.svg";
@@ -64,7 +66,7 @@ export const UniqueHive = () => {
         // If the user has entered a new name for the gift, the gift will be updated
         if (updatedGift) {
             try {
-                await updateGift({ id: giftId, gift: updatedGift, tags: [] });
+                await updateGift({ id: giftId, gift: updatedGift });
                 // await updateGift({ id: giftId, gift: updatedGift, tags: [], bought: false });
                 getHives();
             } catch (error) {
@@ -81,12 +83,30 @@ export const UniqueHive = () => {
     const handleSetAsBought = async (giftId, newBoughtStatus) => {
         try {
             await updateGift({ id: giftId, bought: newBoughtStatus });
-            console.log("Setting gift as bought, ID:", giftId);
-            // getHives();
         } catch (error) {
             console.error("There was an error =>", error);
         }
     };
+
+    const handleUpdateTags = async (giftId, tagToDelete) => {
+        try {
+            // Finds the gift that has the tags that should be updated
+            const giftToUpdate = hive.gifts.find((gift) => gift._id === giftId);
+
+            if (!giftToUpdate) {
+                throw new Error("Gift not found");
+            }
+
+            // Filters out the tag that should be deleted
+            const updatedTags = giftToUpdate.tags.filter(tag => tag !== tagToDelete);
+
+            // Updates the gift with the new tags array
+            await updateGift({ id: giftId, tags: updatedTags });
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    };
+
 
     // Function to handle the delete using the deleteGift function from the useGiftStore hook
     const handleDelete = async (hiveId) => {
@@ -140,6 +160,26 @@ export const UniqueHive = () => {
                                         <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id, gift.gift)} />
                                         <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />
                                     </div>
+                                    <Stack
+                                        className="tags"
+                                        direction="row"
+                                        spacing={1}
+                                    >
+                                        {gift.tags.map((tag) => {
+                                            return (
+                                                <Chip
+                                                    key={tag}
+                                                    label={tag}
+                                                    onDelete={() => handleUpdateTags(gift._id, tag)}
+                                                    sx={{
+                                                        backgroundColor: "var(--primary)",
+                                                        color: "var(--text)",
+                                                        fontFamily: "var(--font)",
+                                                    }}
+                                                />
+                                            );
+                                        })}
+                                    </Stack>
                                 </ul>
                             );
                         })
