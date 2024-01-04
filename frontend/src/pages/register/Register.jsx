@@ -56,14 +56,12 @@ export const Register = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required />
                         </div>
-                        <div className="btns">
-                            {/* Error message displays here */}
-                            <p className="error-message disclaimer">{errorMessage}</p>
-                            <Button className={"primary"} handleOnClick={handleRegister} btnText={"Register"} />
-                            <div className="light-pair-text">
-                                <p className="disclaimer">Changed your mind?</p>
-                                <p className="disclaimer">Go back <Link className="disclaimer bold" to="/">home</Link>.</p>
-                            </div>
+                        {/* Error message displays here */}
+                        <p className="error-message disclaimer">{errorMessage}</p>
+                        <Button className={"primary"} handleOnClick={handleRegister} btnText={"Register"} />
+                        <div className="light-pair-text">
+                            <p className="disclaimer">Changed your mind?</p>
+                            <p className="disclaimer">Go back <Link className="disclaimer bold" to="/">home</Link>.</p>
                         </div>
                     </form >
                 </>

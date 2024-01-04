@@ -191,6 +191,7 @@ input:active {
 
 input {
   padding: 17px 20px;
+  /* width: 100%; */
 }
 
 input::placeholder {

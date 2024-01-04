@@ -50,6 +50,7 @@ export const useUserStore = create((set, get) => ({
     },
 
 
+
     // Creates a function for registering a user
     registerUser: async (username, password) => {
         // Checks if the username or password is empty, and if so, shows an error message
@@ -241,6 +242,11 @@ export const useUserStore = create((set, get) => ({
     // Creates a function that makes it possible to update a username and password
     updateUser: async (username, password, userId) => {
         try {
+            // const body = { username };
+            // if (password !== null) {
+            //     body.password = password;
+            // }
+
             const response = await fetch(withEndpoint(`users/${userId}`), {
                 method: "PUT",
                 headers: {
@@ -263,6 +269,8 @@ export const useUserStore = create((set, get) => ({
                         loading: false,
                     })
                 }
+
+                localStorage.setItem("username", username);
 
                 // Alerts to the user that the username has been updated
                 if (successfullFetch) {
@@ -306,20 +314,19 @@ export const useUserStore = create((set, get) => ({
                 },
             });
 
-            // Removes the deleted user from the store
-            set((state) => ({
-                users: state.users.filter((user) => user._id !== userId),
-            }));
+            // // Removes the deleted user from the store
+            // set((state) => ({
+            //     users: state.users.filter((user) => user._id !== userId),
+            // }));
 
-            // Here I call the getUsers function to update the users in the store
-            await get().getUsers();
+            // // Here I call the getUsers function to update the users in the store
+            // await get().getUsers();
 
             customSwal.fire({
                 title: "User deleted",
                 icon: "success",
                 confirmButtonText: "OK",
             }); // Shows a confirmation message to the user
-            console.log("The following userId was deleted:", userId);
 
         } catch (error) {
             console.error("Error deleting user:", error);

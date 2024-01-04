@@ -29,39 +29,42 @@ export const Dashboard = () => {
     return (
         <>
             {/* Displays first the welcome-square, and then the link to the hives and the dashboard info in the coming squares */}
-            <WelcomeSquare message={dashboard.message} loggedInUser={loggedInUser} hivesLength={hivesAmount} />
-            {isLoggedIn ? (
-                <div className="dashboard">
-                    {/* If there aren't any hives, the user is prompted to create one */}
-                    {hivesAmount === 0 ? (
-                        <CreateNewHive />
-                    ) : (
-                        // If there are hives, the user is shown the dashboard info
-                        <>
-                            <section className="grid-squares">
-                                <>
-                                    {/* <Link className="link-square" to="/hives"><GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} /></Link> */}
-                                    <GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} />
-                                </>
-                                <div className="grid-squares buttons">
-                                    <Link to="/hives"><Button className="primary" btnText="See all hives" /></Link>
-                                    <Link to="/add-hive"><Button className="primary" btnText="Add hive" /></Link>
-                                </div>
-                                <>
-                                    <GridSquares icon={giftIcon} loggedInUser={loggedInUser} amount={giftsAmount} text={giftsAmount < 2 ? "gift" : "gifts"} />
-                                </>
-                                <>
-                                    <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount="0" text="shared hives" />
-                                </>
-                                <div className="full-width">
-                                    <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
-                                </div>
 
-                            </section>
-                            <LinkToFAQ />
-                        </>
-                    )}
-                </div>
+            {isLoggedIn ? (
+                <>
+                    <WelcomeSquare message={dashboard.message} loggedInUser={loggedInUser} hivesLength={hivesAmount} />
+                    <div className="dashboard">
+                        {/* If there aren't any hives, the user is prompted to create one */}
+                        {hivesAmount === 0 ? (
+                            <CreateNewHive />
+                        ) : (
+                            // If there are hives, the user is shown the dashboard info
+                            <>
+                                <section className="grid-squares">
+                                    <>
+                                        {/* <Link className="link-square" to="/hives"><GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} /></Link> */}
+                                        <GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} />
+                                    </>
+                                    <div className="grid-squares buttons">
+                                        <Link to="/hives"><Button className="primary" btnText="See all hives" /></Link>
+                                        <Link to="/add-hive"><Button className="primary" btnText="Add hive" /></Link>
+                                    </div>
+                                    <>
+                                        <GridSquares icon={giftIcon} loggedInUser={loggedInUser} amount={giftsAmount} text={giftsAmount < 2 ? "gift" : "gifts"} />
+                                    </>
+                                    <>
+                                        <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount="0" text="shared hives" />
+                                    </>
+                                    <div className="full-width">
+                                        <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
+                                    </div>
+
+                                </section>
+                                <LinkToFAQ />
+                            </>
+                        )}
+                    </div>
+                </>
             ) : (
                 // If the user isn't logged in, the user is prompted to log in
                 <div className="dashboard">
