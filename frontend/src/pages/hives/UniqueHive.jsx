@@ -3,8 +3,9 @@ import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-import update from "../../assets/update.svg"
-import Swal from "sweetalert2";
+import update from "../../assets/update.svg";
+// import { customSwal } from "../../mixins/swalMixins";
+import { customSwal } from "../../mixins/swalMixins";
 import trashcanIcon from "../../assets/trash.svg";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
@@ -47,7 +48,7 @@ export const UniqueHive = () => {
     // Function to handle the update using the updateHiveName function from the useGiftStore
     const handleUpdateGift = async (giftId, currentGiftName) => {
         // Utilizes the SweetAlert2 library to display a popup with an input field
-        const { value: updatedGift } = await Swal.fire({
+        const { value: updatedGift } = await customSwal.fire({
             title: "Update gift",
             input: "text",
             inputLabel: "What would you like to change your gifts name to be(e)? 🐝",
@@ -68,7 +69,7 @@ export const UniqueHive = () => {
                 getHives();
             } catch (error) {
                 console.error("There was an error =>", error);
-                Swal.fire({
+                customSwal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "Something went wrong!",
@@ -79,7 +80,7 @@ export const UniqueHive = () => {
 
     // Function to handle the delete using the deleteGift function from the useGiftStore hook
     const handleDelete = async (hiveId) => {
-        Swal.fire({
+        customSwal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
             icon: "warning",
@@ -94,8 +95,8 @@ export const UniqueHive = () => {
                 } catch (error) {
                     console.error("There was an error =>", error);
                 }
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire({
+            } else if (result.dismiss === customSwal.DismissReason.cancel) {
+                customSwal.fire({
                     title: "Cancelled",
                     text: "Your gift is safe 🐝",
                     icon: "error"

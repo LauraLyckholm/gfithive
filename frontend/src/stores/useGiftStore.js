@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";
+import { customSwal } from "../mixins/swalMixins";
 import { create } from "zustand";
 
 // Gets the url to the API from the env file
@@ -193,7 +193,7 @@ export const useGiftStore = create((set, get) => ({
                 },
             });
 
-            Swal.fire({
+            customSwal.fire({
                 title: "Gift deleted",
                 icon: "success",
                 confirmButtonText: "OK",
@@ -224,7 +224,7 @@ export const useGiftStore = create((set, get) => ({
             // Here I call the getHives function to update the hives in the store
             await get().getHives();
 
-            Swal.fire({
+            customSwal.fire({
                 title: "Hive deleted",
                 icon: "success",
                 confirmButtonText: "OK",

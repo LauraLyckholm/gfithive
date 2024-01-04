@@ -36,20 +36,26 @@ export const Dashboard = () => {
                     {hivesAmount === 0 ? (
                         <CreateNewHive />
                     ) : (
+                        // If there are hives, the user is shown the dashboard info
                         <>
                             <section className="grid-squares">
                                 <>
-                                    <Link className="link-square" to="/hives"><GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} /></Link>
+                                    {/* <Link className="link-square" to="/hives"><GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} /></Link> */}
+                                    <GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} />
                                 </>
+                                <div className="grid-squares buttons">
+                                    <Link to="/hives"><Button className="primary" btnText="See all hives" /></Link>
+                                    <Link to="/add-hive"><Button className="primary" btnText="Add hive" /></Link>
+                                </div>
                                 <>
                                     <GridSquares icon={giftIcon} loggedInUser={loggedInUser} amount={giftsAmount} text={giftsAmount < 2 ? "gift" : "gifts"} />
                                 </>
                                 <>
                                     <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount="0" text="shared hives" />
                                 </>
-                                <>
+                                <div className="full-width">
                                     <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
-                                </>
+                                </div>
 
                             </section>
                             <LinkToFAQ />

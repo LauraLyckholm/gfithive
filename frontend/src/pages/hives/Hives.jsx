@@ -5,7 +5,7 @@ import { Button } from "../../components/elements/Button/Button";
 import trashcanIcon from "../../assets/trash.svg";
 import update from "../../assets/update.svg"
 import "./hives.css";
-import Swal from "sweetalert2";
+import { customSwal } from "../../mixins/swalMixins";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 
@@ -26,7 +26,7 @@ export const Hives = () => {
     // Function to handle the updating of a hive name using the updateHiveName function from the useGiftStore
     const handleUpdateHiveName = async (hiveId) => {
         // Utilizes the SweetAlert2 library to display a popup with an input field
-        const { value: newHiveName } = await Swal.fire({
+        const { value: newHiveName } = await customSwal.fire({
             title: "Update hive name",
             input: "text",
             inputLabel: "What would you like to change your hives name to be(e)? 🐝",
@@ -47,7 +47,7 @@ export const Hives = () => {
                 getHives();
             } catch (error) {
                 console.error("There was an error =>", error);
-                Swal.fire({
+                customSwal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Something went wrong!',
@@ -58,7 +58,7 @@ export const Hives = () => {
 
     // Function to handle the delete using the deleteHive function from the useGiftStore hook
     const handleDelete = async (hiveId) => {
-        Swal.fire({
+        customSwal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
             icon: "warning",
@@ -73,8 +73,8 @@ export const Hives = () => {
                 } catch (error) {
                     console.error("There was an error =>", error);
                 }
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire(
+            } else if (result.dismiss === customSwal.DismissReason.cancel) {
+                customSwal.fire(
                     "Cancelled",
                     "Your hive is safe 🐝",
                     "error"

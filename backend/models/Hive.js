@@ -16,6 +16,10 @@ const HiveSchema = new Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: "User", // Reference to User schema for ownership
     },
-});
+},
+    {
+        timestamps: true,
+    },
+);
 
 export const Hive = mongoose.model("Hive", HiveSchema);

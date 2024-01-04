@@ -25,6 +25,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
 }
 
 /* Removes margin on all relevant tags. Body for an edge-to-edge look on sections, and headings/paragraphs to easier follow sketch */
@@ -80,15 +81,86 @@ p {
 /* ------------ OVERALL ELEMENTS ------------ */
 button {
     padding: 13px 40px;
-    width: 250px;
+    min-width: 250px;
+    width: 100%;
+    font-family: var(--font);
+    font-weight: 300;
 }
+
+button a {
+  font-weight: 300;
+}
+
+.primary {
+  background-image: linear-gradient(30deg, #FFAF3A, var(--primary));
+  color: var(--text);
+  border: 2px solid var(--primary);
+  background-size: 100% auto;
+  /* border: none; */
+}
+
+.secondary {
+  background-color: transparent;
+  border: 2px solid var(--text);
+}
+
+.logOut {
+  margin-top: 2rem;
+}
+
+button:hover {
+  background-position: right center;
+  background-size: 200% auto;
+}
+
+.primary:hover {
+  /* background-position: right center; */
+  /* background-size: 200% auto; */
+  -webkit-animation: pulsePrimary 2s infinite;
+  animation: pulsePrimary 1.5s infinite;
+ }
+
+ .secondary:hover {
+  /* background-position: right center; */
+  /* background-size: 200% auto; */
+  -webkit-animation: pulseSecondary 2s infinite;
+  animation: pulseSecondary 1.5s infinite;
+ }
+ 
+ @keyframes pulsePrimary {
+  0% {
+   box-shadow: 0 0 0 0 #FFBE2D;
+  }
+ 
+  70% {
+   box-shadow: 0 0 0 8px rgb(218 129 68 / 0%);
+  }
+ 
+  100% {
+   box-shadow: 0 0 0 0 rgb(218 129 68 / 0%);
+  }
+ }
+
+ @keyframes pulseSecondary{
+  0% {
+   box-shadow: 0 0 0 0 #331616;
+  }
+ 
+  70% {
+   box-shadow: 0 0 0 8px rgb(218 129 68 / 0%);
+  }
+ 
+  100% {
+   box-shadow: 0 0 0 0 rgb(218 129 68 / 0%);
+  }
+ }
 
 .btns {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 button, input {
@@ -97,6 +169,24 @@ button, input {
     outline: none;
     cursor: pointer;
     border: none;
+}
+
+div:where(.swal2-container) .swal2-input {
+  border-radius: var(--border-radius);
+  font-size: 18px;
+  margin: 1rem !important;
+  height: auto!important;
+  padding: 17px 20px;
+}
+
+div:where(.swal2-container) .swal2-input:focus, 
+div:where(.swal2-container) .swal2-input:active, 
+input:focus, 
+input:active {
+  border: 2px solid var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.5);
+  padding: 15px 18px;
 }
 
 input {
@@ -161,59 +251,12 @@ ul {
 .disabled {
   opacity: 0.5;
   cursor: not-allowed;
-
 }
 
-.primary {
-  background: var(--primary);
-  color: var(--text);
-  border: 2px solid var(--primary);
+.swal2-actions {
+  margin: 1rem;
+  gap: 1rem;
 }
-
-.secondary {
-  background-color: transparent;
-  border: 2px solid var(--text);
-}
-
-.logOut {
-  margin-top: 2rem;
-}
-
-.swal2-confirm:not([hover]) {
-  padding: 7px 19px;
-  border-radius: var(--border-radius);
-  background: var(--primary);
-  font-size: 18px;
-  border: 2px solid var(--primary);
-  color: var(--text);
-  font-family: var(--font);
-  font-weight: 400;
-}
-
-.swal2-confirm:hover {
-  background: var(--primary);
-  font-weight: 400;
-  color: var(--text);
-}
-
-.swal2-cancel:not([hover]) {
-  padding: 7px 19px;
-  border-radius: var(--border-radius);
-  background-color: transparent;
-  font-size: 18px;
-  border: 2px solid var(--text);
-  color: var(--text);
-  font-family: var(--font);
-  font-weight: 400;
-}
-
-.swal2-cancel:hover {
-  background-color: transparent;
-  font-weight: 400;
-  color: var(--text);
-}
-
-
 /* ------- */
 
 

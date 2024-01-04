@@ -1,7 +1,7 @@
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { customSwal } from "../../../mixins/swalMixins";
 
 // Component for creating a new gift
 export const CreateNewGift = () => {
@@ -32,7 +32,7 @@ export const CreateNewGift = () => {
             // navigate("/hive/${id}")
             setGiftName("");
             // Alerts to the user that the gift has been created and gives them the choice to either add another gift or go back to their hive
-            Swal.fire({
+            customSwal.fire({
                 title: "Weee!",
                 text: "Gift successfully added! 🎁",
                 icon: "success",
@@ -42,7 +42,7 @@ export const CreateNewGift = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     setGiftName("");
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                } else if (result.dismiss === customSwal.DismissReason.cancel) {
                     navigate(`/hives/${hiveId}`);
                 }
             });

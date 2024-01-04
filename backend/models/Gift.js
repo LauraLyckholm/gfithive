@@ -20,6 +20,10 @@ const GiftItemSchema = new Schema({
         type: Boolean,
         default: false,
     },
-});
+},
+    {
+        timestamps: true,
+    },
+);
 
 export const Gift = mongoose.model("Gift", GiftItemSchema);

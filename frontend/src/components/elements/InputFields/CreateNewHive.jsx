@@ -2,7 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { useGiftStore } from "../../../stores/useGiftStore";
-import Swal from "sweetalert2";
+import { customSwal } from "../../../mixins/swalMixins";
 
 export const CreateNewHive = () => {
     const { hiveName, setHiveName, addHive } = useGiftStore();
@@ -20,7 +20,7 @@ export const CreateNewHive = () => {
             await addHive(newHive);
 
             // Alerts to the user that the hive has been created, awaits it so that the user isn't redicted before the alert is closed
-            await Swal.fire({
+            await customSwal.fire({
                 title: "Weee!",
                 text: "Hive successfully created! 🐝",
                 icon: "success",

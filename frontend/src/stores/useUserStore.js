@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import Swal from "sweetalert2";
+import { customSwal } from "../mixins/swalMixins";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -105,7 +105,7 @@ export const useUserStore = create((set, get) => ({
 
             // Alerts to the user that the username has been registered
             if (successfullFetch) {
-                Swal.fire({
+                customSwal.fire({
                     title: "Welcome to Gifthive!",
                     text: `The user ${data.response.username} has been created - time to log in 😍!`,
                     icon: "success",
