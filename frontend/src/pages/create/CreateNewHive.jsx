@@ -1,8 +1,8 @@
 // import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "../Button/Button";
-import { useGiftStore } from "../../../stores/useGiftStore";
-import { customSwal } from "../../../mixins/swalMixins";
+import { Button } from "../../components/elements/Button/Button";
+import { useGiftStore } from "../../stores/useGiftStore";
+import { customSwal } from "../../mixins/swalMixins";
 
 export const CreateNewHive = () => {
     const { hiveName, setHiveName, addHive } = useGiftStore();

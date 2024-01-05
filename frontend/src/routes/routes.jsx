@@ -5,8 +5,8 @@ import { Register } from "../pages/register/Register";
 import { Dashboard } from "../pages/dashboard/Dashboard";
 import { Hives } from "../pages/hives/Hives";
 import { UniqueHive } from "../pages/hives/UniqueHive";
-import { CreateNewHive } from "../components/elements/InputFields/CreateNewHive";
-import { CreateNewGift } from "../components/elements/InputFields/CreateNewGift";
+import { CreateNewHive } from "../pages/create/CreateNewHive";
+import { CreateOrUpdateGift } from "../pages/create/CreateOrUpdateGift";
 import { Faq } from "../pages/faq/Faq";
 import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { Account } from "../pages/account/Account";
@@ -21,7 +21,7 @@ const routes = (
         <Route path="/hives" element={<Hives />} />
         <Route path="/hives/:id" element={<UniqueHive />} />
         <Route path="/add-hive" element={<CreateNewHive />} />
-        <Route path="/hives/:id/add-gift" element={<CreateNewGift />} />
+        <Route path="/hives/:id/add-gift" element={<CreateOrUpdateGift />} />
         <Route path="/account" element={<Account />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="*" element={<ErrorPage />} />

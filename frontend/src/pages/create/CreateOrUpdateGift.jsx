@@ -1,10 +1,10 @@
-import { Button } from "../Button/Button";
-import { useGiftStore } from "../../../stores/useGiftStore";
+import { Button } from "../../components/elements/Button/Button";
+import { useGiftStore } from "../../stores/useGiftStore";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { customSwal } from "../../../mixins/swalMixins";
+import { customSwal } from "../../mixins/swalMixins";
 
 // Component for creating a new gift
-export const CreateNewGift = () => {
+export const CreateOrUpdateGift = () => {
     const { giftName, setGiftName, addGift, tags, setTags } = useGiftStore();
     const { id } = useParams();
     const hiveId = id;
@@ -14,13 +14,23 @@ export const CreateNewGift = () => {
     const handleAddGift = async (event) => {
         event.preventDefault();
 
+        // Formats the tags so that they are saved as an array with several strings instead of one string. Filters out empty tags
+        const formattedTags = typeof tags === "string" ?
+            tags.split(",")
+                .map(tag => tag.trim())
+                .filter(tag => tag !== "")
+            : [];
+
+        const giftData = {
+            gift: giftName,
+            tags: formattedTags
+        };
+
         try {
-            const newGift = {
-                gift: giftName,
-                tags: [tags]
-            };
-            await addGift(newGift, hiveId);
+
+            await addGift(giftData, hiveId);
             setGiftName("");
+            setTags("");
 
             // Alerts to the user that the gift has been created and gives them the choice to either add another gift or go back to their hive
             customSwal.fire({
@@ -33,6 +43,7 @@ export const CreateNewGift = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     setGiftName("");
+                    setTags("");
                 } else if (result.dismiss === customSwal.DismissReason.cancel) {
                     navigate(`/hives/${hiveId}`);
                 }

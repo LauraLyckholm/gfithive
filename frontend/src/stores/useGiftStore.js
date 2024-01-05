@@ -15,6 +15,7 @@ export const useGiftStore = create((set, get) => ({
     giftName: "",
     bought: false,
     tags: [],
+    loadingHives: false,
 
     setGifts: (gifts) => set({ gifts }),
     setHives: (hives) => set({ hives }),
@@ -22,9 +23,11 @@ export const useGiftStore = create((set, get) => ({
     setGiftName: (giftName) => set({ giftName }),
     setBought: (bought) => set({ bought }),
     setTags: (tags) => set({ tags }),
+    setLoadingHives: (loadingHives) => set({ loadingHives }),
 
     // Function for getting all hives from the backend
     getHives: async () => {
+        set({ loadingHives: true })
         try {
             const response = await fetch(withEndpoint("hives"), {
                 headers: {
@@ -36,7 +39,8 @@ export const useGiftStore = create((set, get) => ({
                 const data = await response.json();
 
                 set({
-                    hives: data
+                    hives: data,
+                    loadingHives: false,
                 });
                 localStorage.setItem("hives", JSON.stringify(data)); // Saves the hives data to local storage
             } else {
@@ -229,13 +233,6 @@ export const useGiftStore = create((set, get) => ({
                     "Auth": localStorage.getItem("accessToken"),
                 },
             });
-
-            customSwal.fire({
-                title: "Gift deleted",
-                icon: "success",
-                confirmButtonText: "OK",
-            }); // Shows a confirmation message to the user
-            console.log("The following giftId was deleted:", giftId);
 
         } catch (error) {
             console.error("Error deleting gift:", error);
