@@ -11,6 +11,7 @@ import hiveIcon from "../../assets/hiveIcon.svg";
 import giftIcon from "../../assets/giftIcon.svg";
 import sharedIcon from "../../assets/sharedIcon.svg";
 import deadlineIcon from "../../assets/deadlineIcon.svg";
+import userIconLight from "../../assets/userIconLight.svg";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
@@ -58,13 +59,21 @@ export const Dashboard = () => {
                                             <>
                                                 <GridSquares icon={giftIcon} loggedInUser={loggedInUser} amount={giftsAmount} text={giftsAmount < 2 ? "gift" : "gifts"} />
                                             </>
+
+                                            <>
+                                                <Link className="button-square" to="/account">
+                                                    <GridSquares icon={userIconLight} text="My account" />
+                                                </Link>
+                                            </>
+                                            {/* <div className="full-width">
+                                                <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
+                                            </div> */}
+                                            <>
+                                                <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
+                                            </>
                                             <>
                                                 <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount="0" text="shared hives" />
                                             </>
-                                            <div className="full-width">
-                                                <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
-                                            </div>
-
                                         </section>
                                         <LinkToFAQ />
                                     </>

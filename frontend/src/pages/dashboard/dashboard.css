@@ -27,3 +27,18 @@
     transform: scale(1.05);
 }
 
+.button-square .dashboard-square {
+    background-image: linear-gradient(30deg, #FFAF3A, var(--primary));
+    color: var(--text);
+    border: 2px solid var(--primary);
+    background-size: 100% auto;
+}
+
+.button-square .dashboard-square:hover {
+    background-position: right center;
+    background-size: 200% auto;
+    -webkit-animation: pulsePrimary 2s infinite;
+    animation: pulsePrimary 1.5s infinite;
+}
+
+

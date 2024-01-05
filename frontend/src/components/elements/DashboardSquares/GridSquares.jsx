@@ -10,7 +10,7 @@ export const GridSquares = ({ icon, loggedInUser, amount, text }) => {
                     {`${amount} ${text}`}
                 </p>
             </> :
-                null
+                <p>{text}</p>
             }
         </div>
     )
