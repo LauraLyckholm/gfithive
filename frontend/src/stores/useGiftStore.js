@@ -1,4 +1,3 @@
-import { customSwal } from "../mixins/swalMixins";
 import { create } from "zustand";
 
 // Gets the url to the API from the env file
@@ -257,13 +256,6 @@ export const useGiftStore = create((set, get) => ({
 
             // Here I call the getHives function to update the hives in the store
             await get().getHives();
-
-            customSwal.fire({
-                title: "Hive deleted",
-                icon: "success",
-                confirmButtonText: "OK",
-            }); // Shows a confirmation message to the user
-            console.log("The following hiveId was deleted:", hiveId);
 
         } catch (error) {
             console.error("Error deleting hive:", error);

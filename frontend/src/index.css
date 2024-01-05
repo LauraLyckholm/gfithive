@@ -194,6 +194,11 @@ input {
   /* width: 100%; */
 }
 
+.form-wrapper input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 input::placeholder {
   margin-left: 0;
 }

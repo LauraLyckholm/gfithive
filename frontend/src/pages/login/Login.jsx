@@ -49,6 +49,7 @@ export const Login = () => {
                 <Lottie animationData={loadingSpinner} className="spinner" />
             ) : (
                 <>
+                    <h1>Welcome back! Let&apos;s log in!</h1>
                     {/* <HiveImage /> */}
                     <form className="form-wrapper">
                         <div className="form-group">
@@ -71,10 +72,10 @@ export const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required />
                         </div>
-                        <div className="btns">
-                            <p className="error-message disclaimer">{errorMessage}</p>
-                            <Button className={"primary"} handleOnClick={handleLogin} btnText={"Login"} />
-                        </div>
+                        {/* <div className="btns"> */}
+                        <p className="error-message disclaimer">{errorMessage}</p>
+                        <Button className={"primary"} handleOnClick={handleLogin} btnText={"Login"} />
+                        {/* </div> */}
                         <div className="light-pair-text">
                             <p className="disclaimer">First time here?</p>
                             <p className="disclaimer"><Link onClick={handleSetErrorMessage} className="disclaimer bold" to="/register">Register</Link> for an account!</p>

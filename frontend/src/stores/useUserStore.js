@@ -240,12 +240,10 @@ export const useUserStore = create((set, get) => ({
     },
 
     // Creates a function that makes it possible to update a username and password
-    updateUser: async (username, password, userId) => {
+    updateUser: async (userId, updatedUserInfo) => {
         try {
-            // const body = { username };
-            // if (password !== null) {
-            //     body.password = password;
-            // }
+            // Destructures username from the updatedUserInfo object
+            const { username } = updatedUserInfo;
 
             const response = await fetch(withEndpoint(`users/${userId}`), {
                 method: "PUT",
@@ -253,10 +251,7 @@ export const useUserStore = create((set, get) => ({
                     "Content-Type": "application/json",
                     "Auth": localStorage.getItem("accessToken"),
                 },
-                body: JSON.stringify({
-                    username,
-                    password,
-                }),
+                body: JSON.stringify(updatedUserInfo),
             });
 
             if (response.ok) {

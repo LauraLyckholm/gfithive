@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore";
 import { Button } from "../../components/elements/Button/Button";
 import { customSwal } from "../../mixins/swalMixins";
+import { UpdateUserInfo } from "../../components/elements/InputFields/UpdateUserInfo";
 
 export const Account = () => {
     const { deleteUser, setIsLoggedIn } = useUserStore();
@@ -71,6 +72,7 @@ export const Account = () => {
             <div className="form-group">
                 <h2>Personal information</h2>
                 <p>Username: {username}</p>
+                <UpdateUserInfo userId={userId} />
                 <div className="btns">
                     {/* <Button className={"primary"} handleOnClick={handleUpdateUsername} btnText={"Change username"} /> */}
                     <Button className={"primary"} handleOnClick={handleRemoveUser} btnText={"Remove account"} />

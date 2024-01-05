@@ -158,23 +158,44 @@ export const updateUserController = asyncHandler(async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // Find the user associated with the provided id and update the user's information
-        const user = await User.findByIdAndUpdate({ _id: id }, { username, password }, { new: true });
+        const user = await User.findById(id);
 
         if (!user) {
             return res.status(404).json({ error: "User not found or unauthorized." });
         }
 
-        res.json(user);
-    } catch (error) {
-        if (error.code === 11000) {
-            return res.status(400).json({ error: "Username already exists" });
+        // Check if the new username already exists (excluding the current user)
+        if (username && username !== user.username) {
+            const existingUser = await User.findOne({ username });
+            if (existingUser) {
+                return res.status(400).json({ error: "Username already exists" });
+            }
+            user.username = username;
         }
 
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            console.log("Hashed Password:", hashedPassword); // Debugging line
+            user.password = hashedPassword;
+        }
+
+        console.log("User before save:", user); // Debugging line
+        await user.save();
+        console.log("User after save:", user); // Debugging line
+
+        res.json({
+            message: "User updated successfully",
+            user: {
+                _id: user._id,
+                username: user.username
+            }
+        });
+    } catch (error) {
         console.error("Error updating user:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
 
 // Creates a controller function for deleting a user account
 export const deleteUserController = asyncHandler(async (req, res) => {

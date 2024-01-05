@@ -35,6 +35,7 @@ export const Register = () => {
             {/* Shows a spinning animation when the data is loading */}
             {loading ? <Lottie animationData={loadingSpinner} className="spinner" /> :
                 <>
+                    <h1>Register for an account</h1>
                     {/* <HiveImage /> */}
                     <form className="form-wrapper">
                         <div className="form-group">

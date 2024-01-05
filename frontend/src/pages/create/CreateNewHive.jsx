@@ -36,6 +36,7 @@ export const CreateNewHive = () => {
 
     return (
         <div>
+            <h1>Create a new hive</h1>
             <form className="form-wrapper">
                 <div className="form-group">
                     <label htmlFor="hiveName">Hivename</label>

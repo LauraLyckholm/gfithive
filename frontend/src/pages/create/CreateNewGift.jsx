@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { customSwal } from "../../mixins/swalMixins";
 
 // Component for creating a new gift
-export const CreateOrUpdateGift = () => {
+export const CreateNewGift = () => {
     const { giftName, setGiftName, addGift, tags, setTags } = useGiftStore();
     const { id } = useParams();
     const hiveId = id;
@@ -55,6 +55,7 @@ export const CreateOrUpdateGift = () => {
 
     return (
         <div>
+            <h1>Add a new gift</h1>
             <form className="form-wrapper">
                 <div className="form-group">
                     <label htmlFor="giftName">Gift</label>
