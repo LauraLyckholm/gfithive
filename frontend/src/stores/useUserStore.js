@@ -331,11 +331,17 @@ export const useUserStore = create((set, get) => ({
     // Function to check if there's a stored token in localStorage, to allow for refresh of secret page
     initAuth: () => {
         const storedToken = localStorage.getItem("accessToken");
+        const storedUsername = localStorage.getItem("username");
 
         if (storedToken) {
             set({
                 accessToken: storedToken,
                 isLoggedIn: true,
+            });
+        }
+        if (storedUsername) {
+            set({
+                username: storedUsername,
             });
         }
     },

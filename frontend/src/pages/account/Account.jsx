@@ -3,39 +3,12 @@ import { useUserStore } from "../../stores/useUserStore";
 import { Button } from "../../components/elements/Button/Button";
 import { customSwal } from "../../mixins/swalMixins";
 import { UpdateUserInfo } from "../../components/elements/InputFields/UpdateUserInfo";
+import "./account.css";
 
 export const Account = () => {
-    const { deleteUser, setIsLoggedIn } = useUserStore();
-    // const { updateUser, deleteUser, setIsLoggedIn } = useUserStore();
-    const username = localStorage.getItem("username");
+    const { deleteUser, setIsLoggedIn, username } = useUserStore();
     const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
-
-    // const handleUpdateUsername = async () => {
-    //     const { value: updatedUsername } = await customSwal.fire({
-    //         title: "Update username",
-    //         input: "text",
-    //         inputLabel: "New username",
-    //         inputValue: username,
-    //         confirmButtonText: "Save",
-    //         showCancelButton: true,
-    //         inputValidator: (value) => {
-    //             if (!value) {
-    //                 return "You need to write something!";
-    //             }
-    //         },
-    //     },
-    //     );
-
-    //     if (updatedUsername) {
-    //         try {
-    //             await updateUser(updatedUsername, null, userId);
-    //             navigate("/account");
-    //         } catch (error) {
-    //             console.error("There was an error =>", error);
-    //         }
-    //     }
-    // };
 
     const handleRemoveUser = async () => {
         try {
@@ -67,16 +40,17 @@ export const Account = () => {
     };
 
     return (
-        <section>
+        <section className="account-page">
             <h1>My account</h1>
-            <div className="form-group">
+            <div className="heading-pair">
                 <h2>Personal information</h2>
                 <p>Username: {username}</p>
-                <UpdateUserInfo userId={userId} />
-                <div className="btns">
-                    {/* <Button className={"primary"} handleOnClick={handleUpdateUsername} btnText={"Change username"} /> */}
-                    <Button className={"primary"} handleOnClick={handleRemoveUser} btnText={"Remove account"} />
-                </div>
+            </div>
+            <UpdateUserInfo userId={userId} />
+            <div className="btns">
+                {/* <Button className={"primary"} handleOnClick={handleUpdateUsername} btnText={"Change username"} /> */}
+                <Button className={"secondary"} handleOnClick={handleRemoveUser} btnText={"Remove account"} />
+
             </div>
         </section>
     )

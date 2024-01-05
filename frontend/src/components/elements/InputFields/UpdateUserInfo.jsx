@@ -21,7 +21,7 @@ export const UpdateUserInfo = ({ userId }) => {
     };
 
     return (
-        <div>
+        <section>
             <form className="form-wrapper">
                 <div className="form-group">
                     <label htmlFor="username">Change username</label>
@@ -43,11 +43,11 @@ export const UpdateUserInfo = ({ userId }) => {
                         onChange={(e) => setPassword(e.target.value)}
                         required />
                 </div>
+
+                <Button handleOnClick={handleUpdateUserInfo} className={"primary"} btnText={"Update my info"} />
             </form>
 
-            <div className="btns">
-                <Button handleOnClick={handleUpdateUserInfo} className={"primary"} btnText={"Update my info"} />
-            </div>
-        </div>
+
+        </section>
     )
 }

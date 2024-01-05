@@ -6,6 +6,7 @@ import { useUserStore } from "../../stores/useUserStore";
 import Logo from "../../assets/gifthive-logo.png";
 import "./home.css";
 import { Dashboard } from "../dashboard/Dashboard";
+// import { useEffect } from "react";
 
 // Component for the home page
 export const Home = () => {
