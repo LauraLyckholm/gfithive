@@ -7,17 +7,23 @@ export const UpdateUserInfo = ({ userId }) => {
     const handleUpdateUserInfo = async () => {
         // Creates an object with the updated user info, empty values on default
         const updatedUserInfo = {};
-        if (username) {
+        // Only add username to the object if it's been provided and is different from the stored username
+        if (username && username !== localStorage.getItem("username")) {
             updatedUserInfo.username = username;
-        } // If the user has written a new username, it will be added to the object
+        }
         if (password) {
             updatedUserInfo.password = password
         } // If the user has written a new password, it will be added to the object
 
-        await updateUser(userId, updatedUserInfo);
+        if (Object.keys(updatedUserInfo).length > 0) {
+            await updateUser(userId, updatedUserInfo);
 
-        // Update localStorage and possibly user state
-        if (username) localStorage.setItem("username", username);
+            // Update local storage and state if username was updated
+            if (updatedUserInfo.username) {
+                localStorage.setItem("username", updatedUserInfo.username);
+                setUsername(updatedUserInfo.username);
+            }
+        }
     };
 
     return (
@@ -31,7 +37,7 @@ export const UpdateUserInfo = ({ userId }) => {
                         // placeholder="e.g. New phone"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        required />
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Change password</label>
@@ -41,7 +47,7 @@ export const UpdateUserInfo = ({ userId }) => {
                         // placeholder="e.g. christmas, 2023"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required />
+                    />
                 </div>
 
                 <Button handleOnClick={handleUpdateUserInfo} className={"primary"} btnText={"Update my info"} />

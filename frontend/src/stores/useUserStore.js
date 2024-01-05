@@ -309,20 +309,6 @@ export const useUserStore = create((set, get) => ({
                 },
             });
 
-            // // Removes the deleted user from the store
-            // set((state) => ({
-            //     users: state.users.filter((user) => user._id !== userId),
-            // }));
-
-            // // Here I call the getUsers function to update the users in the store
-            // await get().getUsers();
-
-            customSwal.fire({
-                title: "User deleted",
-                icon: "success",
-                confirmButtonText: "OK",
-            }); // Shows a confirmation message to the user
-
         } catch (error) {
             console.error("Error deleting user:", error);
         }

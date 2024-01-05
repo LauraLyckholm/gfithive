@@ -164,7 +164,7 @@ export const updateUserController = asyncHandler(async (req, res) => {
             return res.status(404).json({ error: "User not found or unauthorized." });
         }
 
-        // Check if the new username already exists (excluding the current user)
+        // Check if a new username is provided and if it's different from the current one
         if (username && username !== user.username) {
             const existingUser = await User.findOne({ username });
             if (existingUser) {
@@ -175,7 +175,6 @@ export const updateUserController = asyncHandler(async (req, res) => {
 
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
-            console.log("Hashed Password:", hashedPassword); // Debugging line
             user.password = hashedPassword;
         }
 
