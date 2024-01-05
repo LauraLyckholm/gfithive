@@ -47,6 +47,11 @@
     {
         "id": 10,
         "question": "Can I remove my account?",
-        "answer": "At the moment, you can only delete your account my contacting us at laura.lyckholm@gmail.com"
+        "answer": "Yes! You can simply remove your account by clicking the 'Remove account'-button on the Account-page. Then, click 'Yes, delete my account' to confirm."
+    },
+    {
+        "id": 11,
+        "question": "Can I update my username or password?",
+        "answer": "Yes! It's easy to update your username or password. Simply fill out the form under your 'Account'."
     }
 ]

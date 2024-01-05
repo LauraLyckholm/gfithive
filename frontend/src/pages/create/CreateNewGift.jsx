@@ -1,6 +1,6 @@
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { customSwal } from "../../mixins/swalMixins";
 
 // Component for creating a new gift
@@ -9,6 +9,10 @@ export const CreateNewGift = () => {
     const { id } = useParams();
     const hiveId = id;
     const navigate = useNavigate();
+
+    const handleOnclickNavigation = () => {
+        navigate(`/hives/${hiveId}`)
+    };
 
     // function to handle adding a new gift
     const handleAddGift = async (event) => {
@@ -81,9 +85,7 @@ export const CreateNewGift = () => {
 
             <div className="btns">
                 <Button handleOnClick={handleAddGift} className={"primary"} btnText={"Add gift"} />
-                <Link to={`/hives/${hiveId}`}>
-                    <Button className={"secondary"} btnText={"Back to hive"} />
-                </Link>
+                <Button className={"secondary"} handleOnClick={handleOnclickNavigation} btnText={"Back to hive"} />
             </div>
         </div>
     )
