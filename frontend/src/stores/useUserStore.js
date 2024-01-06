@@ -32,6 +32,7 @@ export const useUserStore = create((set, get) => ({
     // Creates a function for getting the dashboard from the backend
     getDashboard: async () => {
         try {
+            set({ loadingUser: true });
             const response = await fetch(withEndpoint("dashboard"), {
                 headers: {
                     "Auth": localStorage.getItem("accessToken"),
@@ -41,7 +42,8 @@ export const useUserStore = create((set, get) => ({
             if (response.ok) {
                 const data = await response.json();
                 set({
-                    dashboard: data
+                    dashboard: data,
+                    loadingUser: false,
                 });
             }
         } catch (error) {

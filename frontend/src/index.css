@@ -85,6 +85,7 @@ button {
     width: 100%;
     font-family: var(--font);
     font-weight: 300;
+    color: var(--text);
 }
 
 a {
