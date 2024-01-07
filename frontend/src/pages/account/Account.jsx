@@ -39,6 +39,16 @@ export const Account = () => {
         }
     };
 
+    const handleKeyPress = async (event, action) => {
+        // Checks if "Enter" key is pressed
+        if (event.key === "Enter") {
+            // If the action is update, the handleUpdateGift function will be called
+            if (action === "remove") {
+                handleRemoveUser();
+            }
+        }
+    };
+
     return (
         <section className="account-page">
             <h1>My account</h1>
@@ -47,10 +57,14 @@ export const Account = () => {
                 <p>Username: {username}</p>
             </div>
             <UpdateUserInfo userId={userId} />
-            <div className="btns">
+            <div className="btns"
+                onKeyDown={(event) => handleKeyPress(event, "remove")}
+            >
                 {/* <Button className={"primary"} handleOnClick={handleUpdateUsername} btnText={"Change username"} /> */}
-                <Button className={"secondary"} handleOnClick={handleRemoveUser} btnText={"Remove account"} />
-
+                <Button
+                    className={"secondary"}
+                    handleOnClick={handleRemoveUser}
+                    btnText={"Remove account"} />
             </div>
         </section>
     )

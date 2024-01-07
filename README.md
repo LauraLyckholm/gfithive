@@ -2,6 +2,7 @@
 # Gifthive
 
 As part of a Technigo Web Dev Bootcamp project, this project was created as the Final Project. It includes an API, containting several different routes for handling gift items, lists (hives) and users, as well as a frontend handling all user interactions.
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file of the backend.
@@ -11,6 +12,7 @@ To run this project, you will need to add the following environment variables to
 You will also need to add the following environment variables to your .env file of the frontend.
 
 `VITE_BACKEND_API` - Add your own backend API deployment link
+
 ## API Reference
 
 #### Show endpoints
@@ -61,6 +63,20 @@ You will also need to add the following environment variables to your .env file 
 ```http
   POST /users
 ```
+
+## Techstack used
+- React
+- Zustand
+- Express JS
+- Mongoose
+- MongoDB
+- CSS
+- SwalAlert2
+- React Burger Menu
+- React Router Dom
+- Material UI
+- Lottie Animation
+
 ## View it live
 Backend only: [![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)](https://gifthivebackend.onrender.com)
 

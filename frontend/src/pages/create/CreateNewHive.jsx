@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { customSwal } from "../../mixins/swalMixins";
+import "./create.css";
 
 export const CreateNewHive = () => {
     const { hiveName, setHiveName, addHive } = useGiftStore();
@@ -34,10 +35,11 @@ export const CreateNewHive = () => {
         }
     }
 
+
     return (
-        <div>
+        <section className="create-section">
             <h1>Create a new hive</h1>
-            <form className="form-wrapper">
+            <form className="form-wrapper" onSubmit={handleAddHive}>
                 <div className="form-group">
                     <label htmlFor="hiveName">Hivename</label>
                     <input
@@ -70,13 +72,12 @@ export const CreateNewHive = () => {
                 </div>
             </form>
             <div className="btns">
-                <Link to="/dashboard">
-                    <Button handleOnClick={handleAddHive} className={"primary"} btnText={"Start a new hive"} />
-                </Link>
+                {/* <Link to="/dashboard"> */}
+                <Button handleOnClick={handleAddHive} type="submit" className={"primary"} btnText={"Start a new hive"} />
                 <Link to={`/hives`}>
                     <Button className={"secondary"} btnText={"Back to hives"} />
                 </Link>
             </div>
-        </div>
+        </section>
     )
 }

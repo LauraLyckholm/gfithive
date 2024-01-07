@@ -107,32 +107,45 @@ export const UniqueHive = () => {
         }
     };
 
-
     // Function to handle the delete using the deleteGift function from the useGiftStore hook
-    const handleDelete = async (hiveId) => {
-        customSwal.fire({
+    const handleDelete = async (giftId) => {
+        const result = await customSwal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Yes, delete it!",
             cancelButtonText: "No, keep it",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                try {
-                    deleteGift(hiveId);
-                    getHives();
-                } catch (error) {
-                    console.error("There was an error =>", error);
-                }
-            } else if (result.dismiss === customSwal.DismissReason.cancel) {
-                customSwal.fire({
-                    title: "Cancelled",
-                    text: "Your gift is safe 🐝",
-                    icon: "error"
-                })
-            }
         });
+
+        if (result.isConfirmed) {
+            try {
+                await deleteGift(giftId);
+                getHives();
+            } catch (error) {
+                console.error("There was an error =>", error);
+            }
+        } else if (result.dismiss === customSwal.DismissReason.cancel) {
+            customSwal.fire({
+                title: "Cancelled",
+                text: "Your gift is safe 🐝",
+                icon: "error"
+            });
+        }
+    };
+
+    // Function that reacts to the "Enter" key being pressed, for accessibility
+    const handleKeyPress = async (event, action, giftId) => {
+        // Checks if "Enter" key is pressed
+        if (event.key === "Enter") {
+            // If the action is update, the handleUpdateGift function will be called
+            if (action === "update") {
+                handleUpdateGift(giftId);
+                // If the action is delete, the handleDelete function will be called
+            } else if (action === "delete") {
+                await handleDelete(giftId);
+            }
+        }
     };
 
     return (
@@ -157,8 +170,22 @@ export const UniqueHive = () => {
                                         <li>{gift.gift}</li>
                                     </div>
                                     <div className="icon-pair">
-                                        <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateGift(gift._id, gift.gift)} />
-                                        <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(gift._id)} />
+                                        <img
+                                            tabIndex="0"
+                                            className="icon"
+                                            src={update}
+                                            alt="Icon for updating the hives name"
+                                            onClick={() => handleUpdateGift(gift._id, gift.gift)}
+                                            onKeyDown={((event) => handleKeyPress(event, "update", gift._id))}
+                                        />
+                                        <img
+                                            tabIndex="0"
+                                            className="icon"
+                                            src={trashcanIcon}
+                                            alt="Trashcan for deleting a hive"
+                                            onClick={() => handleDelete(gift._id)}
+                                            onKeyDown={((event) => handleKeyPress(event, "delete", gift._id))}
+                                        />
                                     </div>
                                     <Stack
                                         className="tags"

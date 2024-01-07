@@ -2,6 +2,7 @@ import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams, useNavigate } from "react-router-dom";
 import { customSwal } from "../../mixins/swalMixins";
+import "./create.css";
 
 // Component for creating a new gift
 export const CreateNewGift = () => {
@@ -58,7 +59,7 @@ export const CreateNewGift = () => {
     }
 
     return (
-        <div>
+        <section>
             <h1>Add a new gift</h1>
             <form className="form-wrapper">
                 <div className="form-group">
@@ -87,6 +88,6 @@ export const CreateNewGift = () => {
                 <Button handleOnClick={handleAddGift} className={"primary"} btnText={"Add gift"} />
                 <Button className={"secondary"} handleOnClick={handleOnclickNavigation} btnText={"Back to hive"} />
             </div>
-        </div>
+        </section>
     )
 }

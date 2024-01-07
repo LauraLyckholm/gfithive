@@ -39,7 +39,11 @@ export const Dashboard = () => {
                     {loadingUser || loadingHives ? (
                         <Lottie animationData={loadingSpinner} className="spinner" />
                     ) : (
-                        <><WelcomeSquare message={dashboard.message} loggedInUser={loggedInUser} hivesLength={hivesAmount} />
+                        <><WelcomeSquare
+                            message={dashboard.message}
+                            loggedInUser={loggedInUser}
+                            hivesLength={hivesAmount}
+                        />
                             <div className="dashboard">
                                 {/* If there aren't any hives, the user is prompted to create one */}
                                 {hivesAmount === 0 ? (
@@ -49,7 +53,6 @@ export const Dashboard = () => {
                                     <>
                                         <section className="grid-squares">
                                             <>
-                                                {/* <Link className="link-square" to="/hives"><GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} /></Link> */}
                                                 <GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} />
                                             </>
                                             <div className="grid-squares buttons">
@@ -65,9 +68,6 @@ export const Dashboard = () => {
                                                     <GridSquares icon={userIconLight} text="My account" />
                                                 </Link>
                                             </>
-                                            {/* <div className="full-width">
-                                                <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
-                                            </div> */}
                                             <>
                                                 <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
                                             </>

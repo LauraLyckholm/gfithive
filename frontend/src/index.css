@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&family=Roboto:wght@300;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&family=Roboto:wght@300;500&display=swap");
 
 /* ------------ CUSTOM PROPERTIES AND OVERALL STYLING ------------ */
 :root {
@@ -79,13 +79,17 @@ p {
   }
 
 /* ------------ OVERALL ELEMENTS ------------ */
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(222, 70, 0, 0.5);
+}
+
 button {
     padding: 13px 40px;
-    /* min-width: 250px; */
     width: 100%;
     font-family: var(--font);
     font-weight: 300;
-    color: var(--text);
+    color: var(--text); /* color set here otherwise it appears blue on iOS devices */
 }
 
 a {
@@ -101,7 +105,6 @@ button a {
   color: var(--text);
   border: 2px solid var(--primary);
   background-size: 100% auto;
-  /* border: none; */
 }
 
 .secondary {
@@ -119,19 +122,16 @@ button:hover {
 }
 
 .primary:hover {
-  /* background-position: right center; */
-  /* background-size: 200% auto; */
   -webkit-animation: pulsePrimary 2s infinite;
   animation: pulsePrimary 1.5s infinite;
  }
 
  .secondary:hover {
-  /* background-position: right center; */
-  /* background-size: 200% auto; */
   -webkit-animation: pulseSecondary 2s infinite;
   animation: pulseSecondary 1.5s infinite;
  }
  
+/* Animation for primary button */
  @keyframes pulsePrimary {
   0% {
    box-shadow: 0 0 0 0 #FFBE2D;
@@ -146,7 +146,8 @@ button:hover {
   }
  }
 
- @keyframes pulseSecondary{
+/* Animation for secondary button */
+ @keyframes pulseSecondary {
   0% {
    box-shadow: 0 0 0 0 #331616;
   }
@@ -176,6 +177,7 @@ button, input {
     border: none;
 }
 
+/* Specific styling for buttons inside Swalalert2 windows */
 div:where(.swal2-container) .swal2-input {
   border-radius: var(--border-radius);
   font-size: 18px;
@@ -213,7 +215,7 @@ ul {
     list-style: none;
     padding: 0;
 }
-/* Hide the default checkbox */
+/* Hides the default checkbox, and further down - I'm creating a custom checkbox to be able to style it myself. */
 .container input {
   position: absolute;
   opacity: 0;
@@ -230,7 +232,7 @@ ul {
   user-select: none;
 }
 
-/* Create a custom checkbox */
+/* Creates a custom checkbox */
 .checkmark {
   position: relative;
   top: 0;
@@ -243,14 +245,13 @@ ul {
   transition: 300ms;
 }
 
-/* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: var(--primary);
   border-radius: 7px;
   animation: pulse 500ms ease-in-out;
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
+/* Creates the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
@@ -258,12 +259,12 @@ ul {
   border: none;
 }
 
-/* Show the checkmark when checked */
+/* Shows the checkmark when checked */
 .container input:checked ~ .checkmark:after {
   display: block;
 }
 
-/* Style the checkmark/indicator */
+/* Styles the checkmark/indicator */
 .container .checkmark:after {
   left: 6px;
   top: 3px;
@@ -274,6 +275,7 @@ ul {
   transform: rotate(45deg);
 }
 
+/* Animation for checkmark */
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 #FFB56B72;
@@ -348,8 +350,6 @@ ul {
   margin: 1rem;
   gap: 1rem;
 }
-/* ------- */
-
 
 /* ------------ MEDIA QUERIES ------------ */
 /* ------------ Larger mobiles ------------ */
@@ -364,6 +364,12 @@ ul {
 @media (min-width: 744px) {
   #root {
     max-width: 744px; /* Fixed width for larger screens */
+  }
+}
+
+@media (forced-colors: active) {
+  *:focus-visible {
+    outline: 0.2em solid;
   }
 }
 

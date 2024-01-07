@@ -48,9 +48,9 @@ export const Hives = () => {
             } catch (error) {
                 console.error("There was an error =>", error);
                 customSwal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
                 });
             }
         }
@@ -83,6 +83,21 @@ export const Hives = () => {
         });
     };
 
+    // Function that reacts to the "Enter" key being pressed, for accessibility
+    const handleKeyPress = (event, action, hiveId) => {
+        // Checks if "Enter" key is pressed
+        if (event.key === "Enter") {
+            // If the action is update, the handleUpdateHiveName function will be called
+            if (action === "update") {
+                handleUpdateHiveName(hiveId);
+                // If the action is delete, the handleDelete function will be called
+            } else if (action === "delete") {
+                handleDelete(hiveId);
+            }
+        }
+    };
+
+
     return (
         <>
             {loading ? <Lottie animationData={loadingSpinner} className="spinner" /> :
@@ -92,11 +107,27 @@ export const Hives = () => {
                         {savedHives.map((hive) => {
                             return (
                                 <li className="grid-list-items" key={hive._id}>
-                                    <img className="icon" src={update} alt="Icon for updating the hives name" onClick={() => handleUpdateHiveName(hive._id)} />
-                                    <Link to={`/hives/${hive._id}`}><p className="bold">{hive.name}</p></Link>
+                                    <img
+                                        tabIndex="0"
+                                        className="icon"
+                                        src={update}
+                                        alt="Icon for updating the hives name"
+                                        onClick={() => handleUpdateHiveName(hive._id)} // If user clicks on the icon, the handleUpdateHiveName function will be called
+                                        onKeyDown={(event) => handleKeyPress(event, "update", hive._id)} // If user presses "Enter" on the icon, the handleUpdateHiveName function will be called
+                                    />
+                                    <Link to={`/hives/${hive._id}`}>
+                                        <p className="bold">{hive.name}</p>
+                                    </Link>
                                     <p className="italic-text">{showGiftAmount(hive)} gifts</p>
                                     <p className="italic-text disabled">0 due</p>
-                                    <img className="icon" src={trashcanIcon} alt="Trashcan for deleting a hive" onClick={() => handleDelete(hive._id)} />
+                                    <img
+                                        tabIndex="0"
+                                        className="icon"
+                                        src={trashcanIcon}
+                                        alt="Trashcan for deleting a hive"
+                                        onClick={() => handleDelete(hive._id)} // If user clicks on the icon, the handleDelete function will be called
+                                        onKeyDown={(event) => handleKeyPress(event, "delete", hive._id)} // If user presses "Enter" on the icon, the handleDelete function will be called
+                                    />
                                 </li>
                             );
                         })}
