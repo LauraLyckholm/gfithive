@@ -10,6 +10,7 @@ import { CreateNewGift } from "../pages/create/CreateNewGift";
 import { Faq } from "../pages/faq/Faq";
 import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { Account } from "../pages/account/Account";
+import { SearchResults } from "../pages/searchResults.jsx/SearchResults";
 
 // Creates the routes for the application
 const routes = (
@@ -23,6 +24,7 @@ const routes = (
         <Route path="/add-hive" element={<CreateNewHive />} />
         <Route path="/hives/:id/add-gift" element={<CreateNewGift />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="*" element={<ErrorPage />} />
     </>

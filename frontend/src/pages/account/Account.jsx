@@ -39,6 +39,7 @@ export const Account = () => {
         }
     };
 
+    // Function that reacts to the "Enter" key being pressed, for accessibility
     const handleKeyPress = async (event, action) => {
         // Checks if "Enter" key is pressed
         if (event.key === "Enter") {

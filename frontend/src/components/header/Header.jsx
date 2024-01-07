@@ -9,7 +9,7 @@ import hamburgerIcon from "../../assets/hamburger.svg";
 import crossIcon from "../../assets/cross.svg";
 import beeImage from "../../assets/bee.svg";
 import honeyImage from "../../assets/honey.svg";
-import { Search } from "../elements/Search/Search";
+import { SearchBar } from "../elements/Search/SearchBar";
 
 // Component for the header
 export const Header = () => {
@@ -57,7 +57,7 @@ export const Header = () => {
 
             </div>
             <div className="search-and-menu">
-                <Search />
+                <SearchBar />
                 {/* Configures the React Burger Menu */}
                 <Menu
                     right

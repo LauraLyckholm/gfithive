@@ -23,9 +23,23 @@
     font-family: var(--font);
 }
 
+.search-results-dropdown {
+    font-family: var(--font);
+    position: absolute;
+    top: 100%; /* Position it right below the search bar */
+    left: 0;
+    width: 100%; /* Adjust width as necessary */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+
 /* ------------ Tablet and up ------------ */
 @media (max-width: 743px) {
     .search-bar {
-        width: auto;
+        width: 100%;
     }
   }
