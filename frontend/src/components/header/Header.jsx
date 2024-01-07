@@ -9,6 +9,7 @@ import hamburgerIcon from "../../assets/hamburger.svg";
 import crossIcon from "../../assets/cross.svg";
 import beeImage from "../../assets/bee.svg";
 import honeyImage from "../../assets/honey.svg";
+import { Search } from "../elements/Search/Search";
 
 // Component for the header
 export const Header = () => {
@@ -55,50 +56,53 @@ export const Header = () => {
                 }
 
             </div>
-            {/* Configures the React Burger Menu */}
-            <Menu
-                right
-                isOpen={menuOpen}
-                onStateChange={(state) => setMenuOpen(state.isOpen)}
-                closeMenuOnBlur={true}
-                customBurgerIcon={<img src={hamburgerIcon} alt="Hamburger menu icon" />}
-                customCrossIcon={<img className="custom-icon" src={crossIcon} alt="Close menu icon" />}
-                className={"mobile-nav"}
-                width={"300px"}
-            >
-                <main id="page-wrap">
-                    <img className="honey-image" src={honeyImage} alt="Image of honey dripping down the menu" />
+            <div className="search-and-menu">
+                <Search />
+                {/* Configures the React Burger Menu */}
+                <Menu
+                    right
+                    isOpen={menuOpen}
+                    onStateChange={(state) => setMenuOpen(state.isOpen)}
+                    closeMenuOnBlur={true}
+                    customBurgerIcon={<img src={hamburgerIcon} alt="Hamburger menu icon" />}
+                    customCrossIcon={<img className="custom-icon" src={crossIcon} alt="Close menu icon" />}
+                    className={"mobile-nav"}
+                    width={"300px"}
+                >
+                    <main id="page-wrap">
+                        <img className="honey-image" src={honeyImage} alt="Image of honey dripping down the menu" />
 
-                    {isLoggedIn ? (
-                        <>
-                            <ul className="main-list" onClick={closeMenu}>
-                                <li><Link to="/dashboard" className="main-list-link">Dashboard</Link></li>
-                                <li><Link to="/hives" className="main-list-link">All hives</Link>
-                                    <ul className="minor-list">
-                                        {hives.map((hive) => {
-                                            return (
-                                                <li key={hive._id}>
-                                                    <Link to={`/hives/${hive._id}`}>{hive.name}</Link>
-                                                </li>
-                                            )
-                                        })}
-                                    </ul>
-                                </li>
-                                <li><Link to="/faq" className="main-list-link">FAQ</Link></li>
-                                <li><Link to="/account" className="main-list-link">Account</Link></li>
+                        {isLoggedIn ? (
+                            <>
+                                <ul className="main-list" onClick={closeMenu}>
+                                    <li><Link to="/dashboard" className="main-list-link">Dashboard</Link></li>
+                                    <li><Link to="/hives" className="main-list-link">All hives</Link>
+                                        <ul className="minor-list">
+                                            {hives.map((hive) => {
+                                                return (
+                                                    <li key={hive._id}>
+                                                        <Link to={`/hives/${hive._id}`}>{hive.name}</Link>
+                                                    </li>
+                                                )
+                                            })}
+                                        </ul>
+                                    </li>
+                                    <li><Link to="/faq" className="main-list-link">FAQ</Link></li>
+                                    <li><Link to="/account" className="main-list-link">Account</Link></li>
+                                </ul>
+
+                                <Button className="primary" btnText="Log out" handleOnClick={handleLogout} />
+                            </>
+                        ) : (
+                            <ul className="main-list">
+                                <li><Link to="/login">Login</Link></li>
+                                <li><Link to="/register">Register</Link></li>
                             </ul>
+                        )}
 
-                            <Button className="primary" btnText="Log out" handleOnClick={handleLogout} />
-                        </>
-                    ) : (
-                        <ul className="main-list">
-                            <li><Link to="/login">Login</Link></li>
-                            <li><Link to="/register">Register</Link></li>
-                        </ul>
-                    )}
-
-                </main>
-            </Menu>
+                    </main>
+                </Menu>
+            </div>
         </header >
     )
 }

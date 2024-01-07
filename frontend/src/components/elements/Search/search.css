@@ -1,0 +1,31 @@
+.search-bar {
+    position: relative;
+    border-radius: var(--border-radius);
+    background-color: #ffffff;
+    margin-left: 0;
+    width: auto;
+}
+
+.search-icon-wrapper {
+    /* padding: 17px 20px; */
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-input {
+    width: 100%;
+    /* padding: 17px 20px; */
+    padding-left: 25px;
+    font-family: var(--font);
+}
+
+/* ------------ Tablet and up ------------ */
+@media (max-width: 743px) {
+    .search-bar {
+        width: auto;
+    }
+  }

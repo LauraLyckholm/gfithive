@@ -1,3 +1,9 @@
+.search-and-menu {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
 .bm-morph-shape {
   fill: transparent;
 }

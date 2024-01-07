@@ -8,6 +8,7 @@ import { connectToMongoDB } from "./config/db";
 import { serviceDown } from "./middleware/serviceDown";
 import { giftRouter } from "./routes/giftRoutes";
 import { userRouter } from "./routes/userRoutes";
+import { searchRouter } from "./routes/searchRoutes";
 
 // ------------ VARIABLES ------------ //
 // Defines the port the app will run on
@@ -48,6 +49,7 @@ app.get("/", (req, res) => {
 
 app.use("/user-routes", userRouter);
 app.use("/gift-routes", giftRouter);
+app.use("/search-routes", searchRouter);
 
 // ------------ DATABASE CONNECTION ------------ //
 // Connection to the database through Mongoose

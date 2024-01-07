@@ -178,9 +178,7 @@ export const updateUserController = asyncHandler(async (req, res) => {
             user.password = hashedPassword;
         }
 
-        console.log("User before save:", user); // Debugging line
         await user.save();
-        console.log("User after save:", user); // Debugging line
 
         res.json({
             message: "User updated successfully",

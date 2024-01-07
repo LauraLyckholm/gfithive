@@ -199,7 +199,6 @@ input:active {
 input {
   padding: 17px 20px;
   font-family: var(--font);
-  /* width: 100%; */
 }
 
 .form-wrapper input {
