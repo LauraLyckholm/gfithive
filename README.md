@@ -134,6 +134,21 @@ You will also need to add the following environment variables to your .env file 
 | `tags`      | `array` | **Optional**. Tags that could be added to the gift, separated by comma |
 | `bought`      | `boolean` | **Optional**. Status of bought or not |
 
+
+#### Add new hive with optional gift and tags
+
+```http
+  POST /hives
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `name`      | `string` | **Required**. The name of the hive to be added |
+| `gift`      | `string` | **Optional**. Gift to be added to this hive |
+| `tags`      | `string` | **Optional**. Tags to be added to the gift in case one is added |
+
 #### Update a gifts information
 
 ```http
@@ -147,18 +162,6 @@ You will also need to add the following environment variables to your .env file 
 | `gift`      | `string` | **Optional**. The new name of the gift |
 | `tags`      | `array` | **Optional**. The new tag names |
 | `bought`      | `boolean` | **Optional**. The new status of bought |
-
-#### Add new hive
-
-```http
-  POST /hives
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
-| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
-| `name`      | `string` | **Required**. The name of the hive to be added |
 
 #### Update a hive name
 

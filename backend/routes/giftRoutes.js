@@ -7,7 +7,6 @@ import {
     createNewController,
     createGiftItemController,
     updateGiftItemController,
-    // createHiveController,
     updateHiveName,
     deleteGiftController,
     deleteHiveController
@@ -31,14 +30,11 @@ giftRouter.get("/", asyncHandler(async (req, res) => {
 }));
 
 // ------------ ROUTES ------------ //
-// giftRouter.get("/gifts", authenticateUser, getGiftsController);
-// giftRouter.get("/gifts/:id", authenticateUser, getHiveGiftsController);
 giftRouter.get("/hives", authenticateUser, getHivesController);
 giftRouter.get("/hives/:id", authenticateUser, getIndividualHiveController);
-giftRouter.post("/hives", authenticateUser, createNewController);
 giftRouter.post("/gifts", authenticateUser, createGiftItemController);
+giftRouter.post("/hives", authenticateUser, createNewController);
 giftRouter.put("/gifts/:id", authenticateUser, updateGiftItemController);
-// giftRouter.post("/hives", authenticateUser, createHiveController);
 giftRouter.put("/hives/:id", authenticateUser, updateHiveName);
 giftRouter.delete("/gifts/:id", authenticateUser, deleteGiftController);
 giftRouter.delete("/hives/:id", authenticateUser, deleteHiveController);
