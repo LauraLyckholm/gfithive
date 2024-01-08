@@ -38,7 +38,7 @@ export const Login = () => {
     }
 
     // Function to handle the removal of the errormessage when the user clicks on the register link
-    const handleSetErrorMessage = () => {
+    const handleClearOnNavigate = () => {
         setErrorMessage("");
     }
 
@@ -76,7 +76,7 @@ export const Login = () => {
                         <Button className={"primary"} handleOnClick={handleLogin} btnText={"Login"} />
                         <div className="light-pair-text">
                             <p className="disclaimer">First time here?</p>
-                            <p className="disclaimer"><Link onClick={handleSetErrorMessage} className="disclaimer bold" to="/register">Register</Link> for an account!</p>
+                            <p className="disclaimer"><Link onClick={handleClearOnNavigate} className="disclaimer bold" to="/register">Register</Link> for an account!</p>
                         </div>
                     </form>
                 </>

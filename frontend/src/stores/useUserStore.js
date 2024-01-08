@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_BACKEND_API;
 const withEndpoint = (endpoint) => `${API_URL}/user-routes/${endpoint}`;
 
 // Creates a store for the user handling
-export const useUserStore = create((set, get) => ({
+export const useUserStore = create((set) => ({
 
     // Saves some state variables in the store with default values
     username: "",
@@ -82,34 +82,10 @@ export const useUserStore = create((set, get) => ({
                 const data = await response.json();
                 set({
                     loadingUser: false,
-                    errorMessage: "Registration failed, please try again"
+                    errorMessage: data.response.message
                 })
-                if (data.error) {
-                    if (data.error.includes("unique")) {
-                        set({ errorMessage: "Username already exists. Please choose another one." });
-                        console.log("Unique", data.error);
-                    } else if (data.validationSuccess === false) {
-                        set({ errorMessage: data.message });
-                        console.log("Validation", data.message);
-                    } else {
-                        set({ errorMessage: data.error });
-                        console.log("Other error", data.error);
-                    }
-                }
                 throw new Error(`${response.status} ${response.statusText}`);
             }
-
-
-            // if (!response.ok) {
-            //     const data = await response.json();
-            //     set({ loadingUser: false });
-
-            //     // Use the specific error message from the backend if available
-            //     const errorMessage = data.response?.message || "Registration failed, please try again";
-            //     set({ errorMessage: errorMessage });
-
-            //     throw new Error(`${response.status} ${response.statusText}`);
-            // }
 
             // If the response is ok, saves the response as a variable called data
             const data = await response.json();
@@ -144,7 +120,7 @@ export const useUserStore = create((set, get) => ({
                 username: "",
                 password: "",
                 loadingUser: false,
-                errorMessage: "Username already exists, please choose another one"
+                // errorMessage: "Username already exists, please choose another one"
             })
             console.error("There was an error =>", error);
         }
@@ -220,9 +196,6 @@ export const useUserStore = create((set, get) => ({
                     errorMessage: "Login failed, please try again"
                 });
             }
-
-            // Logs a response to the console
-            console.log(data.response.username, get().isLoggedIn ? "is logged in" : "is not logged in");
 
         } catch (error) {
             if (error.message == 401) {

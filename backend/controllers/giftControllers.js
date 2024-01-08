@@ -3,22 +3,6 @@ import { User } from "../models/User";
 import { Hive } from "../models/Hive";
 import asyncHandler from "express-async-handler";
 
-// export const getGiftsController = asyncHandler(async (req, res) => {
-//     const userId = req.user._id;
-//     // Find all gifts and sort them by date created in descending order
-//     // const gifts = await Gift.find({ userId }).sort({ createdAt: "desc" }).exec();
-//     const gifts = await Gift.find({ userId }).exec();
-//     res.json(gifts);
-// });
-
-// export const getHiveGiftsController = asyncHandler(async (req, res) => {
-//     const { id } = req.params;
-//     const userId = req.user._id;
-//     // Find all gifts associated with the provided hiveId and sort them by date created in descending order
-//     const gifts = await Hive.findOne({ _id: id, userId }).populate("gifts").exec();
-//     res.json(gifts.gifts);
-// });
-
 export const getHivesController = asyncHandler(async (req, res) => {
     const userId = req.user._id;
     // Find all hives and populate their associated gifts in ascending order

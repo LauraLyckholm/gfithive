@@ -30,6 +30,10 @@ export const Register = () => {
         }
     }
 
+    const handleClearOnNavigate = () => {
+        setErrorMessage("");
+    };
+
     return (
         <>
             {/* Shows a spinning animation when the data is loading */}
@@ -62,7 +66,7 @@ export const Register = () => {
                         <Button tabIndex="1" className={"primary"} handleOnClick={handleRegister} btnText={"Register"} />
                         <div className="light-pair-text">
                             <p className="disclaimer">Changed your mind?</p>
-                            <p className="disclaimer">Go back <Link className="disclaimer bold" to="/">home</Link>.</p>
+                            <p className="disclaimer">Back to <Link onClick={handleClearOnNavigate} className="disclaimer bold" to="/login">login</Link>.</p>
                         </div>
                     </form >
                 </>

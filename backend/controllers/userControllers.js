@@ -36,7 +36,7 @@ export const registerUserController = asyncHandler(async (req, res) => {
             return res.status(400).json({
                 success: false,
                 validationSuccess: false,
-                response: { message: "Password must be at least 7 characters long, include uppercase and lowercase letters as well as include at least one number." }
+                response: { message: "Password must be at least 7 characters long, include uppercase and lowercase lettersat and least one number." }
             });
         }
 
@@ -153,7 +153,7 @@ export const getDashboardController = asyncHandler(async (req, res) => {
     }
 });
 
-// Creates a controller function for the route that is used to get all users
+// Creates a controller function for the route that is used to get all users - this route is commented out on the userRoutes, as it is only used for testing purposes
 export const getUsersController = asyncHandler(async (req, res) => {
     try {
         const users = await User.find();
