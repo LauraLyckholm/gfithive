@@ -2,6 +2,8 @@
 import { User } from "../models/User"
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
+import { Hive } from "../models/Hive";
+import { Gift } from "../models/Gift";
 
 // ------------ CONTROLLERS ------------ //
 // Register a user
@@ -28,6 +30,15 @@ export const registerUserController = asyncHandler(async (req, res) => {
                 }
             });
         };
+
+        // Validate password
+        if (password.length < 7 || !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/.test(password)) {
+            return res.status(400).json({
+                success: false,
+                validationSuccess: false,
+                response: { message: "Password must be at least 7 characters long, include uppercase and lowercase letters as well as include at least one number." }
+            });
+        }
 
         // Encrypts the password, so that no plain text passwords are stored in the database
         const hashedPassword = bcrypt.hashSync(password, 10);
@@ -199,16 +210,22 @@ export const deleteUserController = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
-        // Find the user associated with the provided id
         const user = await User.findById(id);
 
         if (!user) {
             return res.status(404).json({ error: "User not found or unauthorized." });
         }
 
-        // Delete hives and gifts associated with the user
+        // Find all hives associated with the user
+        const hives = await Hive.find({ userId: user._id });
+
+        // Delete gifts associated with each hive
+        for (const hive of hives) {
+            await Gift.deleteMany({ hiveId: hive._id });
+        }
+
+        // Delete hives
         await Hive.deleteMany({ userId: user._id });
-        await Gift.deleteMany({ userId: user._id });
 
         // Delete the user
         await User.findByIdAndDelete(id);

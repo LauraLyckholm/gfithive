@@ -26,9 +26,9 @@ userRouter.get("/", asyncHandler(async (req, res) => {
     }
 }));
 
+userRouter.get("/users", getUsersController);
+userRouter.get("/dashboard", authenticateUser, getDashboardController); // The authenticateUser middleware is used to check if the user is logged in
 userRouter.post("/register", registerUserController);
 userRouter.post("/login", loginUserController);
-userRouter.get("/dashboard", authenticateUser, getDashboardController); // The authenticateUser middleware is used to check if the user is logged in
-userRouter.get("/users", getUsersController);
 userRouter.put("/users/:id", authenticateUser, updateUserController);
 userRouter.delete("/users/:id", authenticateUser, deleteUserController);

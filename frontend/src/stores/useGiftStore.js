@@ -156,39 +156,6 @@ export const useGiftStore = create((set, get) => ({
         }
     },
 
-    // // Function for setting a gift as bought
-    // setGiftAsBought: async (giftId) => {
-    //     try {
-    //         const response = await fetch(withEndpoint(`gifts/${giftId}`), {
-    //             method: "PUT",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 "Auth": localStorage.getItem("accessToken"),
-    //             },
-    //             body: JSON.stringify({ bought: true }),
-    //         });
-
-    //         const data = await response.json();
-    //         console.log(data);
-
-    //         // If the request is successful, the gift is updated in the store
-    //         if (response.ok) {
-    //             set((state) => ({
-    //                 gifts: state.gifts.map((gift) =>
-    //                     gift.id === giftId ? { ...gift, ...data } : gift
-    //                 ), // I map over each gift in the store and update the state of the gift with the matching id
-    //             }));
-    //             // If the request is not successful, an error is logged to the console
-    //         } else {
-    //             console.error("Error updating gift");
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-
-    //     } catch (error) {
-    //         console.error("There was an error =>", error);
-    //     }
-    // },
-
     updateHiveName: async (updatedHive) => {
         try {
             // Makes a PUT request to update an existing hive

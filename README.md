@@ -1,7 +1,9 @@
 
 # Gifthive
 
-As part of a Technigo Web Dev Bootcamp project, this project was created as the Final Project. It includes an API, containting several different routes for handling gift items, lists (hives) and users, as well as a frontend handling all user interactions.
+As part of the Technigo Web Dev Bootcamp, this project was created as the Final Project. It includes an API, containting several different routes for handling gift items, lists (hives) and users, as well as a frontend handling all user interactions.
+
+Gifthive is the one and only place you need, to save all gift ideas for your loved ones. You can add, manage, and view all of your gift ideas in one place, so that you never forget what you where supposed to get dad for Father's day, or your sister on her next birthday!
 
 ## Environment Variables
 
@@ -15,7 +17,7 @@ You will also need to add the following environment variables to your .env file 
 
 ## API Reference
 
-#### Show endpoints
+### Show all endpoints
 
 ```http
   GET /
@@ -24,6 +26,25 @@ You will also need to add the following environment variables to your .env file 
 | Description                |
 | :------------------------- |
 | Shows all available endpoints|
+
+### /user-routes
+
+#### Get the all users (only used in development, is commented out so not currently visible on the "/" route)
+
+```http
+  GET /users
+```
+
+#### Get the dashboard/secret page
+
+```http
+  GET /dashboard
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
 
 #### Regsiter a new user
 
@@ -47,10 +68,38 @@ You will also need to add the following environment variables to your .env file 
 | `username`      | `string` | **Required**. **Unique**. The username of the new user. |
 | `password`      | `string` | **Required**. The password for the new user |
 
-#### Get the dashboard/secret page
+#### Update user information
 
 ```http
-  GET /dashboard
+  PUT /users/:id
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `id`      | `string` | The userId of the user |
+| `username`      | `string` | The new username |
+| `password`      | `string` | The new password |
+
+#### Delete a user
+
+```http
+  DELETE /users/:id
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `id`      | `string` | The userId of the user to be deleted |
+
+### /gift-routes
+
+#### Get all hives
+
+```http
+  GET /hives/
 ```
 
 | Parameter | Type     | Description                       |
@@ -58,11 +107,107 @@ You will also need to add the following environment variables to your .env file 
 | `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
 | `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
 
-#### Get all users that are in the database
+#### Get individual hive
 
 ```http
-  POST /users
+  GET /hives/:id
 ```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `id`      | `string` | The hiveId |
+
+#### Post gift to a hive
+
+```http
+  POST /gifts
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `hiveId`      | `string` | **Required**. The hiveId in which the gift gets added |
+| `gift`      | `string` | **Required**. The name of the gift |
+| `tags`      | `array` | **Optional**. Tags that could be added to the gift, separated by comma |
+| `bought`      | `boolean` | **Optional**. Status of bought or not |
+
+#### Update a gifts information
+
+```http
+  PUT /gifts/:id
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `gift`      | `string` | **Optional**. The new name of the gift |
+| `tags`      | `array` | **Optional**. The new tag names |
+| `bought`      | `boolean` | **Optional**. The new status of bought |
+
+#### Add new hive
+
+```http
+  POST /hives
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `name`      | `string` | **Required**. The name of the hive to be added |
+
+#### Update a hive name
+
+```http
+  PUT /gifts/:id
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `name`      | `string` | **Required**. The new name of the hive |
+
+#### Delete an individual gift
+
+```http
+  DELETE /gifts/:id
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+
+#### Delete an individual hive
+
+```http
+  DELETE /hive/:id
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+
+### /search-routes
+
+#### Get individual hive
+
+```http
+  GET /search
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `searchTerm`      | `string` | **Required**. The queryparam that is positioned right behind /search ("/search/searchTerm=") |
+| `searchValue`      | `string` | **Required**. The queryparam that is positioned right behind /searchTerm, the actual value searched for ("/search/searchTerm=HiveName") |
 
 ## Techstack used
 - React

@@ -3,21 +3,21 @@ import { User } from "../models/User";
 import { Hive } from "../models/Hive";
 import asyncHandler from "express-async-handler";
 
-export const getGiftsController = asyncHandler(async (req, res) => {
-    const userId = req.user._id;
-    // Find all gifts and sort them by date created in descending order
-    // const gifts = await Gift.find({ userId }).sort({ createdAt: "desc" }).exec();
-    const gifts = await Gift.find({ userId }).exec();
-    res.json(gifts);
-});
+// export const getGiftsController = asyncHandler(async (req, res) => {
+//     const userId = req.user._id;
+//     // Find all gifts and sort them by date created in descending order
+//     // const gifts = await Gift.find({ userId }).sort({ createdAt: "desc" }).exec();
+//     const gifts = await Gift.find({ userId }).exec();
+//     res.json(gifts);
+// });
 
-export const getHiveGiftsController = asyncHandler(async (req, res) => {
-    const { id } = req.params;
-    const userId = req.user._id;
-    // Find all gifts associated with the provided hiveId and sort them by date created in descending order
-    const gifts = await Hive.findOne({ _id: id, userId }).populate("gifts").exec();
-    res.json(gifts.gifts);
-});
+// export const getHiveGiftsController = asyncHandler(async (req, res) => {
+//     const { id } = req.params;
+//     const userId = req.user._id;
+//     // Find all gifts associated with the provided hiveId and sort them by date created in descending order
+//     const gifts = await Hive.findOne({ _id: id, userId }).populate("gifts").exec();
+//     res.json(gifts.gifts);
+// });
 
 export const getHivesController = asyncHandler(async (req, res) => {
     const userId = req.user._id;
@@ -95,7 +95,7 @@ export const updateGiftItemController = asyncHandler(async (req, res) => {
 });
 
 export const createHiveController = asyncHandler(async (req, res) => {
-    const { name, gifts } = req.body;
+    const { name } = req.body;
     const userId = req.user._id;
 
     try {
@@ -106,7 +106,7 @@ export const createHiveController = asyncHandler(async (req, res) => {
             return res.status(400).json({ error: "Hive with this name already exists." });
         } else {
             // If the hive name is not found for the user, create a new hive associated with the user
-            const newHive = await new Hive({ name, gifts, userId }).save();
+            const newHive = await new Hive({ name, userId }).save();
 
             // Update the corresponding user's list of hives
             const user = await User.findById(userId);

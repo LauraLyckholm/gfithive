@@ -87,12 +87,29 @@ export const useUserStore = create((set, get) => ({
                 if (data.error) {
                     if (data.error.includes("unique")) {
                         set({ errorMessage: "Username already exists. Please choose another one." });
+                        console.log("Unique", data.error);
+                    } else if (data.validationSuccess === false) {
+                        set({ errorMessage: data.message });
+                        console.log("Validation", data.message);
                     } else {
                         set({ errorMessage: data.error });
+                        console.log("Other error", data.error);
                     }
                 }
                 throw new Error(`${response.status} ${response.statusText}`);
             }
+
+
+            // if (!response.ok) {
+            //     const data = await response.json();
+            //     set({ loadingUser: false });
+
+            //     // Use the specific error message from the backend if available
+            //     const errorMessage = data.response?.message || "Registration failed, please try again";
+            //     set({ errorMessage: errorMessage });
+
+            //     throw new Error(`${response.status} ${response.statusText}`);
+            // }
 
             // If the response is ok, saves the response as a variable called data
             const data = await response.json();
