@@ -4,6 +4,7 @@ import trashcanIcon from "../../assets/trash.svg";
 import update from "../../assets/update.svg"
 import "./hives.css";
 import { customSwal } from "../../mixins/swalMixins";
+import { useEffect } from "react";
 
 // Component for the list of hives, that gets rendered on /hives
 export const HiveListComponent = () => {
@@ -12,6 +13,10 @@ export const HiveListComponent = () => {
 
     // Saves the hives from the local storage in a variable
     const savedHives = JSON.parse(localStorage.getItem("hives"));
+
+    useEffect(() => {
+        getHives();
+    }, [getHives]);
 
     // Function to show the amount of gifts in each hive
     const showGiftAmount = (hive) => {

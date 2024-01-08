@@ -61,7 +61,7 @@ export const CreateNewGift = () => {
     return (
         <section>
             <h1>Add a new gift</h1>
-            <form className="form-wrapper">
+            <form className="form-wrapper" onSubmit={handleAddGift}>
                 <div className="form-group">
                     <label htmlFor="giftName">Gift</label>
                     <input

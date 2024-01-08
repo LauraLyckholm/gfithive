@@ -184,21 +184,23 @@ export const deleteHiveController = asyncHandler(async (req, res) => {
 
     try {
         // Find the hive associated with the provided id and userId
-        const deletedHive = await Hive.findByIdAndDelete(id);
+        // const deletedHive = await Hive.findByIdAndDelete(id);
+        const hive = await Hive.findById(id);
 
-        if (!deletedHive) {
+        if (!hive || hive.userId.toString() !== userId.toString()) {
             return res.status(404).json({ error: "Hive not found or unauthorized." });
         }
 
-        // Update the user's list of hives by removing the deleted hive's ID
-        await User.findByIdAndUpdate(userId, {
-            $pull: { hives: deletedHive._id }
-        });
+        // Delete gifts associated with the hive
+        await Gift.deleteMany({ hiveId: hive._id });
+
+        // Delete the hive
+        await Hive.findByIdAndDelete(id);
 
         // Send a response indicating successful deletion
         res.json({
             message: "Hive deleted successfully",
-            deletedHive: deletedHive,
+            deletedHive: hive,
         });
     } catch (error) {
         console.error("Error deleting hive:", error);

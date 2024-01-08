@@ -1,8 +1,7 @@
 import "./search.css";
-// import { useState } from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-// import { useNavigate } from "react-router-dom";
 // import SearchIcon from "@mui/icons-material/Search";
 import searchIcon from "../../../assets/search-icon.svg";
 import { useSearchStore } from "../../../stores/useSearchStore";
@@ -49,16 +48,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const SearchBar = () => {
-    // const navigate = useNavigate();
-    const { searchTerm, setSearchTerm, searchItems, searchData } = useSearchStore();
+    const { searchTerm, setSearchTerm, searchItems, searchData, searchPerformed } = useSearchStore();
+    const [showDropdown, setShowDropdown] = useState(false);
 
     const handleSearch = () => {
-        // event.preventDefault();
         searchItems(searchTerm);
         setSearchTerm("");
-        // navigate("/search");
-        console.log(searchData);
+        setShowDropdown(true)
     }
+
+    const hideDropdown = () => {
+        setShowDropdown(false);
+    };
 
     // Function that reacts to the "Enter" key being pressed, for accessibility
     const handleKeyDown = async (event) => {
@@ -82,7 +83,13 @@ export const SearchBar = () => {
                 onChange={(event) => setSearchTerm(event.target.value)}
                 onKeyDown={(event) => handleKeyDown(event)}
             />
-            <SearchResultsDropdown results={searchData} />
+            {showDropdown && searchData && (
+                <SearchResultsDropdown
+                    results={searchData}
+                    searchPerformed={searchPerformed}
+                    hideDropDown={hideDropdown}
+                />
+            )}
         </Search>
     )
 }

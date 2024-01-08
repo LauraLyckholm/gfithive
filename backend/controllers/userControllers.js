@@ -200,11 +200,18 @@ export const deleteUserController = asyncHandler(async (req, res) => {
 
     try {
         // Find the user associated with the provided id
-        const user = await User.findByIdAndDelete(id);
+        const user = await User.findById(id);
 
         if (!user) {
             return res.status(404).json({ error: "User not found or unauthorized." });
         }
+
+        // Delete hives and gifts associated with the user
+        await Hive.deleteMany({ userId: user._id });
+        await Gift.deleteMany({ userId: user._id });
+
+        // Delete the user
+        await User.findByIdAndDelete(id);
 
         res.json(`User with username ${user.username} deleted successfully`);
     } catch (error) {

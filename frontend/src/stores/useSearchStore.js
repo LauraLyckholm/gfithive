@@ -9,10 +9,10 @@ const withEndpoint = (endpoint) => `${API_URL}/search-routes/search?${endpoint}`
 export const useSearchStore = create((set) => ({
     searchTerm: "",
     searchData: [],
+    searchPerformed: false,
 
-    setSearchTerm: (searchTerm) => {
-        set({ searchTerm });
-    },
+    setSearchTerm: (searchTerm) => { set({ searchTerm }) },
+    setSearchPerformed: (searchPerformed) => { set({ searchPerformed }) },
 
     searchItems: async (searchValue) => {
         try {
@@ -25,6 +25,7 @@ export const useSearchStore = create((set) => ({
                 const data = await response.json();
                 set({
                     searchData: data,
+                    searchPerformed: true,
                 });
             }
         } catch (error) {
