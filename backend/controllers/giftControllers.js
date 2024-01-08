@@ -222,8 +222,14 @@ export const deleteHiveController = asyncHandler(async (req, res) => {
         // Delete gifts associated with the hive
         await Gift.deleteMany({ hiveId: hive._id });
 
+        // Remove the hive reference from the user's account
+        await User.findByIdAndUpdate(userId, {
+            $pull: { hives: hive._id }
+        });
+
         // Delete the hive
         await Hive.findByIdAndDelete(id);
+
 
         // Send a response indicating successful deletion
         res.json({
