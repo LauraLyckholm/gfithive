@@ -13,11 +13,18 @@ export const CreateNewHive = () => {
     const handleAddHive = async (event) => {
         event.preventDefault();
 
+        // Formats the tags so that they are saved as an array with several strings instead of one string. Filters out empty tags
+        const formattedTags = typeof tagNames === "string" ?
+            tagNames.split(",")
+                .map(tag => tag.trim())
+                .filter(tag => tag !== "")
+            : [];
+
         try {
             const newHive = {
                 name: hiveName,
                 gift: giftName || null, // Gift is optional
-                tags: tagNames || null, // Tags are optional
+                tags: formattedTags || null, // Tags are optional
             };
 
             const success = await addHive(newHive);

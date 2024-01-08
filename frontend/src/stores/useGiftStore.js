@@ -111,8 +111,10 @@ export const useGiftStore = create((set, get) => ({
 
             // If the request is successful, the hive is added to the store
             const data = await response.json();
+
+            const newHiveData = data.hive || data;
             set((state) => ({
-                hives: [...state.hives, data.hive],
+                hives: [...state.hives, newHiveData],
             }));
 
             // Here I call the getHives function to update the hives in the store

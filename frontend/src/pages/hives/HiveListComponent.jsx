@@ -1,6 +1,6 @@
 import { useGiftStore } from "../../stores/useGiftStore";
-// import { useUserStore } from "../../stores/useUserStore";
-import { Link } from "react-router-dom";
+import { useUserStore } from "../../stores/useUserStore";
+import { Link, useNavigate } from "react-router-dom";
 import trashcanIcon from "../../assets/trash.svg";
 import update from "../../assets/update.svg"
 import "./hives.css";
@@ -10,7 +10,10 @@ import { useEffect } from "react";
 // Component for the list of hives, that gets rendered on /hives
 export const HiveListComponent = () => {
     const { getHives, deleteHive, updateHiveName } = useGiftStore();
-    // const { getDashboard } = useUserStore();
+    const { dashboard } = useUserStore();
+    const hivesAmount = dashboard.hivesCount; // Saves the amount of hives in a variable
+
+    const navigate = useNavigate();
 
     // Saves the hives from the local storage in a variable
     const savedHives = JSON.parse(localStorage.getItem("hives"));
@@ -71,8 +74,15 @@ export const HiveListComponent = () => {
             if (result.isConfirmed) {
                 try {
                     deleteHive(hiveId);
-                    getHives();
-                    // getDashboard();
+
+                    // If there aren't any hives left, the user is redirected to the dashboard
+                    if (hivesAmount === 0) {
+                        navigate("/");
+                    } else {
+                        getHives();
+                    }
+
+
                 } catch (error) {
                     console.error("There was an error =>", error);
                 }
