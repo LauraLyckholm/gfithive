@@ -12,6 +12,7 @@ export const useGiftStore = create((set, get) => ({
     hives: [],
     hiveName: "",
     giftName: "",
+    tagNames: [],
     bought: false,
     tags: [],
     loadingHives: false,
@@ -20,6 +21,7 @@ export const useGiftStore = create((set, get) => ({
     setHives: (hives) => set({ hives }),
     setHiveName: (hiveName) => set({ hiveName }),
     setGiftName: (giftName) => set({ giftName }),
+    setTagNames: (tagNames) => set({ tagNames }),
     setBought: (bought) => set({ bought }),
     setTags: (tags) => set({ tags }),
     setLoadingHives: (loadingHives) => set({ loadingHives }),
@@ -102,24 +104,25 @@ export const useGiftStore = create((set, get) => ({
                 body: JSON.stringify(newHive), // Sends the data in the body of the request
             });
 
-            const data = await response.json();
-
-            // If the request is successful, the hive is added to the store
-            if (response.ok) {
-                set((state) => ({
-                    hives: [...state.hives, data],
-                }));
-
-                // Here I call the getHives function to update the hives in the store
-                await get().getHives();
-
-            } else {
-                console.error("Error adding hive");
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || "Failed to create hive");
             }
 
+            // If the request is successful, the hive is added to the store
+            const data = await response.json();
+            set((state) => ({
+                hives: [...state.hives, data.hive],
+            }));
+
+            // Here I call the getHives function to update the hives in the store
+            await get().getHives();
+
+            return true; // Indicates success
+
         } catch (error) {
-            console.error("There was an error =>", error);
+            console.error("Error creating hive:", error);
+            return false; // Indicates failure
         }
     },
 

@@ -19,6 +19,50 @@ export const getIndividualHiveController = asyncHandler(async (req, res) => {
     res.json(hive);
 });
 
+export const createNewController = asyncHandler(async (req, res) => {
+    const { gift, tags, bought, name } = req.body;
+    const userId = req.user._id;
+
+    try {
+        // Check if a hive with the provided name already exists for the user
+        const hiveNameExistsForUser = await Hive.findOne({ name, userId });
+
+        let newHive;
+
+        if (hiveNameExistsForUser) {
+            // If hive with the name already exists, use the existing hive
+            newHive = hiveNameExistsForUser;
+        } else {
+            // If the hive name is not found for the user, create a new hive
+            newHive = await new Hive({ name, userId }).save();
+
+            // Update the corresponding user's list of hives
+            await User.findByIdAndUpdate(userId, { $push: { hives: newHive._id } });
+        }
+
+        // If gift details are provided, create a new gift
+        if (gift) {
+            // Create a new gift item associated with the new hive
+            const giftItem = await new Gift({ gift, tags, bought, hiveId: newHive._id }).save();
+
+            // Update the corresponding hive's gifts array with the newly created gift's ID
+            newHive.gifts.push(giftItem._id);
+            await newHive.save();
+
+            // Update the user's gifts array with the new gift's ID
+            await User.findByIdAndUpdate(userId, { $push: { gifts: giftItem._id } });
+
+            res.json({ hive: newHive, gift: giftItem });
+        } else {
+            // If no gift details provided, only return the hive
+            res.json(newHive);
+        }
+    } catch (error) {
+        console.error("Error creating hive:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 export const createGiftItemController = asyncHandler(async (req, res) => {
     // Retrieves the information sent by the client
     const { gift, tags, bought, hiveId } = req.body;
@@ -78,33 +122,33 @@ export const updateGiftItemController = asyncHandler(async (req, res) => {
     }
 });
 
-export const createHiveController = asyncHandler(async (req, res) => {
-    const { name } = req.body;
-    const userId = req.user._id;
+// export const createHiveController = asyncHandler(async (req, res) => {
+//     const { name } = req.body;
+//     const userId = req.user._id;
 
-    try {
-        // Check if a hive with the provided name already exists for the user
-        const hiveNameExistsForUser = await Hive.findOne({ name, userId });
+//     try {
+//         // Check if a hive with the provided name already exists for the user
+//         const hiveNameExistsForUser = await Hive.findOne({ name, userId });
 
-        if (hiveNameExistsForUser) {
-            return res.status(400).json({ error: "Hive with this name already exists." });
-        } else {
-            // If the hive name is not found for the user, create a new hive associated with the user
-            const newHive = await new Hive({ name, userId }).save();
+//         if (hiveNameExistsForUser) {
+//             return res.status(400).json({ error: "Hive with this name already exists." });
+//         } else {
+//             // If the hive name is not found for the user, create a new hive associated with the user
+//             const newHive = await new Hive({ name, userId }).save();
 
-            // Update the corresponding user's list of hives
-            const user = await User.findById(userId);
-            user.hives.push(newHive._id);
-            await user.save();
+//             // Update the corresponding user's list of hives
+//             const user = await User.findById(userId);
+//             user.hives.push(newHive._id);
+//             await user.save();
 
-            // Send the created hive's data in the response
-            res.json(newHive);
-        }
-    } catch (error) {
-        console.error("Error creating hive:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-});
+//             // Send the created hive's data in the response
+//             res.json(newHive);
+//         }
+//     } catch (error) {
+//         console.error("Error creating hive:", error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// });
 
 export const updateHiveName = asyncHandler(async (req, res) => {
     const { id } = req.params;

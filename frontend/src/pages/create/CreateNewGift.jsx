@@ -11,6 +11,7 @@ export const CreateNewGift = () => {
     const hiveId = id;
     const navigate = useNavigate();
 
+    // Function to handle navigation back to the hive
     const handleOnclickNavigation = () => {
         navigate(`/hives/${hiveId}`)
     };
@@ -32,7 +33,6 @@ export const CreateNewGift = () => {
         };
 
         try {
-
             await addGift(giftData, hiveId);
             setGiftName("");
             setTags("");

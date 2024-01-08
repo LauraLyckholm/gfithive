@@ -12,6 +12,7 @@ import { Dashboard } from "../dashboard/Dashboard";
 export const Home = () => {
     const { isLoggedIn } = useUserStore();
 
+    // Clears localStorage when the user isn't logged in, just as a precaution
     if (!isLoggedIn) {
         localStorage.clear();
     }

@@ -24,6 +24,8 @@ export const Dashboard = () => {
     const hivesAmount = dashboard.hivesCount; // Saves the amount of hives in a variable
     const giftsAmount = dashboard.giftsCount; // Saves the amount of gifts in a variable
 
+    console.log(hivesAmount);
+
     // Fetches the hives when the component mounts
     useEffect(() => {
         getDashboard();

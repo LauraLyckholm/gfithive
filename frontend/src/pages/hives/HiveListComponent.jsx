@@ -1,4 +1,5 @@
 import { useGiftStore } from "../../stores/useGiftStore";
+// import { useUserStore } from "../../stores/useUserStore";
 import { Link } from "react-router-dom";
 import trashcanIcon from "../../assets/trash.svg";
 import update from "../../assets/update.svg"
@@ -9,7 +10,7 @@ import { useEffect } from "react";
 // Component for the list of hives, that gets rendered on /hives
 export const HiveListComponent = () => {
     const { getHives, deleteHive, updateHiveName } = useGiftStore();
-    // const { loading } = useUserStore();
+    // const { getDashboard } = useUserStore();
 
     // Saves the hives from the local storage in a variable
     const savedHives = JSON.parse(localStorage.getItem("hives"));
@@ -71,6 +72,7 @@ export const HiveListComponent = () => {
                 try {
                     deleteHive(hiveId);
                     getHives();
+                    // getDashboard();
                 } catch (error) {
                     console.error("There was an error =>", error);
                 }

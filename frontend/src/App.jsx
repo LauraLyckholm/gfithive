@@ -9,7 +9,6 @@ export const App = () => {
     <BrowserRouter>
       <Header />
       <section className="main-wrapper">
-        {/* <ScrollToTop /> */}
         <main className="main">
           <Routes>{routes}</Routes>
         </main>
