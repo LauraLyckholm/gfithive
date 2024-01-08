@@ -12,6 +12,10 @@ import { Dashboard } from "../dashboard/Dashboard";
 export const Home = () => {
     const { isLoggedIn } = useUserStore();
 
+    if (!isLoggedIn) {
+        localStorage.clear();
+    }
+
     return (
         <>
             {/* If the user is logged in it shows the dashboard, otherwise prompts the user to log in */}
