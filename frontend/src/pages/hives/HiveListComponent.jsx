@@ -5,7 +5,9 @@ import trashcanIcon from "../../assets/trash.svg";
 import update from "../../assets/update.svg"
 import "./hives.css";
 import { customSwal } from "../../mixins/swalMixins";
+// import { formatTimeMixins } from "../../mixins/formatTimeMixins";
 import { useEffect } from "react";
+import dayjs from "dayjs";
 
 // Component for the list of hives, that gets rendered on /hives
 export const HiveListComponent = () => {
@@ -17,14 +19,9 @@ export const HiveListComponent = () => {
 
     // Saves the hives from the local storage in a variable
     const savedHives = JSON.parse(localStorage.getItem("hives"));
-
-    // Function to format the time
-    const handleFormatTime = (time) => {
-        const formattedTime = new Date(time).toLocaleString();
-        return formattedTime.slice(0, 10);
-    };
-    console.log("savedHives", savedHives[0].updatedAt.toLocaleString());
-    console.log("savedHives", handleFormatTime(savedHives[0].updatedAt));
+    // console.log("savedHives", savedHives);
+    // console.log("savedHives", savedHives[0].updatedAt.toLocaleString());
+    // console.log("savedHives", formatTimeMixins(savedHives[0].updatedAt));
 
     useEffect(() => {
         getHives();
@@ -36,6 +33,14 @@ export const HiveListComponent = () => {
     const showGiftAmount = (hive) => {
         const numberOfGifts = hive.gifts.length;
         return numberOfGifts;
+    };
+
+    // Function to count overdue gifts in a hive
+    const countOverdueGifts = (hive) => {
+        return hive.gifts.reduce((count, gift) => {
+            const dueDate = dayjs(gift.dueDate);
+            return dueDate.isValid() && dueDate.isBefore(dayjs()) ? count + 1 : count;
+        }, 0);
     };
 
     // Function to handle the updating of a hive name using the updateHiveName function from the useGiftStore
@@ -124,6 +129,7 @@ export const HiveListComponent = () => {
         <>
             <ul>
                 {savedHives.map((hive) => {
+                    const overdueCount = countOverdueGifts(hive);
                     return (
                         <li className="grid-list-items" key={hive._id}>
                             <img
@@ -138,7 +144,12 @@ export const HiveListComponent = () => {
                                 <p className="bold">{hive.name}</p>
                             </Link>
                             <p className="italic-text">{showGiftAmount(hive)} gifts</p>
-                            <p className="italic-text disabled">{handleFormatTime(hive.dueDate)}</p>
+                            {/* <p className="italic-text disabled">{handleFormatTime(hive.dueDate)}</p> */}
+
+                            <p className="due-text">
+                                {overdueCount > 0 ? `${overdueCount} due` : null}
+
+                            </p>
                             <img
                                 tabIndex="0"
                                 className="icon"

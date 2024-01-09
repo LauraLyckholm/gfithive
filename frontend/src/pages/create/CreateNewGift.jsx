@@ -3,22 +3,23 @@ import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams, useNavigate } from "react-router-dom";
 import { customSwal } from "../../mixins/swalMixins";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { PickersDay } from "@mui/x-date-pickers/PickersDay";
-import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
+// import { PickersDay } from "@mui/x-date-pickers/PickersDay";
+// import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
+// import { styled } from "@mui/material/styles";
+// import IconButton from "@mui/material/IconButton";
+import dayjs from "dayjs";
 import "./create.css";
 
-const StyledButton = styled(IconButton)(({ theme }) => ({
-    borderRadius: theme.shape.borderRadius,
-}));
-const StyledDay = styled(PickersDay)(({ theme }) => ({
-    borderRadius: theme.shape.borderRadius,
-    color:
-        theme.palette.mode === 'light'
-            ? theme.palette.secondary.dark
-            : theme.palette.secondary.light,
-}));
+// const StyledButton = styled(IconButton)(({ theme }) => ({
+//     borderRadius: theme.shape.borderRadius,
+// }));
+// const StyledDay = styled(PickersDay)(({ theme }) => ({
+//     borderRadius: theme.shape.borderRadius,
+//     color:
+//         theme.palette.mode === "light"
+//             ? theme.palette.secondary.dark
+//             : theme.palette.secondary.light,
+// }));
 
 // Component for creating a new gift
 export const CreateNewGift = () => {
@@ -48,6 +49,17 @@ export const CreateNewGift = () => {
             tags: formattedTags,
             dueDate: dueDate,
         };
+
+        // Check if the due date is in the past
+        if (dueDate && dayjs(dueDate).isBefore(dayjs())) {
+            customSwal.fire({
+                title: "Oops...",
+                text: "The due date must be in the past!",
+                icon: "error",
+                confirmButtonText: "OK",
+            });
+            return; // Exit the function early
+        }
 
         try {
             await addGift(giftData, hiveId);
@@ -106,21 +118,21 @@ export const CreateNewGift = () => {
                     <DatePicker
                         id="tags"
                         value={dueDate}
-                        onChange={(e) => setDueDate(e.target.value)}
-                        slots={{
-                            openPickerIcon: EditCalendarRoundedIcon,
-                            openPickerButton: StyledButton,
-                            day: StyledDay,
-                        }}
-                        slotProps={{
-                            openPickerIcon: { fontSize: 'large' },
-                            openPickerButton: { color: 'secondary' },
-                            textField: {
-                                variant: 'filled',
-                                focused: true,
-                                color: 'secondary',
-                            },
-                        }}
+                        onChange={setDueDate}
+                    // slots={{
+                    //     openPickerIcon: EditCalendarRoundedIcon,
+                    //     openPickerButton: StyledButton,
+                    //     day: StyledDay,
+                    // }}
+                    // slotProps={{
+                    //     openPickerIcon: { fontSize: "large" },
+                    //     openPickerButton: { color: "secondary" },
+                    //     textField: {
+                    //         variant: "filled",
+                    //         focused: true,
+                    //         color: "secondary",
+                    //     },
+                    // }}
                     />
                 </div>
             </form>

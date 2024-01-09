@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Avatar from "@mui/material/Avatar";
 import update from "../../assets/update.svg";
 import { customSwal } from "../../mixins/swalMixins";
 import trashcanIcon from "../../assets/trash.svg";
+import dueIcon from "../../assets/due-icon.svg";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
+import { formatTimeMixins } from "../../mixins/formatTimeMixins";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -35,7 +38,6 @@ export const UniqueHive = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setHive(data);
-                    console.log("data", data);
                 } else {
                     console.error("Error fetching hive with that id");
                 }
@@ -149,6 +151,16 @@ export const UniqueHive = () => {
         }
     };
 
+    // Function to handle showing the due date
+    const handleDueDate = (gift) => {
+        if (gift.dueDate !== null) {
+            const formattedDueDate = formatTimeMixins(gift.dueDate);
+            return formattedDueDate;
+        } else (
+            null
+        )
+    };
+
     return (
         <section>
             {/* If there is a hive recognized the user is shown the hives. */}
@@ -193,6 +205,15 @@ export const UniqueHive = () => {
                                         direction="row"
                                         spacing={1}
                                     >
+                                        {gift.dueDate !== null ?
+                                            <Chip
+
+                                                avatar={<Avatar alt="Due date icon" src={dueIcon} />}
+                                                variant="outlined"
+                                                label={handleDueDate(gift)}
+                                            />
+                                            : null
+                                        }
                                         {gift.tags.map((tag) => {
                                             return (
                                                 <Chip

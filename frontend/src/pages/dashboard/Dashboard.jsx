@@ -15,6 +15,7 @@ import userIconLight from "../../assets/userIconLight.svg";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
+import dayjs from "dayjs";
 
 // Component for the dashboard
 export const Dashboard = () => {
@@ -23,12 +24,32 @@ export const Dashboard = () => {
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
     const hivesAmount = dashboard.hivesCount; // Saves the amount of hives in a variable
     const giftsAmount = dashboard.giftsCount; // Saves the amount of gifts in a variable
+    const allHives = JSON.parse(localStorage.getItem("hives"));
 
     // Fetches the hives when the component mounts
     useEffect(() => {
         getDashboard();
         setLoggedInUser(localStorage.getItem("username"));
     }, [getDashboard])
+
+    // Function to count overdue gifts in a hive
+    const countOverdueGifts = (allHives) => {
+        allHives.map(hive => {
+            return hive.gifts.reduce((count, gift) => {
+                const dueDate = dayjs(gift.dueDate);
+                return dueDate.isValid() && dueDate.isBefore(dayjs()) ? count + 1 : count;
+            }, 0);
+        })
+    };
+
+    // Function to handle showing the amount of overdue gifts in the dashboard
+    const handleShowingOverdueGifts = () => {
+        if (countOverdueGifts(allHives) > 0) {
+            return countOverdueGifts(allHives);
+        } else {
+            return `0`;
+        }
+    }
 
     return (
         <>
@@ -69,7 +90,7 @@ export const Dashboard = () => {
                                                 </Link>
                                             </>
                                             <>
-                                                <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} amount="0" text="deadlines" />
+                                                <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} text="deadlines" amount={handleShowingOverdueGifts()} />
                                             </>
                                             <>
                                                 <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount="0" text="shared hives" />
