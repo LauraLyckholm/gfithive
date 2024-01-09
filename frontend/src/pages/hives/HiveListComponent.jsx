@@ -18,9 +18,19 @@ export const HiveListComponent = () => {
     // Saves the hives from the local storage in a variable
     const savedHives = JSON.parse(localStorage.getItem("hives"));
 
+    // Function to format the time
+    const handleFormatTime = (time) => {
+        const formattedTime = new Date(time).toLocaleString();
+        return formattedTime.slice(0, 10);
+    };
+    console.log("savedHives", savedHives[0].updatedAt.toLocaleString());
+    console.log("savedHives", handleFormatTime(savedHives[0].updatedAt));
+
     useEffect(() => {
         getHives();
     }, [getHives]);
+
+
 
     // Function to show the amount of gifts in each hive
     const showGiftAmount = (hive) => {
@@ -128,7 +138,7 @@ export const HiveListComponent = () => {
                                 <p className="bold">{hive.name}</p>
                             </Link>
                             <p className="italic-text">{showGiftAmount(hive)} gifts</p>
-                            <p className="italic-text disabled">0 due</p>
+                            <p className="italic-text disabled">{handleFormatTime(hive.dueDate)}</p>
                             <img
                                 tabIndex="0"
                                 className="icon"

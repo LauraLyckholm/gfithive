@@ -21,13 +21,21 @@ export const useSearchStore = create((set) => ({
                     "Auth": localStorage.getItem("accessToken"),
                 },
             });
-            if (response.ok) {
-                const data = await response.json();
+
+            if (response.status === 404) {
                 set({
-                    searchData: data,
+                    searchData: [],
                     searchPerformed: true,
                 });
-            }
+            } else
+
+                if (response.ok) {
+                    const data = await response.json();
+                    set({
+                        searchData: data,
+                        searchPerformed: true,
+                    });
+                }
         } catch (error) {
             console.error("There was an error =>", error);
         }

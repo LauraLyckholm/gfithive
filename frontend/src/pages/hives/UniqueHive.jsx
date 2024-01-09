@@ -35,6 +35,7 @@ export const UniqueHive = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setHive(data);
+                    console.log("data", data);
                 } else {
                     console.error("Error fetching hive with that id");
                 }

@@ -2,11 +2,27 @@ import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams, useNavigate } from "react-router-dom";
 import { customSwal } from "../../mixins/swalMixins";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { PickersDay } from "@mui/x-date-pickers/PickersDay";
+import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
 import "./create.css";
+
+const StyledButton = styled(IconButton)(({ theme }) => ({
+    borderRadius: theme.shape.borderRadius,
+}));
+const StyledDay = styled(PickersDay)(({ theme }) => ({
+    borderRadius: theme.shape.borderRadius,
+    color:
+        theme.palette.mode === 'light'
+            ? theme.palette.secondary.dark
+            : theme.palette.secondary.light,
+}));
 
 // Component for creating a new gift
 export const CreateNewGift = () => {
-    const { giftName, setGiftName, addGift, tags, setTags } = useGiftStore();
+    const { giftName, setGiftName, addGift, tags, setTags, dueDate, setDueDate } = useGiftStore();
     const { id } = useParams();
     const hiveId = id;
     const navigate = useNavigate();
@@ -29,13 +45,15 @@ export const CreateNewGift = () => {
 
         const giftData = {
             gift: giftName,
-            tags: formattedTags
+            tags: formattedTags,
+            dueDate: dueDate,
         };
 
         try {
             await addGift(giftData, hiveId);
             setGiftName("");
             setTags("");
+            setDueDate("");
 
             // Alerts to the user that the gift has been created and gives them the choice to either add another gift or go back to their hive
             customSwal.fire({
@@ -49,6 +67,7 @@ export const CreateNewGift = () => {
                 if (result.isConfirmed) {
                     setGiftName("");
                     setTags("");
+                    setDueDate("");
                 } else if (result.dismiss === customSwal.DismissReason.cancel) {
                     navigate(`/hives/${hiveId}`);
                 }
@@ -81,6 +100,28 @@ export const CreateNewGift = () => {
                         value={tags}
                         onChange={(e) => setTags(e.target.value)}
                         required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="dueDate">Set due date</label>
+                    <DatePicker
+                        id="tags"
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                        slots={{
+                            openPickerIcon: EditCalendarRoundedIcon,
+                            openPickerButton: StyledButton,
+                            day: StyledDay,
+                        }}
+                        slotProps={{
+                            openPickerIcon: { fontSize: 'large' },
+                            openPickerButton: { color: 'secondary' },
+                            textField: {
+                                variant: 'filled',
+                                focused: true,
+                                color: 'secondary',
+                            },
+                        }}
+                    />
                 </div>
             </form>
 

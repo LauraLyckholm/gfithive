@@ -19,6 +19,10 @@ const GiftItemSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    dueDate: {
+        type: Date,
+        default: null,  // Set default to null if the due date is optional
+    },
 },
     {
         timestamps: true,

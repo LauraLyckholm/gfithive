@@ -19,7 +19,7 @@ export const getIndividualHiveController = asyncHandler(async (req, res) => {
 });
 
 export const createNewController = asyncHandler(async (req, res) => {
-    const { gift, tags, bought, name } = req.body;
+    const { gift, tags, bought, name, dueDate } = req.body;
     const userId = req.user._id;
 
     try {
@@ -41,14 +41,19 @@ export const createNewController = asyncHandler(async (req, res) => {
 
         // If gift details are provided, create a new gift
         if (gift) {
-            // Create a new gift item associated with the new hive
-            const giftItem = await new Gift({ gift, tags, bought, hiveId: newHive._id }).save();
+            // Checks that the dueDate is in the future
+            if (dueDate && new Date(dueDate) < new Date()) {
+                return res.status(400).json({ error: "Due date must be in the future." });
+            }
 
-            // Update the corresponding hive's gifts array with the newly created gift's ID
+            // Creates a new gift item associated with the new hive
+            const giftItem = await new Gift({ gift, tags, bought, dueDate, hiveId: newHive._id }).save();
+
+            // Updates the corresponding hive's gifts array with the newly created gift's ID
             newHive.gifts.push(giftItem._id);
             await newHive.save();
 
-            // Update the user's gifts array with the new gift's ID
+            // Updates the user's gifts array with the new gift's ID
             await User.findByIdAndUpdate(userId, { $push: { gifts: giftItem._id } });
 
             res.json({ hive: newHive, gift: giftItem });
@@ -64,7 +69,7 @@ export const createNewController = asyncHandler(async (req, res) => {
 
 export const createGiftItemController = asyncHandler(async (req, res) => {
     // Retrieves the information sent by the client
-    const { gift, tags, bought, hiveId } = req.body;
+    const { gift, tags, bought, hiveId, dueDate } = req.body;
     const userId = req.user._id;
     // Checks if there is a hiveId in the request body, if there isn't, an error message is sent to the client
     if (!hiveId) {
@@ -80,8 +85,13 @@ export const createGiftItemController = asyncHandler(async (req, res) => {
             return res.status(404).json({ error: "Hive not found or unauthorized." });
         }
 
+        // Checks that the dueDate is in the future
+        if (dueDate && new Date(dueDate) < new Date()) {
+            return res.status(400).json({ error: "Due date must be in the future." });
+        }
+
         // Create a new gift item associated with the given hiveId
-        const giftItem = await new Gift({ gift, tags, bought, hiveId }).save();
+        const giftItem = await new Gift({ gift, tags, bought, hiveId, dueDate }).save();
 
         // Update the corresponding hive's gifts array with the newly created gift's ID
         hiveExists.gifts.push(giftItem._id);
@@ -103,11 +113,16 @@ export const createGiftItemController = asyncHandler(async (req, res) => {
 
 export const updateGiftItemController = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { gift, tags, bought } = req.body;
+    const { gift, tags, bought, dueDate } = req.body;
 
     try {
+        // Checks that the dueDate is in the future
+        if (dueDate && new Date(dueDate) < new Date()) {
+            return res.status(400).json({ error: "Due date must be in the future." });
+        }
+
         // Find the gift associated with the provided id and update the gift's information
-        const giftItem = await Gift.findByIdAndUpdate({ _id: id }, { gift, tags, bought }, { new: true });
+        const giftItem = await Gift.findByIdAndUpdate({ _id: id }, { gift, tags, bought, dueDate }, { new: true });
         console.log(giftItem);
 
         if (!giftItem) {

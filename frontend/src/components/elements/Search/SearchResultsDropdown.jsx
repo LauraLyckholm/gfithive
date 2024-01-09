@@ -1,9 +1,9 @@
 import "./search.css";
 import { Link } from "react-router-dom";
-// import { useSearchStore } from "../../../stores/useSearchStore";
+import { useUserStore } from "../../../stores/useUserStore";
 
 export const SearchResultsDropdown = ({ results, searchPerformed, hideDropDown }) => {
-    // const { setSearchTerm } = useSearchStore();
+    const { isLoggedIn } = useUserStore();
     // Destructures the results object
     const { hives, gifts } = results;
     if (!results) return null;
@@ -17,6 +17,8 @@ export const SearchResultsDropdown = ({ results, searchPerformed, hideDropDown }
 
     return (
         <div className="search-results-dropdown">
+            {/* Notifies the user that they must log in to search */}
+            {!isLoggedIn ? <p>You must log in to search!</p> : null}
             {searchPerformed && noResults ? (
                 <p>No results found</p>
             ) : (
