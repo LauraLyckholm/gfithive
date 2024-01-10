@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import trashcanIcon from "../../assets/trash.svg";
 import update from "../../assets/update.svg"
 import "./hives.css";
-import { customSwal } from "../../mixins/swalMixins";
-// import { formatTimeMixins } from "../../mixins/formatTimeMixins";
+import { customSwal } from "../../utils/customSwal";
+// import { formatTime } from "../../mixins/formatTime";
 import { useEffect } from "react";
 import dayjs from "dayjs";
 
@@ -21,7 +21,7 @@ export const HiveListComponent = () => {
     const savedHives = JSON.parse(localStorage.getItem("hives"));
     // console.log("savedHives", savedHives);
     // console.log("savedHives", savedHives[0].updatedAt.toLocaleString());
-    // console.log("savedHives", formatTimeMixins(savedHives[0].updatedAt));
+    // console.log("savedHives", formatTime(savedHives[0].updatedAt));
 
     useEffect(() => {
         getHives();

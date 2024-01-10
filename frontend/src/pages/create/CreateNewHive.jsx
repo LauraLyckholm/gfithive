@@ -2,7 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
-import { customSwal } from "../../mixins/swalMixins";
+import { customSwal } from "../../utils/customSwal";
 import "./create.css";
 
 export const CreateNewHive = () => {

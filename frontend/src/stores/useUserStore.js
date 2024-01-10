@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { customSwal } from "../mixins/swalMixins";
+import { customSwal } from "../utils/customSwal";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -56,9 +56,9 @@ export const useUserStore = create((set) => ({
 
 
     // Creates a function for registering a user
-    registerUser: async (username, password, email) => {
+    registerUser: async (username, email, password) => {
         // Checks if the username or password is empty, and if so, shows an error message
-        if (!username || !password || !email) {
+        if (!username || !email || !password) {
             set({ errorMessage: "Please fill out all fields!" });
             return;
         }
@@ -87,12 +87,15 @@ export const useUserStore = create((set) => ({
                     loadingUser: false,
                     errorMessage: data.response.message
                 })
+                console.log(data.response);
+
                 throw new Error(`${response.status} ${response.statusText}`);
             }
 
             // If the response is ok, saves the response as a variable called data
             const data = await response.json();
             const successfullFetch = data.success;
+            console.log(data);
 
             // In case of a successfull fetch, sets the state variables to the values from the response
             if (successfullFetch) {

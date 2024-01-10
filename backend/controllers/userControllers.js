@@ -9,6 +9,7 @@ import { Gift } from "../models/Gift";
 // Register a user
 export const registerUserController = asyncHandler(async (req, res) => {
     const { username, password, email } = req.body;
+    console.log(req.body);
 
     try {
         // Check if the user already exists in the database, by finding a user with the same username from the database
@@ -29,6 +30,7 @@ export const registerUserController = asyncHandler(async (req, res) => {
             });
         }
 
+        // Validate that all required fields are filled in
         if (!username || !password || !email) {
             res.status(400).json({
                 success: false,

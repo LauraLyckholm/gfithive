@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore";
 import { Button } from "../../components/elements/Button/Button";
-import { customSwal } from "../../mixins/swalMixins";
+import { customSwal } from "../../utils/customSwal";
 import { UpdateUserInfo } from "../../components/elements/InputFields/UpdateUserInfo";
 import "./account.css";
 

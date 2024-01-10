@@ -1,7 +1,7 @@
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams, useNavigate } from "react-router-dom";
-import { customSwal } from "../../mixins/swalMixins";
+import { customSwal } from "../../utils/customSwal";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import "./create.css";

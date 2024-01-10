@@ -7,12 +7,12 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import update from "../../assets/update.svg";
-import { customSwal } from "../../mixins/swalMixins";
+import { customSwal } from "../../utils/customSwal";
 import trashcanIcon from "../../assets/trash.svg";
 import dueIcon from "../../assets/due-icon.svg";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
-import { formatTimeMixins } from "../../mixins/formatTimeMixins";
+import { formatTime } from "../../utils/formatTime";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -154,7 +154,7 @@ export const UniqueHive = () => {
     // Function to handle showing the due date
     const handleDueDate = (gift) => {
         if (gift.dueDate !== null) {
-            const formattedDueDate = formatTimeMixins(gift.dueDate);
+            const formattedDueDate = formatTime(gift.dueDate);
             return formattedDueDate;
         } else (
             null

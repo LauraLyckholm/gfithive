@@ -21,6 +21,8 @@ export const Register = () => {
             // If the fetch was successfull, the user will be redirected to the login page, otherwise an error message will be displayed
             if (successfullFetch) {
                 setErrorMessage("");
+                console.log(email);
+
                 return;
             } else {
                 errorMessage;
