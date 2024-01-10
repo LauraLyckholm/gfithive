@@ -219,4 +219,41 @@ export const deleteHiveController = asyncHandler(async (req, res) => {
     }
 });
 
+export const shareHiveController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { shareToEmail } = req.body;
+    const userId = req.user._id;
+
+    try {
+        // Find the hive associated with the provided id and userId
+        const hive = await Hive.findById(id);
+
+        if (!hive || hive.userId.toString() !== userId.toString()) {
+            return res.status(404).json({ error: "Hive not found or unauthorized." });
+        }
+
+        // Find recipient user based on email
+        const recipient = await User.findOne({ email: shareToEmail });
+        if (!recipient) {
+            return res.status(404).json({ error: "Recipient not found." });
+        }
+
+        // Update the hive's sharedWith field
+        hive.sharedWith.push(recipient._id);
+        await hive.save();
+
+        // Optionally update recipient's sharedHives field
+        recipient.sharedHives.push(hive._id);
+        await recipient.save();
+
+        res.json({
+            message: "Hive shared successfully",
+            sharedHive: hive,
+        });
+    } catch (error) {
+        console.error("Error sharing hive:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 

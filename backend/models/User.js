@@ -35,7 +35,11 @@ const UserSchema = new Schema(
         gifts: [{
             type: mongoose.SchemaTypes.ObjectId,
             ref: "Gift"
-        }]
+        }],
+        sharedHives: [{
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: "Hive",
+        }],
     },
     {
         timestamps: true,
