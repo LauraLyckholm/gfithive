@@ -123,7 +123,6 @@ export const updateGiftItemController = asyncHandler(async (req, res) => {
 
         // Find the gift associated with the provided id and update the gift's information
         const giftItem = await Gift.findByIdAndUpdate({ _id: id }, { gift, tags, bought, dueDate }, { new: true });
-        console.log(giftItem);
 
         if (!giftItem) {
             return res.status(404).json({ error: "Gift not found or unauthorized." });

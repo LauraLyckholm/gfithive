@@ -39,6 +39,16 @@
     grid-row: 1 / 2;
 }
 
+.icon-pair-with-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-icon {
+    margin-top: 7px;
+}
+
 .icon-pair:nth-child(2) {
     grid-column: 3 / 4;
     grid-row: 1 / 2;

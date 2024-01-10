@@ -182,15 +182,17 @@ export const UniqueHive = () => {
                                         </label>
                                         <li>{gift.gift}</li>
                                     </div>
-                                    <div className="icon-pair">
-                                        <img
-                                            tabIndex="0"
-                                            className="icon"
-                                            src={update}
-                                            alt="Icon for updating the hives name"
-                                            onClick={() => handleUpdateGift(gift._id, gift.gift)}
-                                            onKeyDown={((event) => handleKeyPress(event, "update", gift._id))}
-                                        />
+                                    <div className="icon-pair icon-pair-with-link">
+                                        <Link to={`/hives/${id}/${gift._id}/update-gift`}>
+                                            <img
+                                                tabIndex="0"
+                                                className="icon update-icon"
+                                                src={update}
+                                                alt="Icon for updating the hives name"
+                                            // onClick={() => handleUpdateGift(gift._id, gift.gift)}
+
+                                            // onKeyDown={((event) => handleKeyPress(event, "update", gift._id))}
+                                            /></Link>
                                         <img
                                             tabIndex="0"
                                             className="icon"

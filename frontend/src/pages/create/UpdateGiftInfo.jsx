@@ -3,30 +3,17 @@ import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams, useNavigate } from "react-router-dom";
 import { customSwal } from "../../mixins/swalMixins";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-// import { PickersDay } from "@mui/x-date-pickers/PickersDay";
-// import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
-// import { styled } from "@mui/material/styles";
-// import IconButton from "@mui/material/IconButton";
 import dayjs from "dayjs";
 import "./create.css";
 
-// const StyledButton = styled(IconButton)(({ theme }) => ({
-//     borderRadius: theme.shape.borderRadius,
-// }));
-// const StyledDay = styled(PickersDay)(({ theme }) => ({
-//     borderRadius: theme.shape.borderRadius,
-//     color:
-//         theme.palette.mode === "light"
-//             ? theme.palette.secondary.dark
-//             : theme.palette.secondary.light,
-// }));
-
-// Component for creating a new gift
-export const CreateNewGift = () => {
-    const { giftName, setGiftName, addGift, tags, setTags, dueDate, setDueDate } = useGiftStore();
-    const { id } = useParams();
+export const UpdateGiftInfo = () => {
+    const { giftName, setGiftName, updateGift, tags, setTags, dueDate, setDueDate } = useGiftStore();
+    const { id, giftId } = useParams();
     const hiveId = id;
+    const giftIdParam = giftId;
     const navigate = useNavigate();
+
+    console.log("giftIdParam", giftIdParam);
 
     // Function to handle navigation back to the hive
     const handleOnclickNavigation = () => {
@@ -34,7 +21,7 @@ export const CreateNewGift = () => {
     };
 
     // function to handle adding a new gift
-    const handleAddGift = async (event) => {
+    const handleUpdateGift = async (event) => {
         event.preventDefault();
 
         // Formats the tags so that they are saved as an array with several strings instead of one string. Filters out empty tags
@@ -45,6 +32,7 @@ export const CreateNewGift = () => {
             : [];
 
         const giftData = {
+            id: giftIdParam,
             gift: giftName,
             tags: formattedTags,
             dueDate: dueDate,
@@ -58,11 +46,11 @@ export const CreateNewGift = () => {
                 icon: "error",
                 confirmButtonText: "OK",
             });
-            return; // Exit the function early
+            return;
         }
 
         try {
-            await addGift(giftData, hiveId);
+            await updateGift(giftData);
             setGiftName("");
             setTags("");
             setDueDate("");
@@ -70,17 +58,14 @@ export const CreateNewGift = () => {
             // Alerts to the user that the gift has been created and gives them the choice to either add another gift or go back to their hive
             customSwal.fire({
                 title: "Weee!",
-                text: "Gift successfully added! 🎁",
+                text: "Gift successfully updated! 🎁",
                 icon: "success",
-                showCancelButton: true,
-                confirmButtonText: "Let's add another!",
-                cancelButtonText: "Back to my hive",
+                confirmButtonText: "Back to my hive!",
             }).then((result) => {
                 if (result.isConfirmed) {
                     setGiftName("");
                     setTags("");
                     setDueDate("");
-                } else if (result.dismiss === customSwal.DismissReason.cancel) {
                     navigate(`/hives/${hiveId}`);
                 }
             });
@@ -91,10 +76,10 @@ export const CreateNewGift = () => {
 
     return (
         <section>
-            <h1>Add a new gift</h1>
-            <form className="form-wrapper" onSubmit={handleAddGift}>
+            <h1>Update gift</h1>
+            <form className="form-wrapper" onSubmit={handleUpdateGift}>
                 <div className="form-group">
-                    <label htmlFor="giftName">Gift</label>
+                    <label htmlFor="giftName">Gift name</label>
                     <input
                         type="text"
                         id="giftName"
@@ -104,7 +89,7 @@ export const CreateNewGift = () => {
                         required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="tags">Add tags (separated by comma)</label>
+                    <label htmlFor="tags">Tags (separated by comma)</label>
                     <input
                         type="text"
                         id="tags"
@@ -114,7 +99,7 @@ export const CreateNewGift = () => {
                         required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="dueDate">Set due date</label>
+                    <label htmlFor="dueDate">Due date</label>
                     <DatePicker
                         id="dueDate"
                         value={dueDate}
@@ -138,7 +123,7 @@ export const CreateNewGift = () => {
             </form>
 
             <div className="btns">
-                <Button handleOnClick={handleAddGift} className={"primary"} btnText={"Add gift"} />
+                <Button handleOnClick={handleUpdateGift} className={"primary"} btnText={"Update gift"} />
                 <Button className={"secondary"} handleOnClick={handleOnclickNavigation} btnText={"Back to hive"} />
             </div>
         </section>
