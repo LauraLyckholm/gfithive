@@ -157,14 +157,15 @@ export const loginUserController = asyncHandler(async (req, res) => {
 
 // Creates a controller function for the route that is used to get the dashboard, which is only accessible if the user is logged in. The authentication is done in the routes-file
 export const getDashboardController = asyncHandler(async (req, res) => {
-    const { username, hives, gifts } = req.user; // gets the username from the authenticated user
+    const { username, hives, gifts, sharedHives } = req.user; // gets the username from the authenticated user
     try {
         res.json({
             message: `Welcome to your Dashboard, ${username}!`,
             hivesCount: hives.length,
             giftsCount: gifts.length,
             gifts: gifts,
-            hives: hives
+            hives: hives,
+            sharedHives: sharedHives
         });
 
     } catch (err) {

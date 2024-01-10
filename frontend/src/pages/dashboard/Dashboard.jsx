@@ -24,6 +24,7 @@ export const Dashboard = () => {
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
     const hivesAmount = dashboard.hivesCount; // Saves the amount of hives in a variable
     const giftsAmount = dashboard.giftsCount; // Saves the amount of gifts in a variable
+    const sharedHives = dashboard.sharedHives; // Saves the amount of shared hives in a variable
     const allHives = JSON.parse(localStorage.getItem("hives"));
 
     // Fetches the hives when the component mounts
@@ -37,7 +38,6 @@ export const Dashboard = () => {
         return allHives.map(hive => {
             return hive.gifts.reduce((count, gift) => {
                 const dueDate = dayjs(gift.dueDate);
-                console.log("dueDate", dueDate);
                 return dueDate.isValid() && dueDate.isBefore(dayjs()) ? count + 1 : count;
             }, 0);
         })
@@ -51,6 +51,22 @@ export const Dashboard = () => {
             return `0`;
         }
     }
+
+    // Function to count the amount of hives shared with others
+    const mySharedHives = (allHives) => {
+        return allHives.map(hive => {
+            return hive.sharedWith;
+        })
+    }
+    console.log("sharedHives", mySharedHives(allHives));
+
+    // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
+    // const handleShowingSharedHives = () => {
+    //     const sharedByUser = sharedHives(allHives).reduce((total, current) => total + current, 0);
+    //     console.log("sharedByUser", sharedByUser);
+    //     // const sharedToUser = sharedHives.length;
+    //     // return sharedByUser + sharedToUser;
+    // }
 
     return (
         <>
@@ -78,7 +94,7 @@ export const Dashboard = () => {
                                                 <GridSquares icon={hiveIcon} loggedInUser={loggedInUser} amount={hivesAmount} text={hivesAmount < 2 ? "hive" : "hives"} />
                                             </>
                                             <div className="grid-squares buttons">
-                                                <Link to="/hives"><Button className="primary" btnText="See all hives" /></Link>
+                                                <Link to="/hives"><Button className="primary" btnText="See my hives" /></Link>
                                                 <Link to="/add-hive"><Button className="primary" btnText="Add hive" /></Link>
                                             </div>
                                             <>
@@ -94,7 +110,7 @@ export const Dashboard = () => {
                                                 <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} text="deadlines" amount={handleShowingOverdueGifts()} />
                                             </>
                                             <>
-                                                <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount="0" text="shared hives" />
+                                                {/* <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount={handleShowingSharedHives()} text="shared hives" /> */}
                                             </>
                                         </section>
                                         <LinkToFAQ />
