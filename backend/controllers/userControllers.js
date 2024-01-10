@@ -261,3 +261,18 @@ export const deleteUserController = asyncHandler(async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+export const getHivesSharedByUserController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await User.findById(id).populate("sharedHives");
+        const sharedHives = user.sharedHives;
+        res.json(sharedHives);
+    } catch (error) {
+        console.error("Error getting shared hives:", error);
+        res.status(500).json({ error: "Internal server error" });
+    };
+
+
+});

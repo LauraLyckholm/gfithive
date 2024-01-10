@@ -2,6 +2,7 @@ import { Gift } from "../models/Gift";
 import { User } from "../models/User";
 import { Hive } from "../models/Hive";
 import asyncHandler from "express-async-handler";
+import mongoose from "mongoose";
 
 export const getHivesController = asyncHandler(async (req, res) => {
     const userId = req.user._id;
@@ -252,6 +253,20 @@ export const shareHiveController = asyncHandler(async (req, res) => {
         });
     } catch (error) {
         console.error("Error sharing hive:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+export const getHivesSharedToTheUserController = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+
+    try {
+        const hives = await Hive.find({
+            sharedWith: new mongoose.Types.ObjectId(userId)
+        }).populate("gifts").exec();
+        res.json(hives);
+    } catch (error) {
+        console.error("Error getting shared hives:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });

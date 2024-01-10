@@ -16,19 +16,10 @@ const HiveSchema = new Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: "User", // Reference to User schema for ownership
     },
-    sharedBy: {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: "User",
-    },
     sharedWith: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: "User",
     }],
-    shareToEmail: {
-        type: String,
-        lowercase: true, // Ensures that the email is stored in lowercase
-        match: [/.+\@.+\..+/, "Please fill a valid email address"], // Regular expression for email validation
-    }
 },
     {
         timestamps: true,

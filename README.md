@@ -94,12 +94,35 @@ You will also need to add the following environment variables to your .env file 
 | `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
 | `id`      | `string` | The userId of the user to be deleted |
 
+#### Get hives shared by user
+
+```http
+  GET /users/:id/shared-hives
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `id`      | `string` | The userId used to search for the sharedHives. These are the hives shared by the user account being used. |
+
 ### /gift-routes
 
 #### Get all hives
 
 ```http
   GET /hives/
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+
+#### Get shared hives with gifts
+
+```http
+  GET /hives/shared
 ```
 
 | Parameter | Type     | Description                       |

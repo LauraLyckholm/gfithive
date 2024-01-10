@@ -40,4 +40,29 @@ export const useSearchStore = create((set) => ({
             console.error("There was an error =>", error);
         }
     },
+
+    // Function to search hives by ID
+    searchHivesById: async (hiveId) => {
+        // Join the IDs into a comma-separated string or similar
+
+        try {
+            const response = await fetch(withEndpoint(`searchTerm=${hiveId}`), {
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                set({
+                    searchData: data,
+                    searchPerformed: true,
+                });
+            } else {
+                console.error("Error searching hives");
+            }
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    },
 }));

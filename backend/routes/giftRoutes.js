@@ -10,7 +10,8 @@ import {
     updateHiveName,
     deleteGiftController,
     deleteHiveController,
-    shareHiveController
+    shareHiveController,
+    getHivesSharedToTheUserController
 } from "../controllers/giftControllers";
 import { authenticateUser } from "../middleware/authenticateUser";
 const listEndpoints = require("express-list-endpoints");
@@ -32,6 +33,7 @@ giftRouter.get("/", asyncHandler(async (req, res) => {
 
 // ------------ ROUTES ------------ //
 giftRouter.get("/hives", authenticateUser, getHivesController);
+giftRouter.get("/hives/shared", authenticateUser, getHivesSharedToTheUserController);
 giftRouter.get("/hives/:id", authenticateUser, getIndividualHiveController);
 giftRouter.post("/gifts", authenticateUser, createGiftItemController);
 giftRouter.post("/hives", authenticateUser, createNewController);

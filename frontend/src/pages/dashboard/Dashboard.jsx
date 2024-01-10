@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { useUserStore } from "../../stores/useUserStore";
+// import { useSearchStore } from "../../stores/useSearchStore";
 import { WelcomeSquare } from "../../components/elements/DashboardSquares/WelcomeSquare";
 import { CreateNewHive } from "../create/CreateNewHive";
 import "./dashboard.css";
 import { GridSquares } from "../../components/elements/DashboardSquares/GridSquares";
 import hiveIcon from "../../assets/hiveIcon.svg";
 import giftIcon from "../../assets/giftIcon.svg";
-import sharedIcon from "../../assets/sharedIcon.svg";
+// import sharedIcon from "../../assets/sharedIcon.svg";
 import deadlineIcon from "../../assets/deadlineIcon.svg";
 import userIconLight from "../../assets/userIconLight.svg";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
@@ -20,11 +21,12 @@ import dayjs from "dayjs";
 // Component for the dashboard
 export const Dashboard = () => {
     const { isLoggedIn, getDashboard, dashboard, loadingUser } = useUserStore(); // Destructures the function logoutUser from the useUserStore 
+    // const { searchHivesById } = useSearchStore();
     const { loadingHives } = useGiftStore(); // Gets the loading state from the useGiftStore 
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
     const hivesAmount = dashboard.hivesCount; // Saves the amount of hives in a variable
     const giftsAmount = dashboard.giftsCount; // Saves the amount of gifts in a variable
-    const sharedHives = dashboard.sharedHives; // Saves the amount of shared hives in a variable
+    // const sharedHives = dashboard.sharedHives; // Saves the amount of shared hives in a variable
     const allHives = JSON.parse(localStorage.getItem("hives"));
 
     // Fetches the hives when the component mounts
@@ -52,13 +54,17 @@ export const Dashboard = () => {
         }
     }
 
-    // Function to count the amount of hives shared with others
-    const mySharedHives = (allHives) => {
-        return allHives.map(hive => {
-            return hive.sharedWith;
-        })
-    }
-    console.log("sharedHives", mySharedHives(allHives));
+    // // Function to search for shared hives on id
+    // const sharedHivesOnId = (sharedHives) => {
+    //     if (sharedHives.length > 0) {
+    //         return sharedHives.map(hive => {
+    //             return hive._id;
+    //         })
+    //     }
+    // }
+
+    // const allSharedHiveIds = sharedHivesOnId(allHives).flat();
+    // console.log(searchHivesById(allSharedHiveIds));
 
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
     // const handleShowingSharedHives = () => {

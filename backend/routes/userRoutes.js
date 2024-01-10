@@ -8,7 +8,8 @@ import {
     getDashboardController,
     getUsersController,
     updateUserController,
-    deleteUserController
+    deleteUserController,
+    getHivesSharedByUserController
 } from "../controllers/userControllers";
 import listEndpoints from "express-list-endpoints";
 
@@ -32,3 +33,4 @@ userRouter.post("/register", registerUserController);
 userRouter.post("/login", loginUserController);
 userRouter.put("/users/:id", authenticateUser, updateUserController);
 userRouter.delete("/users/:id", authenticateUser, deleteUserController);
+userRouter.get("/users/:id/shared-hives", authenticateUser, getHivesSharedByUserController);
