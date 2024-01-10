@@ -38,12 +38,25 @@ export const registerUserController = asyncHandler(async (req, res) => {
             });
         };
 
+        // Validate that the email added is an actual email
+        if (!/.+\@.+\..+/.test(email)) {
+            return res.status(400).json({
+                success: false,
+                validationSuccess: false,
+                response: {
+                    message: "Please enter a valid email address",
+                }
+            });
+        }
+
         // Validate password
         if (password.length < 7 || !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/.test(password)) {
             return res.status(400).json({
                 success: false,
                 validationSuccess: false,
-                response: { message: "Password must be at least 7 characters long, include uppercase and lowercase letters and least one number." }
+                response: {
+                    message: "Password must be at least 7 characters long, include uppercase and lowercase letters and least one number."
+                }
             });
         }
 
