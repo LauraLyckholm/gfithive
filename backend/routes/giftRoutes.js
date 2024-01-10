@@ -4,8 +4,8 @@ import asyncHandler from "express-async-handler";
 import {
     getHivesController,
     getIndividualHiveController,
-    createNewController,
     createGiftItemController,
+    createNewController,
     updateGiftItemController,
     updateHiveName,
     deleteGiftController,

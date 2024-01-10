@@ -12,6 +12,7 @@ export const useUserStore = create((set) => ({
     // Saves some state variables in the store with default values
     username: "",
     password: "",
+    email: "",
     accessToken: null,
     isLoggedIn: false,
     loadingUser: false,
@@ -22,6 +23,7 @@ export const useUserStore = create((set) => ({
     // Sets the values of the state variables to the values being passed in
     setUsername: (username) => set({ username }),
     setPassword: (password) => set({ password }),
+    setEmail: (email) => set({ email }),
     setAccessToken: (accessToken) => set({ accessToken }),
     setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn: isLoggedIn }),
     setLoadingUser: (loadingUser) => set({ loadingUser: loadingUser }),
@@ -54,10 +56,10 @@ export const useUserStore = create((set) => ({
 
 
     // Creates a function for registering a user
-    registerUser: async (username, password) => {
+    registerUser: async (username, password, email) => {
         // Checks if the username or password is empty, and if so, shows an error message
-        if (!username || !password) {
-            set({ errorMessage: "Please enter both username and password" });
+        if (!username || !password || !email) {
+            set({ errorMessage: "Please fill out all fields!" });
             return;
         }
 
@@ -73,6 +75,7 @@ export const useUserStore = create((set) => ({
                 // Sends the username and password in the body of the request
                 body: JSON.stringify({
                     username,
+                    email,
                     password,
                 }),
             });
@@ -95,6 +98,7 @@ export const useUserStore = create((set) => ({
             if (successfullFetch) {
                 set({
                     username: username,
+                    email: email,
                     loadingUser: false,
                 })
             }
@@ -118,6 +122,7 @@ export const useUserStore = create((set) => ({
             // If something goes wrong in the registration process, an error is thrown and the fields are set to empty
             set({
                 username: "",
+                email: "",
                 password: "",
                 loadingUser: false,
                 // errorMessage: "Username already exists, please choose another one"

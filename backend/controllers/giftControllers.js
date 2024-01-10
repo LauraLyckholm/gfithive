@@ -18,6 +18,50 @@ export const getIndividualHiveController = asyncHandler(async (req, res) => {
     res.json(hive);
 });
 
+export const createGiftItemController = asyncHandler(async (req, res) => {
+    // Retrieves the information sent by the client
+    const { gift, tags, bought, hiveId, dueDate } = req.body;
+    const userId = req.user._id;
+    // Checks if there is a hiveId in the request body, if there isn't, an error message is sent to the client
+    if (!hiveId) {
+        return res.status(400).json({ error: "hiveId is required." });
+    }
+
+    try {
+        // Find the hive associated with the provided hiveId and userId
+        const hiveExists = await Hive.findOne({ _id: hiveId, userId });
+
+        // If the hive doesn't exist or doesn't belong to the user, send an error message
+        if (!hiveExists) {
+            return res.status(404).json({ error: "Hive not found or unauthorized." });
+        }
+
+        // Checks that the dueDate is in the future
+        if (dueDate && new Date(dueDate) < new Date()) {
+            return res.status(400).json({ error: "Due date must be in the future." });
+        }
+
+        // Create a new gift item associated with the given hiveId
+        const giftItem = await new Gift({ gift, tags, bought, hiveId, dueDate }).save();
+
+        // Update the corresponding hive's gifts array with the newly created gift's ID
+        hiveExists.gifts.push(giftItem._id);
+        await hiveExists.save();
+
+        // Find the user and update their gifts array with the new gift's ID
+        await User.findOneAndUpdate(
+            { _id: userId },
+            { $push: { gifts: giftItem._id } },
+            { new: true }
+        );
+
+        res.json(giftItem);
+    } catch (error) {
+        console.error("Error creating gift item:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 export const createNewController = asyncHandler(async (req, res) => {
     const { gift, tags, bought, name, dueDate } = req.body;
     const userId = req.user._id;
@@ -63,50 +107,6 @@ export const createNewController = asyncHandler(async (req, res) => {
         }
     } catch (error) {
         console.error("Error creating hive:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-});
-
-export const createGiftItemController = asyncHandler(async (req, res) => {
-    // Retrieves the information sent by the client
-    const { gift, tags, bought, hiveId, dueDate } = req.body;
-    const userId = req.user._id;
-    // Checks if there is a hiveId in the request body, if there isn't, an error message is sent to the client
-    if (!hiveId) {
-        return res.status(400).json({ error: "hiveId is required." });
-    }
-
-    try {
-        // Find the hive associated with the provided hiveId and userId
-        const hiveExists = await Hive.findOne({ _id: hiveId, userId });
-
-        // If the hive doesn't exist or doesn't belong to the user, send an error message
-        if (!hiveExists) {
-            return res.status(404).json({ error: "Hive not found or unauthorized." });
-        }
-
-        // Checks that the dueDate is in the future
-        if (dueDate && new Date(dueDate) < new Date()) {
-            return res.status(400).json({ error: "Due date must be in the future." });
-        }
-
-        // Create a new gift item associated with the given hiveId
-        const giftItem = await new Gift({ gift, tags, bought, hiveId, dueDate }).save();
-
-        // Update the corresponding hive's gifts array with the newly created gift's ID
-        hiveExists.gifts.push(giftItem._id);
-        await hiveExists.save();
-
-        // Find the user and update their gifts array with the new gift's ID
-        await User.findOneAndUpdate(
-            { _id: userId },
-            { $push: { gifts: giftItem._id } },
-            { new: true }
-        );
-
-        res.json(giftItem);
-    } catch (error) {
-        console.error("Error creating gift item:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });

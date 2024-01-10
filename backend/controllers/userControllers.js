@@ -8,21 +8,28 @@ import { Gift } from "../models/Gift";
 // ------------ CONTROLLERS ------------ //
 // Register a user
 export const registerUserController = asyncHandler(async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
 
     try {
         // Check if the user already exists in the database, by finding a user with the same username from the database
-        const userExists = await User.findOne({ username });
+        const usernameExists = await User.findOne({ username });
+        const emailExists = await User.findOne({ email });
+
 
         // If the user exists, send an error to the client, saying the user already exists
-        if (userExists) {
+        if (usernameExists) {
             return res.status(400).json({
                 success: false,
                 response: "User with the username " + username + " already exists"
-            }) // Checks if the user already exists, if so, it will return an error
+            });
+        } else if (emailExists) {
+            return res.status(400).json({
+                success: false,
+                response: "User with the email " + email + " already exists"
+            });
         }
 
-        if (!username || !password) {
+        if (!username || !password || !email) {
             res.status(400).json({
                 success: false,
                 response: {
@@ -36,7 +43,7 @@ export const registerUserController = asyncHandler(async (req, res) => {
             return res.status(400).json({
                 success: false,
                 validationSuccess: false,
-                response: { message: "Password must be at least 7 characters long, include uppercase and lowercase lettersat and least one number." }
+                response: { message: "Password must be at least 7 characters long, include uppercase and lowercase letters and least one number." }
             });
         }
 
@@ -46,6 +53,7 @@ export const registerUserController = asyncHandler(async (req, res) => {
         // If all checks pass, create a new user with the username and hashed version of the users password
         const newUser = new User({
             username,
+            email,
             password: hashedPassword,
         });
 
@@ -57,6 +65,7 @@ export const registerUserController = asyncHandler(async (req, res) => {
             success: true,
             response: {
                 username: newUser.username,
+                email: newUser.email,
                 id: newUser._id,
                 accessToken: newUser.accessToken
             },

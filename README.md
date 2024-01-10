@@ -133,6 +133,7 @@ You will also need to add the following environment variables to your .env file 
 | `gift`      | `string` | **Required**. The name of the gift |
 | `tags`      | `array` | **Optional**. Tags that could be added to the gift, separated by comma |
 | `bought`      | `boolean` | **Optional**. Status of bought or not |
+| `dueDate`      | `string` | **Optional**. Expected due date for gift item |
 
 
 #### Add new hive with optional gift and tags
@@ -148,6 +149,7 @@ You will also need to add the following environment variables to your .env file 
 | `name`      | `string` | **Required**. The name of the hive to be added |
 | `gift`      | `string` | **Optional**. Gift to be added to this hive |
 | `tags`      | `string` | **Optional**. Tags to be added to the gift in case one is added |
+| `dueDate`      | `string` | **Optional**. Expected due date for gift item |
 
 #### Update a gifts information
 
@@ -162,6 +164,7 @@ You will also need to add the following environment variables to your .env file 
 | `gift`      | `string` | **Optional**. The new name of the gift |
 | `tags`      | `array` | **Optional**. The new tag names |
 | `bought`      | `boolean` | **Optional**. The new status of bought |
+| `dueDate`      | `string` | **Optional**. Expected due date for gift item |
 
 #### Update a hive name
 

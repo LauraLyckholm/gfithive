@@ -11,6 +11,13 @@ const UserSchema = new Schema(
             maxlength: 20,
             unique: true
         },
+        email: {
+            type: String,
+            required: true,
+            lowercase: true, // Ensures that the email is stored in lowercase
+            match: [/.+\@.+\..+/, "Please fill a valid email address"], // Regular expression for email validation
+            unique: true
+        },
         password: {
             type: String,
             required: true,

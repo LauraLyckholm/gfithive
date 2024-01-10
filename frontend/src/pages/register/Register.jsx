@@ -10,14 +10,14 @@ import "../login/login.css";
 export const Register = () => {
 
     // Destructures the function loginUser and some other states from the useUserStore hook
-    const { registerUser, username, setUsername, password, setPassword, loading, errorMessage, setErrorMessage, successfullFetch } = useUserStore();
+    const { registerUser, username, setUsername, email, setEmail, password, setPassword, loading, errorMessage, setErrorMessage, successfullFetch } = useUserStore();
 
     // Function to handle the login using the loginUser function from the useUserStore hook
     const handleRegister = async (event) => {
         event.preventDefault();
 
         try {
-            await registerUser(username, password);
+            await registerUser(username, email, password);
             // If the fetch was successfull, the user will be redirected to the login page, otherwise an error message will be displayed
             if (successfullFetch) {
                 setErrorMessage("");
@@ -50,6 +50,16 @@ export const Register = () => {
                                 placeholder="Username"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
+                                required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required />
                         </div>
                         <div className="form-group">
