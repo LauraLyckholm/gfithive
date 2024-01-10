@@ -8,6 +8,7 @@ import { customSwal } from "../../utils/customSwal";
 // import { formatTime } from "../../mixins/formatTime";
 import { useEffect } from "react";
 import dayjs from "dayjs";
+import { Tooltip } from "@mui/material";
 
 // Component for the list of hives, that gets rendered on /hives
 export const HiveListComponent = () => {
@@ -132,14 +133,16 @@ export const HiveListComponent = () => {
                     const overdueCount = countOverdueGifts(hive);
                     return (
                         <li className="grid-list-items" key={hive._id}>
-                            <img
-                                tabIndex="0"
-                                className="icon"
-                                src={update}
-                                alt="Icon for updating the hives name"
-                                onClick={() => handleUpdateHiveName(hive._id)} // If user clicks on the icon, the handleUpdateHiveName function will be called
-                                onKeyDown={(event) => handleKeyPress(event, "update", hive._id)} // If user presses "Enter" on the icon, the handleUpdateHiveName function will be called
-                            />
+                            <Tooltip title="Update name">
+                                <img
+                                    tabIndex="0"
+                                    className="icon"
+                                    src={update}
+                                    alt="Icon for updating the hives name"
+                                    onClick={() => handleUpdateHiveName(hive._id)} // If user clicks on the icon, the handleUpdateHiveName function will be called
+                                    onKeyDown={(event) => handleKeyPress(event, "update", hive._id)} // If user presses "Enter" on the icon, the handleUpdateHiveName function will be called
+                                />
+                            </Tooltip>
                             <Link to={`/hives/${hive._id}`}>
                                 <p className="bold">{hive.name}</p>
                             </Link>
@@ -150,14 +153,17 @@ export const HiveListComponent = () => {
                                 {overdueCount > 0 ? `${overdueCount} due` : null}
 
                             </p>
-                            <img
-                                tabIndex="0"
-                                className="icon"
-                                src={trashcanIcon}
-                                alt="Trashcan for deleting a hive"
-                                onClick={() => handleDelete(hive._id)} // If user clicks on the icon, the handleDelete function will be called
-                                onKeyDown={(event) => handleKeyPress(event, "delete", hive._id)} // If user presses "Enter" on the icon, the handleDelete function will be called
-                            />
+
+                            <Tooltip title="Delete hive">
+                                <img
+                                    tabIndex="0"
+                                    className="icon"
+                                    src={trashcanIcon}
+                                    alt="Trashcan for deleting a hive"
+                                    onClick={() => handleDelete(hive._id)} // If user clicks on the icon, the handleDelete function will be called
+                                    onKeyDown={(event) => handleKeyPress(event, "delete", hive._id)} // If user presses "Enter" on the icon, the handleDelete function will be called
+                                />
+                            </Tooltip>
                         </li>
                     );
                 })}

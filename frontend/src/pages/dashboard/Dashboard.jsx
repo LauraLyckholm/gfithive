@@ -34,9 +34,10 @@ export const Dashboard = () => {
 
     // Function to count overdue gifts in a hive
     const countOverdueGifts = (allHives) => {
-        allHives.map(hive => {
+        return allHives.map(hive => {
             return hive.gifts.reduce((count, gift) => {
                 const dueDate = dayjs(gift.dueDate);
+                console.log("dueDate", dueDate);
                 return dueDate.isValid() && dueDate.isBefore(dayjs()) ? count + 1 : count;
             }, 0);
         })

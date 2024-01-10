@@ -20,7 +20,6 @@
 .list-item-pair {
     display: flex;
     justify-content: space-between;
-    /* gap: 1rem; */
     margin: 0.5rem 0;
 }
 
@@ -35,18 +34,28 @@
     display: flex;
     align-items: center;
     gap: 0.5rem; 
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
 }
 
 .icon-pair-with-link {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 0.5rem; 
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
 }
 
 .update-icon {
     margin-top: 7px;
+}
+
+.share-icon {
+    margin-top: 3px;
+}
+
+.unique-hive-heading {
+    display: flex;
+    gap: 0.5rem;
 }
 
 .icon-pair:nth-child(2) {

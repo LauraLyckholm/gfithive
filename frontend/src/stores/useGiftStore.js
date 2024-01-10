@@ -235,4 +235,39 @@ export const useGiftStore = create((set, get) => ({
             console.error("Error deleting hive:", error);
         }
     },
+
+    // Function to share a hive
+    shareHive: async (hiveId, email) => {
+        try {
+            // Makes a POST request to the backend to share a hive
+            const response = await fetch(withEndpoint(`hives/${hiveId}/share`), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+                body: JSON.stringify({ shareToEmail: email }),
+            });
+
+            console.log(hiveId, email);
+            console.log(response);
+            const data = await response.json();
+
+            // If the request is successful, the hive is updated in the store
+            if (response.ok) {
+                set((state) => ({
+                    hives: state.hives.map((hive) =>
+                        hive.id === hiveId ? { ...hive, ...data } : hive // I map over each hive in the store and update the state of the hive with the matching id
+                    ),
+                }));
+                // If the request is not successful, an error is logged to the console
+            } else {
+                console.error("Error sharing hive");
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    },
 }));

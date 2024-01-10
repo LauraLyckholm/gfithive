@@ -10,9 +10,11 @@ import update from "../../assets/update.svg";
 import { customSwal } from "../../utils/customSwal";
 import trashcanIcon from "../../assets/trash.svg";
 import dueIcon from "../../assets/due-icon.svg";
+import shareIcon from "../../assets/share-icon-yellow.svg";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import { formatTime } from "../../utils/formatTime";
+import { Tooltip } from "@mui/material";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -23,7 +25,8 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 export const UniqueHive = () => {
     const { id } = useParams();
     const [hive, setHive] = useState(null);
-    const { getHives, deleteGift, updateGift } = useGiftStore();
+    const { getHives, deleteGift, updateGift, shareHive } = useGiftStore();
+    // console.log(useGiftStore());
 
     // Fetches the hives when the component mounts, and saves the data to a local state for the hives
     useEffect(() => {
@@ -48,40 +51,6 @@ export const UniqueHive = () => {
         };
         handleHiveFetch();
     }, [id, hive]);
-
-    // Function to handle the update using the updateHiveName function from the useGiftStore
-    const handleUpdateGift = async (giftId, currentGiftName) => {
-        // Utilizes the SweetAlert2 library to display a popup with an input field
-        const { value: updatedGift } = await customSwal.fire({
-            title: "Update gift",
-            input: "text",
-            inputLabel: "What would you like to change your gifts name to be(e)? 🐝",
-            inputValue: currentGiftName,
-            confirmButtonText: "Save",
-            showCancelButton: true,
-            inputValidator: (value) => {
-                if (!value) {
-                    return "You need to write something!";
-                }
-            },
-        });
-
-        // If the user has entered a new name for the gift, the gift will be updated
-        if (updatedGift) {
-            try {
-                await updateGift({ id: giftId, gift: updatedGift });
-                // await updateGift({ id: giftId, gift: updatedGift, tags: [], bought: false });
-                getHives();
-            } catch (error) {
-                console.error("There was an error =>", error);
-                customSwal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Something went wrong!",
-                });
-            }
-        }
-    };
 
     const handleSetAsBought = async (giftId, newBoughtStatus) => {
         try {
@@ -142,11 +111,9 @@ export const UniqueHive = () => {
         // Checks if "Enter" key is pressed
         if (event.key === "Enter") {
             // If the action is update, the handleUpdateGift function will be called
-            if (action === "update") {
-                handleUpdateGift(giftId);
-                // If the action is delete, the handleDelete function will be called
-            } else if (action === "delete") {
+            if (action === "delete") {
                 await handleDelete(giftId);
+                // If the action is delete, the handleDelete function will be called
             }
         }
     };
@@ -161,12 +128,61 @@ export const UniqueHive = () => {
         )
     };
 
+    // Function to handle the sharing of a hive
+    const handleShare = async (hiveId) => {
+        const result = await customSwal.fire({
+            title: "Share your hive",
+            input: "email",
+            inputLabel: "To whom would you like to share your hive? (Email) 🐝",
+            inputPlaceholder: "e.g. email@hives.com",
+            confirmButtonText: "Share!",
+            cancelButtonText: "Never mind..",
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return "You need to write something!";
+                }
+            },
+        });
+
+        if (result.isConfirmed) {
+            try {
+                // The email entered by the user is available in result.value
+                await shareHive(hiveId, result.value);
+
+                customSwal.fire({
+                    title: "Shared!",
+                    text: "Your hive has successfully been shared! 🐝",
+                    icon: "success",
+                });
+            } catch (error) {
+                customSwal.fire({
+                    title: "Error!",
+                    text: "Something went wrong, your hive could not be shared 🐝",
+                    icon: "error",
+                });
+                console.error("There was an error =>", error);
+            }
+        }
+    };
+
     return (
         <section>
             {/* If there is a hive recognized the user is shown the hives. */}
             {hive ? (
                 <div>
-                    <h1>Gift hive for {hive.name}</h1>
+                    <div className="unique-hive-heading">
+                        <h1>Gift hive for {hive.name}</h1>
+                        <Tooltip title="Share your hive">
+                            <img
+                                onClick={() => handleShare(hive._id)} // If user clicks on the icon, the handleShare function will be called
+                                tabIndex="0"
+                                className="icon share-icon"
+                                src={shareIcon}
+                                alt="Icon for sharing hives"
+                            />
+                        </Tooltip>
+                    </div>
                     {hive.gifts.length === 0 ? "Empty hive, get started by adding a gift below!" :
                         hive.gifts.map((gift) => {
                             return (
@@ -184,23 +200,28 @@ export const UniqueHive = () => {
                                     </div>
                                     <div className="icon-pair icon-pair-with-link">
                                         <Link to={`/hives/${id}/${gift._id}/update-gift`}>
+                                            <Tooltip title="Update gift">
+                                                <img
+                                                    tabIndex="0"
+                                                    className="icon update-icon"
+                                                    src={update}
+                                                    alt="Icon for updating the hives name"
+                                                // onClick={() => handleUpdateGift(gift._id, gift.gift)}
+
+                                                // onKeyDown={((event) => handleKeyPress(event, "update", gift._id))}
+                                                />
+                                            </Tooltip>
+                                        </Link>
+                                        <Tooltip title="Delete gift">
                                             <img
                                                 tabIndex="0"
-                                                className="icon update-icon"
-                                                src={update}
-                                                alt="Icon for updating the hives name"
-                                            // onClick={() => handleUpdateGift(gift._id, gift.gift)}
-
-                                            // onKeyDown={((event) => handleKeyPress(event, "update", gift._id))}
-                                            /></Link>
-                                        <img
-                                            tabIndex="0"
-                                            className="icon"
-                                            src={trashcanIcon}
-                                            alt="Trashcan for deleting a hive"
-                                            onClick={() => handleDelete(gift._id)}
-                                            onKeyDown={((event) => handleKeyPress(event, "delete", gift._id))}
-                                        />
+                                                className="icon"
+                                                src={trashcanIcon}
+                                                alt="Trashcan for deleting a hive"
+                                                onClick={() => handleDelete(gift._id)}
+                                                onKeyDown={((event) => handleKeyPress(event, "delete", gift._id))}
+                                            />
+                                        </Tooltip>
                                     </div>
                                     <Stack
                                         className="tags"
@@ -208,12 +229,14 @@ export const UniqueHive = () => {
                                         spacing={1}
                                     >
                                         {gift.dueDate !== null ?
-                                            <Chip
+                                            <Tooltip title="Due date">
+                                                <Chip
 
-                                                avatar={<Avatar alt="Due date icon" src={dueIcon} />}
-                                                variant="outlined"
-                                                label={handleDueDate(gift)}
-                                            />
+                                                    avatar={<Avatar alt="Due date icon" src={dueIcon} />}
+                                                    variant="outlined"
+                                                    label={handleDueDate(gift)}
+                                                />
+                                            </Tooltip>
                                             : null
                                         }
                                         {gift.tags.map((tag) => {

@@ -20,7 +20,7 @@ export const Hives = () => {
                         <Link to="/add-hive"><Button className="primary" btnText="Add hive" /></Link>
                         <Link to="/dashboard"><Button className="secondary" btnText="Back to dashboard" /></Link>
                     </div>
-                </div >
+                </div>
             }
         </>
     )

@@ -200,9 +200,21 @@ You will also need to add the following environment variables to your .env file 
 | `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
 | `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
 
+#### Share a hive to an other user
+
+```http
+  POST /hive/:id/share
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `shareToEmail`      | `string` | **Required**. The email of the user you wish to share the hive to |
+
 ### /search-routes
 
-#### Get individual hive
+#### Search for hives or gifts
 
 ```http
   GET /search
