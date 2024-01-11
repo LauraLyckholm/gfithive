@@ -87,7 +87,7 @@ export const Header = () => {
                                             })}
                                         </ul>
                                     </li>
-                                    <li><Link to="/shared-hives">Shared hives</Link></li>
+                                    <li><Link to="/shared-hives" className="main-list-link">Shared hives</Link></li>
                                     <li><Link to="/faq" className="main-list-link">FAQ</Link></li>
                                     <li><Link to="/account" className="main-list-link">Account</Link></li>
                                 </ul>

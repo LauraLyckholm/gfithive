@@ -6,8 +6,10 @@ import { UpdateUserInfo } from "../../components/elements/InputFields/UpdateUser
 import "./account.css";
 
 export const Account = () => {
-    const { deleteUser, setIsLoggedIn, username } = useUserStore();
+    const { deleteUser, setIsLoggedIn } = useUserStore();
     const userId = localStorage.getItem("userId");
+    const currentUsername = localStorage.getItem("username");
+    const currentEmail = localStorage.getItem("email");
     const navigate = useNavigate();
 
     const handleRemoveUser = async () => {
@@ -55,7 +57,8 @@ export const Account = () => {
             <h1>My account</h1>
             <div className="heading-pair">
                 <h2>Personal information</h2>
-                <p>Username: {username}</p>
+                <p>Username: {currentUsername}</p>
+                <p>Email: {currentEmail}</p>
             </div>
             <UpdateUserInfo userId={userId} />
             <div className="btns"

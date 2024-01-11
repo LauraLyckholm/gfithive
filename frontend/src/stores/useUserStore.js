@@ -190,16 +190,19 @@ export const useUserStore = create((set) => ({
                     isLoggedIn: true,
                     loadingUser: false,
                     userId: data.response._id,
+                    email: data.response.email,
                 })
                 // Saves the accessToken in localStorage
                 localStorage.setItem("accessToken", data.response.accessToken);
                 localStorage.setItem("username", username);
                 localStorage.setItem("userId", data.response._id);
                 localStorage.setItem("isLoggedIn", true);
+                localStorage.setItem("email", data.response.email);
 
             } else {
                 set({
                     username: "",
+                    email: "",
                     accessToken: null,
                     isLoggedIn: false,
                     loadingUser: false,
@@ -211,6 +214,7 @@ export const useUserStore = create((set) => ({
             if (error.message == 401) {
                 set({
                     username: "",
+                    email: "",
                     password: "",
                     loadingUser: false,
                     errorMessage: "Wrong username or password, please try again"
@@ -218,6 +222,7 @@ export const useUserStore = create((set) => ({
             } else if (error.message == 404) {
                 set({
                     username: "",
+                    email: "",
                     password: "",
                     loadingUser: false,
                     errorMessage: "Username not found, please try again"
@@ -232,6 +237,7 @@ export const useUserStore = create((set) => ({
         // Removes the accessToken from the store and sets isLoggedIn to false. Also empties the username and password fields
         set({
             username: "",
+            email: "",
             password: "",
             accessToken: null,
             isLoggedIn: false,
@@ -245,7 +251,9 @@ export const useUserStore = create((set) => ({
     updateUser: async (userId, updatedUserInfo) => {
         try {
             // Destructures username from the updatedUserInfo object
-            const { username } = updatedUserInfo;
+            const { username, email } = updatedUserInfo;
+            console.log("Sending update request with:", updatedUserInfo);
+
 
             const response = await fetch(withEndpoint(`users/${userId}`), {
                 method: "PUT",
@@ -259,20 +267,22 @@ export const useUserStore = create((set) => ({
             if (response.ok) {
                 const data = await response.json();
                 const successfullFetch = data.success;
+                console.log(data);
 
                 if (successfullFetch) {
                     set({
                         username: username,
+                        email: email,
                         loadingUser: false,
                     })
+                    localStorage.setItem("username", data.user.username);
+                    localStorage.setItem("email", data.user.email);
                 }
-
-                localStorage.setItem("username", username);
 
                 // Alerts to the user that the username has been updated
                 if (successfullFetch) {
                     customSwal.fire({
-                        title: "Username updated",
+                        title: "User updated",
                         text: `Your username has been updated to ${data.response.username}!`,
                         icon: "success",
                         confirmButtonText: "OK",
@@ -285,13 +295,13 @@ export const useUserStore = create((set) => ({
                 }
 
             } else {
-                console.error("Error updating username");
+                console.error("Error updating user");
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
         } catch (error) {
             customSwal.fire({
-                title: "Username update failed",
+                title: "User update failed",
                 text: `${error}`,
                 icon: "error",
                 confirmButtonText: "OK",

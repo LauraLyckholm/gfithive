@@ -77,6 +77,7 @@ export const SearchBar = () => {
                 <img src={searchIcon} width="30px" alt="Search icon" />
             </SearchIconWrapper>
             <StyledInputBase
+                name="search"
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
                 value={searchTerm}

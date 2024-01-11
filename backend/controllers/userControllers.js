@@ -209,14 +209,19 @@ export const updateUserController = asyncHandler(async (req, res) => {
             user.username = username;
         }
 
+        // Check if the email is provided and if it's different from the current one
+        if (email && email.toLowerCase() !== user.email.toLowerCase()) {
+            const existingEmail = await User.findOne({ email: email.toLowerCase() });
+            console.log(existingEmail, email);
+            if (existingEmail) {
+                return res.status(400).json({ error: "Email already exists" });
+            }
+            user.email = email.toLowerCase();
+        }
+
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
             user.password = hashedPassword;
-        }
-
-        // Check if the email is provided and if it's different from the current one
-        if (email && email !== user.email) {
-            user.email = email;
         }
 
         await user.save();

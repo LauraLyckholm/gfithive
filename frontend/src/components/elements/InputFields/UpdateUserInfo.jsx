@@ -7,6 +7,7 @@ export const UpdateUserInfo = ({ userId }) => {
     const handleUpdateUserInfo = async () => {
         // Creates an object with the updated user info, empty values on default
         const updatedUserInfo = {};
+
         // Only add username to the object if it's been provided and is different from the stored username
         if (username && username !== localStorage.getItem("username")) {
             updatedUserInfo.username = username;
@@ -16,7 +17,7 @@ export const UpdateUserInfo = ({ userId }) => {
             updatedUserInfo.password = password
         }
         // If the user has written a new email, it will be added to the object
-        if (email) {
+        if (email && email !== localStorage.getItem("email")) {
             updatedUserInfo.email = email
         }
 
@@ -27,6 +28,11 @@ export const UpdateUserInfo = ({ userId }) => {
             if (updatedUserInfo.username) {
                 localStorage.setItem("username", updatedUserInfo.username);
                 setUsername(updatedUserInfo.username);
+            }
+            // Update local storage and state if email was updated
+            if (updatedUserInfo.email) {
+                localStorage.setItem("email", updatedUserInfo.email);
+                setEmail(updatedUserInfo.email);
             }
         }
     };
@@ -41,6 +47,7 @@ export const UpdateUserInfo = ({ userId }) => {
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        autoComplete="off"
                     />
                 </div>
                 <div className="form-group">
@@ -50,6 +57,7 @@ export const UpdateUserInfo = ({ userId }) => {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="off"
                     />
                 </div>
                 <div className="form-group">
@@ -59,6 +67,7 @@ export const UpdateUserInfo = ({ userId }) => {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="on"
                     />
                 </div>
 

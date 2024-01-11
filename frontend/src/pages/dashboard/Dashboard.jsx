@@ -42,19 +42,12 @@ export const Dashboard = () => {
         return allHives.map(hive => {
             return hive.gifts.reduce((count, gift) => {
                 const dueDate = dayjs(gift.dueDate);
+                console.log(dueDate);
                 return dueDate.isValid() && dueDate.isBefore(dayjs()) ? count + 1 : count;
             }, 0);
         })
     };
-
-    // Function to handle showing the amount of overdue gifts in the dashboard
-    const handleShowingOverdueGifts = () => {
-        if (countOverdueGifts(allHives) > 0) {
-            return countOverdueGifts(allHives);
-        } else {
-            return `0`;
-        }
-    }
+    const totalOverdueGifts = countOverdueGifts(allHives).reduce((sum, count) => sum + count, 0);
 
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
     const handleShowingSharedHives = () => {
@@ -103,7 +96,7 @@ export const Dashboard = () => {
                                                 </Link>
                                             </>
                                             <>
-                                                <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} text="deadlines" amount={handleShowingOverdueGifts()} />
+                                                <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} text={`${totalOverdueGifts === 1 ? "gift is due" : "gifts are due"}`} amount={totalOverdueGifts} />
                                             </>
                                             <>
                                                 <Link to="/shared-hives">
