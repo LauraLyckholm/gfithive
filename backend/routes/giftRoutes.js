@@ -11,7 +11,8 @@ import {
     deleteGiftController,
     deleteHiveController,
     shareHiveController,
-    getHivesSharedToTheUserController
+    getHivesSharedToTheUserController,
+    unshareHiveController
 } from "../controllers/giftControllers";
 import { authenticateUser } from "../middleware/authenticateUser";
 const listEndpoints = require("express-list-endpoints");
@@ -32,12 +33,13 @@ giftRouter.get("/", asyncHandler(async (req, res) => {
 
 // ------------ ROUTES ------------ //
 giftRouter.get("/hives", authenticateUser, getHivesController);
-giftRouter.get("/hives/shared", authenticateUser, getHivesSharedToTheUserController);
+giftRouter.get("/hives/shared-with/:id", authenticateUser, getHivesSharedToTheUserController);
 giftRouter.get("/hives/:id", authenticateUser, getIndividualHiveController);
 giftRouter.post("/gifts", authenticateUser, createGiftItemController);
 giftRouter.post("/hives", authenticateUser, createNewController);
+giftRouter.post("/hives/:id/share", authenticateUser, shareHiveController);
 giftRouter.put("/gifts/:id", authenticateUser, updateGiftItemController);
 giftRouter.put("/hives/:id", authenticateUser, updateHiveName);
 giftRouter.delete("/gifts/:id", authenticateUser, deleteGiftController);
 giftRouter.delete("/hives/:id", authenticateUser, deleteHiveController);
-giftRouter.post("/hives/:id/share", authenticateUser, shareHiveController);
+giftRouter.delete("/hives/unshare/:id", authenticateUser, unshareHiveController);

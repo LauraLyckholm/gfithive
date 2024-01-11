@@ -241,6 +241,7 @@ export const useGiftStore = create((set, get) => ({
 
     // Function to share a hive
     shareHive: async (hiveId, email) => {
+        console.log(hiveId);
         try {
             // Makes a POST request to the backend to share a hive
             const response = await fetch(withEndpoint(`hives/${hiveId}/share`), {
@@ -285,10 +286,12 @@ export const useGiftStore = create((set, get) => ({
             if (response.ok) {
                 const data = await response.json();
 
-                set({
-                    hivesSharedToMe: data,
-                });
+                // set({
+                //     hivesSharedToMe: data,
+                // });
                 // localStorage.setItem("hivesSharedToMe", JSON.stringify(data)); // Saves the shared hives data to local storage
+                console.log('data', data);
+
             } else {
                 console.error("Error fetching shared hives");
             }

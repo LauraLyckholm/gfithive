@@ -56,7 +56,9 @@ export const createGiftItemController = asyncHandler(async (req, res) => {
             { new: true }
         );
 
+        // Return the new gift item
         res.json(giftItem);
+        // If something goes wrong, send an error message
     } catch (error) {
         console.error("Error creating gift item:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -71,6 +73,7 @@ export const createNewController = asyncHandler(async (req, res) => {
         // Check if a hive with the provided name already exists for the user
         const hiveNameExistsForUser = await Hive.findOne({ name, userId });
 
+        // Creates a let variable to store the new hive, which will be updated depending on whether or not the hive name already exists
         let newHive;
 
         if (hiveNameExistsForUser) {
@@ -101,11 +104,13 @@ export const createNewController = asyncHandler(async (req, res) => {
             // Updates the user's gifts array with the new gift's ID
             await User.findByIdAndUpdate(userId, { $push: { gifts: giftItem._id } });
 
+            // Returns the new hive and gift
             res.json({ hive: newHive, gift: giftItem });
         } else {
             // If no gift details provided, only return the hive
             res.json(newHive);
         }
+        // If something goes wrong, send an error message
     } catch (error) {
         console.error("Error creating hive:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -125,11 +130,14 @@ export const updateGiftItemController = asyncHandler(async (req, res) => {
         // Find the gift associated with the provided id and update the gift's information
         const giftItem = await Gift.findByIdAndUpdate({ _id: id }, { gift, tags, bought, dueDate }, { new: true });
 
+        // Check if the gift exists and if it belongs to the user
         if (!giftItem) {
             return res.status(404).json({ error: "Gift not found or unauthorized." });
         }
 
+        // Return the updated giftItem
         res.json(giftItem);
+        // If something goes wrong, send an error message
     } catch (error) {
         console.error("Error updating gift item:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -145,11 +153,14 @@ export const updateHiveName = asyncHandler(async (req, res) => {
         // Find the hive associated with the provided id and userId
         const hive = await Hive.findByIdAndUpdate({ _id: id, userId }, { name }, { new: true });
 
+        // Check if the hive exists and if it belongs to the user
         if (!hive) {
             return res.status(404).json({ error: "Hive not found or unauthorized." });
         }
 
+        // Return the updated hivename
         res.json(hive);
+        // If something goes wrong, send an error message
     } catch (error) {
         console.error("Error updating hive name:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -164,6 +175,7 @@ export const deleteGiftController = asyncHandler(async (req, res) => {
         // Find the hive associated with the provided id and userId
         const deletedGift = await Gift.findByIdAndDelete(id);
 
+        // Check if the gift exists and if it belongs to the user
         if (!deletedGift) {
             return res.status(404).json({ error: "Gift not found or unauthorized." });
         }
@@ -174,11 +186,13 @@ export const deleteGiftController = asyncHandler(async (req, res) => {
             { new: true } // Return the updated document
         );
 
+        // Sends a response indicating successful deletion
         res.json({
             message: "Gift deleted successfully",
             deletedGift: deletedGift
         });
 
+        // If something goes wrong, send an error message
     } catch (error) {
         console.error("Error deleting gift:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -193,6 +207,7 @@ export const deleteHiveController = asyncHandler(async (req, res) => {
         // Find the hive associated with the provided id and userId
         const hive = await Hive.findById(id);
 
+        // Check if the hive exists and if it belongs to the user
         if (!hive || hive.userId.toString() !== userId.toString()) {
             return res.status(404).json({ error: "Hive not found or unauthorized." });
         }
@@ -214,6 +229,7 @@ export const deleteHiveController = asyncHandler(async (req, res) => {
             message: "Hive deleted successfully",
             deletedHive: hive,
         });
+        // If something goes wrong, send an error message
     } catch (error) {
         console.error("Error deleting hive:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -229,6 +245,7 @@ export const shareHiveController = asyncHandler(async (req, res) => {
         // Find the hive associated with the provided id and userId
         const hive = await Hive.findById(id);
 
+        // Check if the hive exists and if it belongs to the user
         if (!hive || hive.userId.toString() !== userId.toString()) {
             return res.status(404).json({ error: "Hive not found or unauthorized." });
         }
@@ -252,26 +269,84 @@ export const shareHiveController = asyncHandler(async (req, res) => {
         recipient.sharedHives.push(hive._id);
         await recipient.save();
 
+        // Send a response indicating successful sharing
         res.json({
             message: "Hive shared successfully",
             recipientId: recipient._id,
             email: shareToEmail,
             sharedHive: hive,
         });
+        // If something goes wrong, send an error message
     } catch (error) {
         console.error("Error sharing hive:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
 
-export const getHivesSharedToTheUserController = asyncHandler(async (req, res) => {
-    const userId = req.user._id;
+// Function to unshare a specific hiveid from a specific user (the ones whose email you enter)
+export const unshareHiveController = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { unshareFromEmail } = req.body;
+    const userId = req.user._id; // The user sharing the hive
 
+    try {
+        // Find the hive associated with the id from the url
+        const hive = await Hive.findById(id);
+
+        // Check if the hive exists and if it belongs to the user
+        if (!hive || hive.userId.toString() !== userId.toString()) {
+            return res.status(404).json({ error: "Hive not found or unauthorized." });
+        }
+
+        // Find recipient user based on email
+        const recipient = await User.findOne({ email: unshareFromEmail });
+        if (!recipient) {
+            return res.status(404).json({ error: "Recipient not found." });
+        }
+
+        // Check if the hive is already shared with the recipient
+        if (!hive.sharedWith.includes(recipient._id)) {
+            return res.status(400).json({ error: "Hive not shared with this user." });
+        };
+
+        // Update the hive's sharedWith field
+        hive.sharedWith.pull(recipient._id);
+        await hive.save();
+
+        // Optionally update recipient's sharedHives field
+        recipient.sharedHives.pull(hive._id);
+        await recipient.save();
+
+        // Send a response indicating successful unsharing
+        res.json({
+            message: "Hive unshared successfully",
+            recipientId: recipient._id,
+            email: unshareFromEmail,
+            sharedHive: hive,
+        });
+        // If something goes wrong, send an error message
+    } catch (error) {
+        console.error("Error unsharing hive:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// Funciton to get the hives shared to the user
+export const getHivesSharedToTheUserController = asyncHandler(async (req, res) => {
+    const userId = req.params.id;
+    console.log(userId);
+
+    // Find all hives and populate their associated gifts
     try {
         const hives = await Hive.find({
             sharedWith: new mongoose.Types.ObjectId(userId)
         }).populate("gifts").exec();
-        res.json(hives);
+        res.json({
+            success: true,
+            hives,
+        });
+
+        // If something goes wrong, send an error message
     } catch (error) {
         console.error("Error getting shared hives:", error);
         res.status(500).json({ error: "Internal server error" });

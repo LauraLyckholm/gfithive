@@ -94,17 +94,17 @@ You will also need to add the following environment variables to your .env file 
 | `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
 | `id`      | `string` | The userId of the user to be deleted |
 
-#### Get hives shared by user
+#### Get all the hives that a user has been shared
 
 ```http
-  GET /users/:id/shared-hives
+  GET /users/shared-hives/:id
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
 | `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
-| `id`      | `string` | The userId used to search for the sharedHives. These are the hives shared by the user account being used. |
+| `userId`      | `string` | The userId used to get all hives they have been shared. |
 
 ### /gift-routes
 
@@ -122,13 +122,14 @@ You will also need to add the following environment variables to your .env file 
 #### Get shared hives with gifts
 
 ```http
-  GET /hives/shared
+  GET /hives/shared-with/:id
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
 | `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `id`      | `string` | **Required**. Gets the list of shared hives from the users id.  |
 
 #### Get individual hive
 
@@ -173,6 +174,18 @@ You will also need to add the following environment variables to your .env file 
 | `gift`      | `string` | **Optional**. Gift to be added to this hive |
 | `tags`      | `string` | **Optional**. Tags to be added to the gift in case one is added |
 | `dueDate`      | `string` | **Optional**. Expected due date for gift item |
+
+#### Share a hive to an other user
+
+```http
+  POST /hive/:id/share
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
+| `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
+| `shareToEmail`      | `string` | **Required**. The email of the user you wish to share the hive to |
 
 #### Update a gifts information
 
@@ -223,17 +236,18 @@ You will also need to add the following environment variables to your .env file 
 | `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
 | `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
 
-#### Share a hive to an other user
+#### Unshare a specific hive from the email it is shared to
 
 ```http
-  POST /hive/:id/share
+  DELETE /hives/unshare/:id
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `Auth`      | `Header` | **Required**. Authorization Middleware checks for header "Auth" |
 | `accessToken`      | `string` | **Required**. AccessToken comes from the logged in user |
-| `shareToEmail`      | `string` | **Required**. The email of the user you wish to share the hive to |
+| `id`      | `string` | **Required**. The id of the hive you wish to unshare |
+| `unshareFromEmail`      | `string` | **Required**. Request in the body, pointing to the user account the hive is to be unshared from |
 
 ### /search-routes
 

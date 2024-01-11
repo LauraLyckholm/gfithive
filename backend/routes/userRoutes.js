@@ -3,13 +3,13 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { authenticateUser } from "../middleware/authenticateUser";
 import {
+    // getUsersController,
     registerUserController,
     loginUserController,
     getDashboardController,
-    getUsersController,
     updateUserController,
     deleteUserController,
-    getHivesSharedByUserController
+    getUsersSharedHivesController
 } from "../controllers/userControllers";
 import listEndpoints from "express-list-endpoints";
 
@@ -27,10 +27,11 @@ userRouter.get("/", asyncHandler(async (req, res) => {
     }
 }));
 
-userRouter.get("/users", getUsersController);
-userRouter.get("/dashboard", authenticateUser, getDashboardController); // The authenticateUser middleware is used to check if the user is logged in
+// userRouter.get("/users", getUsersController);
+userRouter.get("/dashboard", authenticateUser, getDashboardController);
+userRouter.get("/users/shared-hives/:id", authenticateUser, getUsersSharedHivesController);
 userRouter.post("/register", registerUserController);
 userRouter.post("/login", loginUserController);
 userRouter.put("/users/:id", authenticateUser, updateUserController);
 userRouter.delete("/users/:id", authenticateUser, deleteUserController);
-userRouter.get("/users/:id/shared-hives", authenticateUser, getHivesSharedByUserController);
+

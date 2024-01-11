@@ -312,11 +312,11 @@ export const useUserStore = create((set) => ({
             if (response.ok) {
                 const data = await response.json();
 
-                set({
-                    hivesSharedByMe: data,
-                });
-                localStorage.setItem("hivesSharedByMe", JSON.stringify(data)); // Saves the shared hives data to local storage
-
+                // set({
+                //     hivesSharedByMe: data,
+                // });
+                // localStorage.setItem("hivesSharedByMe", JSON.stringify(data)); // Saves the shared hives data to local storage
+                console.log(data);
             } else {
                 console.error("Error fetching shared hives");
             }

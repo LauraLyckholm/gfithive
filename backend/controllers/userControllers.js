@@ -129,6 +129,7 @@ export const loginUserController = asyncHandler(async (req, res) => {
                 success: false,
                 response: "Incorrect password"
             })
+            // If the password is correct, return the user's informations
         } else {
             return res.status(201).json({
                 success: true,
@@ -159,6 +160,7 @@ export const loginUserController = asyncHandler(async (req, res) => {
 export const getDashboardController = asyncHandler(async (req, res) => {
     const { username, hives, gifts, sharedHives } = req.user; // gets the username from the authenticated user
     try {
+        // Returns the necessary information to the client
         res.json({
             message: `Welcome to your Dashboard, ${username}!`,
             hivesCount: hives.length,
@@ -168,6 +170,7 @@ export const getDashboardController = asyncHandler(async (req, res) => {
             sharedHives: sharedHives
         });
 
+        // If an error occurs, send an errormessage to the client
     } catch (err) {
         res.status(400).json({
             success: false,
@@ -179,14 +182,14 @@ export const getDashboardController = asyncHandler(async (req, res) => {
 });
 
 // Creates a controller function for the route that is used to get all users - this route is commented out on the userRoutes, as it is only used for testing purposes
-export const getUsersController = asyncHandler(async (req, res) => {
-    try {
-        const users = await User.find();
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-});
+// export const getUsersController = asyncHandler(async (req, res) => {
+//     try {
+//         const users = await User.find();
+//         res.status(200).json(users);
+//     } catch (error) {
+//         res.status(404).json({ message: error.message });
+//     }
+// });
 
 // Creates a function that makes it possible to update the users information
 export const updateUserController = asyncHandler(async (req, res) => {
@@ -194,8 +197,10 @@ export const updateUserController = asyncHandler(async (req, res) => {
     const { username, password, email } = req.body;
 
     try {
+        // Find the user
         const user = await User.findById(id);
 
+        // If no user is found, return an error
         if (!user) {
             return res.status(404).json({ error: "User not found or unauthorized." });
         }
@@ -212,19 +217,23 @@ export const updateUserController = asyncHandler(async (req, res) => {
         // Check if the email is provided and if it's different from the current one
         if (email && email !== user.email) {
             const existingEmail = await User.findOne({ email: email.toLowerCase() });
+            // If the email already exists, return an error
             if (existingEmail) {
                 return res.status(400).json({ error: "Email already exists" });
             }
             user.email = email.toLowerCase();
         }
 
+        // If there is a new password, hash it and save it
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
             user.password = hashedPassword;
         }
 
+        // Save the updated user
         await user.save();
 
+        // Return the updated user
         res.json({
             message: "User updated successfully",
             user: {
@@ -233,6 +242,7 @@ export const updateUserController = asyncHandler(async (req, res) => {
                 email: user.email,
             }
         });
+        // If an error occurs, send an errormessage to the client
     } catch (error) {
         console.error("Error updating user:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -245,8 +255,10 @@ export const deleteUserController = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
+        // Find the user
         const user = await User.findById(id);
 
+        // If no user is found, return an error
         if (!user) {
             return res.status(404).json({ error: "User not found or unauthorized." });
         }
@@ -266,19 +278,43 @@ export const deleteUserController = asyncHandler(async (req, res) => {
         await User.findByIdAndDelete(id);
 
         res.json(`User with username ${user.username} deleted successfully`);
+        // If an error occurs, send an errormessage to the client
     } catch (error) {
         console.error("Error deleting user:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
 
-export const getHivesSharedByUserController = asyncHandler(async (req, res) => {
-    const { id } = req.params;
+// Function to get the users shared hives
+export const getUsersSharedHivesController = asyncHandler(async (req, res) => {
+    const userId = req.params.id;
 
     try {
-        const user = await User.findById(id).populate("sharedHives");
-        const sharedHives = user.sharedHives;
-        res.json(sharedHives);
+        // Find the user
+        const user = await User.findById(userId).populate('sharedHives');
+
+        // Get the users shared hives
+        let usersSharedHives = user.sharedHives;
+
+        // if no user is found, return an error
+        if (!user) {
+            return res.status(404).json({ error: "User not found or unauthorized." });
+        }
+
+        // If the user has not shared any hives, return an error
+        if (usersSharedHives.length === 0) {
+            return res.status(404).json({ error: "User has not been shared any hives." });
+        }
+
+        // Return the users shared hives
+        res.json({
+            success: true,
+            response: {
+                message: "Shared hives found",
+                sharedHives: usersSharedHives
+            }
+        });
+        // If an error occurs, send an errormessage to the client
     } catch (error) {
         console.error("Error getting shared hives:", error);
         res.status(500).json({ error: "Internal server error" });

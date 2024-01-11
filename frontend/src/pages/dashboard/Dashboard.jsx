@@ -17,6 +17,7 @@ import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import dayjs from "dayjs";
+// import { safelyParseJson } from "../../utils/safelyParseJson";
 
 // Component for the dashboard
 export const Dashboard = () => {
@@ -56,12 +57,14 @@ export const Dashboard = () => {
 
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
     const handleShowingSharedHives = () => {
-        const hivesSharedToMe = JSON.parse(localStorage.getItem("hivesSharedToMe") || "[]");
-        const hivesSharedByMe = JSON.parse(localStorage.getItem("hivesSharedByMe") || "[]");
-        // const sharedGiftsCount = sharedHives.reduce((total, hive) => total + hive.gifts.length, 0);
-        return hivesSharedToMe.length + hivesSharedByMe.length;
-    }
+        // const hivesSharedToMe = localStorage.getItem("hivesSharedToMe");
+        const hivesSharedByMe = localStorage.getItem("hivesSharedByMe");
+        // console.log(hivesSharedToMe);
+        console.log(hivesSharedByMe);
 
+        // const sharedGiftsCount = sharedHives.reduce((total, hive) => total + hive.gifts.length, 0);
+        return hivesSharedByMe.length;
+    }
 
     return (
         <>
