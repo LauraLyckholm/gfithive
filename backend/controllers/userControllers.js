@@ -304,9 +304,7 @@ export const getUsersSharedHivesController = asyncHandler(async (req, res) => {
         // Return the users shared hives
         res.json({
             success: true,
-            response: {
-                sharedHives: usersSharedHives
-            }
+            sharedHives: usersSharedHives
         });
         // If an error occurs, send an errormessage to the client
     } catch (error) {

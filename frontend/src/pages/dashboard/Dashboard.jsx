@@ -37,7 +37,7 @@ export const Dashboard = () => {
         getHivesSharedToMe(userId);
         getHivesSharedByUser(userId);
         setLoggedInUser(localStorage.getItem("username"));
-    }, [getDashboard, getHivesSharedToMe, getHivesSharedByUser, userId])
+    }, [])
 
     // Function to count overdue gifts in a hive
     const countOverdueGifts = (allHives) => {
@@ -60,28 +60,31 @@ export const Dashboard = () => {
 
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
     const handleShowingSharedHives = () => {
-        const sharedToMe = hivesSharedToMe.hives;
+        const sharedToMe = hivesSharedToMe;
         console.log("hives shared to me", sharedToMe);
-        const sharedByMe = hivesSharedByMe.hives;
+
+        const sharedByMe = hivesSharedByMe;
         console.log("hives shared by me", sharedByMe);
+
+        // if (sharedToMe === undefined) {
+        //     let sharedToMe = 0;
+        //     console.log(sharedToMe);
+        //     // return sharedToMe;
+
+        // }
+
+        // if (sharedByMe === undefined) {
+        //     let sharedByMe = 0;
+        //     console.log(sharedByMe);
+        //     // return sharedByMe;
+        // }
+
+        // const totalAmountOfSharedHives = sharedToMe.length + sharedByMe.length;
+        // return totalAmountOfSharedHives;
         // const sharedByMe = hivesSharedByMe.hives;
         // if (sharedToMe.length === 0) {
         // console.log("No hives have been shared to you");
     }
-    // if (sharedByMe.length === 0) {
-    //     console.log("You haven't shared any hives");
-    // }
-
-    // const hivesSharedToMe = getHivesSharedToMe(userId);
-    // console.log("hives shared to me", hivesSharedToMe.hives);
-    // const hivesSharedToMe = localStorage.getItem("hivesSharedToMe");
-    //     const hivesSharedByMe = localStorage.getItem("hivesSharedByMe");
-    //     // console.log(hivesSharedToMe);
-    //     console.log(hivesSharedByMe);
-
-    // const sharedGiftsCount = hivesSharedToMe.hives.reduce((total, hive) => total + hive.gifts.length, 0);
-    // return hives.length;
-
 
     return (
         <>

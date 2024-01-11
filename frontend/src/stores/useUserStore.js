@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_BACKEND_API;
 const withEndpoint = (endpoint) => `${API_URL}/user-routes/${endpoint}`;
 
 // Creates a store for the user handling
-export const useUserStore = create((set) => ({
+export const useUserStore = create((set, get) => ({
 
     // Saves some state variables in the store with default values
     username: "",
@@ -309,16 +309,25 @@ export const useUserStore = create((set) => ({
                 },
             });
 
-            console.log(response);
-
             if (response.ok) {
                 const data = await response.json();
-
+                console.log("Data from userstore", data);
                 set({
-                    hivesSharedByMe: data,
+                    hivesSharedByMe: data.sharedHives,
                 });
 
-                console.log(data);
+                // if (data.sharedHives === undefined) {
+                //     set({
+                //         hivesSharedByMe: [{}],
+                //     });
+                //     console.log(get().hivesSharedByMe);
+                //     console.log(data);
+                // } else {
+                //     set({
+                //         hivesSharedByMe: data,
+                //     });
+                // }
+
             } else {
                 console.error("Error fetching shared hives");
             }
