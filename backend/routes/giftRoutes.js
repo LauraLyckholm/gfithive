@@ -26,7 +26,6 @@ giftRouter.get("/", asyncHandler(async (req, res) => {
         const endpoints = listEndpoints(giftRouter);
         res.json(endpoints);
     } catch (error) {
-        console.log(error);
         res.status(500).json({ error: "Something went wrong" });
     }
 }));

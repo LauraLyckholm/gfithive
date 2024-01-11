@@ -9,7 +9,6 @@ import { Gift } from "../models/Gift";
 // Register a user
 export const registerUserController = asyncHandler(async (req, res) => {
     const { username, password, email } = req.body;
-    console.log(req.body);
 
     try {
         // Check if the user already exists in the database, by finding a user with the same username from the database
@@ -138,7 +137,8 @@ export const loginUserController = asyncHandler(async (req, res) => {
                     username: user.username,
                     accessToken: user.accessToken,
                     hives: user.hives,
-                    gifts: user.gifts
+                    gifts: user.gifts,
+                    email: user.email,
                 }
             })
         }
@@ -212,7 +212,6 @@ export const updateUserController = asyncHandler(async (req, res) => {
         // Check if the email is provided and if it's different from the current one
         if (email && email !== user.email) {
             const existingEmail = await User.findOne({ email: email.toLowerCase() });
-            console.log(existingEmail, email);
             if (existingEmail) {
                 return res.status(400).json({ error: "Email already exists" });
             }

@@ -29,9 +29,6 @@ export const CreateNewHive = () => {
 
             const success = await addHive(newHive);
 
-            console.log("success", success);
-            console.log("newHive", newHive);
-
             if (success) {
                 // Clear form fields
                 setHiveName("");

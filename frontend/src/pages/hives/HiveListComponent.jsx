@@ -20,9 +20,6 @@ export const HiveListComponent = () => {
 
     // Saves the hives from the local storage in a variable
     const savedHives = JSON.parse(localStorage.getItem("hives"));
-    // console.log("savedHives", savedHives);
-    // console.log("savedHives", savedHives[0].updatedAt.toLocaleString());
-    // console.log("savedHives", formatTime(savedHives[0].updatedAt));
 
     useEffect(() => {
         getHives();

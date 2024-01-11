@@ -89,7 +89,6 @@ export const useUserStore = create((set) => ({
                     loadingUser: false,
                     errorMessage: data.response.message
                 })
-                console.log(data.response);
 
                 throw new Error(`${response.status} ${response.statusText}`);
             }
@@ -97,7 +96,6 @@ export const useUserStore = create((set) => ({
             // If the response is ok, saves the response as a variable called data
             const data = await response.json();
             const successfullFetch = data.success;
-            console.log(data);
 
             // In case of a successfull fetch, sets the state variables to the values from the response
             if (successfullFetch) {
@@ -192,6 +190,7 @@ export const useUserStore = create((set) => ({
                     userId: data.response._id,
                     email: data.response.email,
                 })
+                console.log(data);
                 // Saves the accessToken in localStorage
                 localStorage.setItem("accessToken", data.response.accessToken);
                 localStorage.setItem("username", username);
@@ -302,7 +301,6 @@ export const useUserStore = create((set) => ({
 
     // Function to get hives shared by the user to an other user
     getHivesSharedByUser: async (userId) => {
-        console.log(userId);
         try {
             // Makes a GET request to the backend to get all hives shared by the user
             const response = await fetch(withEndpoint(`/users/${userId}/shared-hives`), {

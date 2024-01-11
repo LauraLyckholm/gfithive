@@ -252,8 +252,6 @@ export const useGiftStore = create((set, get) => ({
                 body: JSON.stringify({ shareToEmail: email }),
             });
 
-            console.log(hiveId, email);
-            console.log(response);
             const data = await response.json();
 
             // If the request is successful, the hive is updated in the store
@@ -290,7 +288,7 @@ export const useGiftStore = create((set, get) => ({
                 set({
                     hivesSharedToMe: data,
                 });
-                localStorage.setItem("hivesSharedToMe", JSON.stringify(data)); // Saves the shared hives data to local storage
+                // localStorage.setItem("hivesSharedToMe", JSON.stringify(data)); // Saves the shared hives data to local storage
             } else {
                 console.error("Error fetching shared hives");
             }

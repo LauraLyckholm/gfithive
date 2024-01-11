@@ -13,8 +13,6 @@ export const UpdateGiftInfo = () => {
     const giftIdParam = giftId;
     const navigate = useNavigate();
 
-    console.log("giftIdParam", giftIdParam);
-
     // Function to handle navigation back to the hive
     const handleOnclickNavigation = () => {
         navigate(`/hives/${hiveId}`)

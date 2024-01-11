@@ -35,19 +35,24 @@ export const Dashboard = () => {
         setLoggedInUser(localStorage.getItem("username"));
     }, [getDashboard])
 
-    // console.log(sharedHives);
-
     // Function to count overdue gifts in a hive
     const countOverdueGifts = (allHives) => {
+        if (!allHives) {
+            // Return an empty array to ensure the return type is consistent
+            return [];
+        }
+
         return allHives.map(hive => {
             return hive.gifts.reduce((count, gift) => {
                 const dueDate = dayjs(gift.dueDate);
-                console.log(dueDate);
                 return dueDate.isValid() && dueDate.isBefore(dayjs()) ? count + 1 : count;
             }, 0);
-        })
+        });
     };
-    const totalOverdueGifts = countOverdueGifts(allHives).reduce((sum, count) => sum + count, 0);
+
+    // Function to count the total amount of overdue gifts
+    const totalOverdueGifts = allHives ? countOverdueGifts(allHives).reduce((sum, count) => sum + count, 0) : 0;
+
 
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
     const handleShowingSharedHives = () => {

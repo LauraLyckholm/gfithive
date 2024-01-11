@@ -26,7 +26,6 @@ export const UniqueHive = () => {
     const { id } = useParams();
     const [hive, setHive] = useState(null);
     const { getHives, deleteGift, updateGift, shareHive } = useGiftStore();
-    // console.log(useGiftStore());
 
     // Fetches the hives when the component mounts, and saves the data to a local state for the hives
     useEffect(() => {
