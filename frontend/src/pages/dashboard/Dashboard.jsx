@@ -10,7 +10,7 @@ import "./dashboard.css";
 import { GridSquares } from "../../components/elements/DashboardSquares/GridSquares";
 import hiveIcon from "../../assets/hiveIcon.svg";
 import giftIcon from "../../assets/giftIcon.svg";
-// import sharedIcon from "../../assets/sharedIcon.svg";
+import sharedIcon from "../../assets/sharedIcon.svg";
 import deadlineIcon from "../../assets/deadlineIcon.svg";
 import userIconLight from "../../assets/userIconLight.svg";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
@@ -35,6 +35,8 @@ export const Dashboard = () => {
         setLoggedInUser(localStorage.getItem("username"));
     }, [getDashboard])
 
+    // console.log(sharedHives);
+
     // Function to count overdue gifts in a hive
     const countOverdueGifts = (allHives) => {
         return allHives.map(hive => {
@@ -54,25 +56,13 @@ export const Dashboard = () => {
         }
     }
 
-    // // Function to search for shared hives on id
-    // const sharedHivesOnId = (sharedHives) => {
-    //     if (sharedHives.length > 0) {
-    //         return sharedHives.map(hive => {
-    //             return hive._id;
-    //         })
-    //     }
-    // }
-
-    // const allSharedHiveIds = sharedHivesOnId(allHives).flat();
-    // console.log(searchHivesById(allSharedHiveIds));
-
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
-    // const handleShowingSharedHives = () => {
-    //     const sharedByUser = sharedHives(allHives).reduce((total, current) => total + current, 0);
-    //     console.log("sharedByUser", sharedByUser);
-    //     // const sharedToUser = sharedHives.length;
-    //     // return sharedByUser + sharedToUser;
-    // }
+    const handleShowingSharedHives = () => {
+        const sharedHives = JSON.parse(localStorage.getItem("sharedHives") || "[]");
+        // const sharedGiftsCount = sharedHives.reduce((total, hive) => total + hive.gifts.length, 0);
+        return sharedHives.length;
+    }
+
 
     return (
         <>
@@ -116,7 +106,10 @@ export const Dashboard = () => {
                                                 <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} text="deadlines" amount={handleShowingOverdueGifts()} />
                                             </>
                                             <>
-                                                {/* <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount={handleShowingSharedHives()} text="shared hives" /> */}
+                                                <Link to="/shared-hives">
+                                                    <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount={handleShowingSharedHives()} text="Shared hives" />
+                                                </Link>
+
                                             </>
                                         </section>
                                         <LinkToFAQ />

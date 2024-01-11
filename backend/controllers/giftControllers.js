@@ -223,7 +223,7 @@ export const deleteHiveController = asyncHandler(async (req, res) => {
 export const shareHiveController = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { shareToEmail } = req.body;
-    const userId = req.user._id;
+    const userId = req.user._id; // The user sharing the hive
 
     try {
         // Find the hive associated with the provided id and userId
@@ -239,6 +239,11 @@ export const shareHiveController = asyncHandler(async (req, res) => {
             return res.status(404).json({ error: "Recipient not found." });
         }
 
+        // Check if the hive is already shared with the recipient
+        if (hive.sharedWith.includes(recipient._id)) {
+            return res.status(400).json({ error: "Hive already shared with this user." });
+        };
+
         // Update the hive's sharedWith field
         hive.sharedWith.push(recipient._id);
         await hive.save();
@@ -249,6 +254,8 @@ export const shareHiveController = asyncHandler(async (req, res) => {
 
         res.json({
             message: "Hive shared successfully",
+            recipientId: recipient._id,
+            email: shareToEmail,
             sharedHive: hive,
         });
     } catch (error) {

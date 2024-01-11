@@ -7,6 +7,7 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 
 // Creates a store for the gift hive handling
 export const useGiftStore = create((set, get) => ({
+
     // Saves some state variables in the store with default values
     gifts: [],
     hives: [],
@@ -17,6 +18,7 @@ export const useGiftStore = create((set, get) => ({
     tags: [],
     loadingHives: false,
     dueDate: null,
+    hivesSharedToMe: [],
 
     setGifts: (gifts) => set({ gifts }),
     setHives: (hives) => set({ hives }),
@@ -27,6 +29,7 @@ export const useGiftStore = create((set, get) => ({
     setTags: (tags) => set({ tags }),
     setLoadingHives: (loadingHives) => set({ loadingHives }),
     setDueDate: (dueDate) => set({ dueDate }),
+    setHivesSharedToMe: (hivesSharedToMe) => set({ hivesSharedToMe }),
 
     // Function for getting all hives from the backend
     getHives: async () => {
@@ -264,6 +267,32 @@ export const useGiftStore = create((set, get) => ({
             } else {
                 console.error("Error sharing hive");
                 throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    },
+
+    // Function to get hives shared to the user by an other user
+    getSharedHives: async () => {
+        try {
+            // Makes a GET request to the backend to get all hives shared with the user
+            const response = await fetch(withEndpoint(`hives/shared`), {
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                set({
+                    hivesSharedToMe: data,
+                });
+                localStorage.setItem("sharedHives", JSON.stringify(data)); // Saves the shared hives data to local storage
+            } else {
+                console.error("Error fetching shared hives");
             }
 
         } catch (error) {

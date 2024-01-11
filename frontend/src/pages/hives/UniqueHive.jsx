@@ -50,7 +50,7 @@ export const UniqueHive = () => {
             }
         };
         handleHiveFetch();
-    }, [id, hive]);
+    }, []);
 
     const handleSetAsBought = async (giftId, newBoughtStatus) => {
         try {

@@ -11,6 +11,7 @@ import { Faq } from "../pages/faq/Faq";
 import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { Account } from "../pages/account/Account";
 import { UpdateGiftInfo } from "../pages/create/UpdateGiftInfo";
+import { SharedHives } from "../pages/hives/SharedHives";
 
 // Creates the routes for the application
 const routes = (
@@ -24,6 +25,7 @@ const routes = (
         <Route path="/add-hive" element={<CreateNewHive />} />
         <Route path="/hives/:id/add-gift" element={<CreateNewGift />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/shared-hives" element={<SharedHives />} />
         <Route path="/hives/:id/:giftId/update-gift" element={<UpdateGiftInfo />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="*" element={<ErrorPage />} />

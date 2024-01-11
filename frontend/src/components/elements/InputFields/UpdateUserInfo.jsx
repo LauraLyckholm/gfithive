@@ -2,7 +2,7 @@ import { useUserStore } from "../../../stores/useUserStore";
 import { Button } from "../../../components/elements/Button/Button";
 
 export const UpdateUserInfo = ({ userId }) => {
-    const { updateUser, username, setUsername, password, setPassword } = useUserStore();
+    const { updateUser, username, setUsername, password, setPassword, email, setEmail } = useUserStore();
 
     const handleUpdateUserInfo = async () => {
         // Creates an object with the updated user info, empty values on default
@@ -11,9 +11,14 @@ export const UpdateUserInfo = ({ userId }) => {
         if (username && username !== localStorage.getItem("username")) {
             updatedUserInfo.username = username;
         }
+        // If the user has written a new password, it will be added to the object
         if (password) {
             updatedUserInfo.password = password
-        } // If the user has written a new password, it will be added to the object
+        }
+        // If the user has written a new email, it will be added to the object
+        if (email) {
+            updatedUserInfo.email = email
+        }
 
         if (Object.keys(updatedUserInfo).length > 0) {
             await updateUser(userId, updatedUserInfo);
@@ -34,7 +39,6 @@ export const UpdateUserInfo = ({ userId }) => {
                     <input
                         type="text"
                         id="username"
-                        // placeholder="e.g. New phone"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
@@ -44,9 +48,17 @@ export const UpdateUserInfo = ({ userId }) => {
                     <input
                         type="password"
                         id="password"
-                        // placeholder="e.g. christmas, 2023"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Change email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
 

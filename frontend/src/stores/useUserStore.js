@@ -19,6 +19,7 @@ export const useUserStore = create((set) => ({
     errorMessage: "",
     userId: "",
     dashboard: {},
+    hivesSharedByMe: [],
 
     // Sets the values of the state variables to the values being passed in
     setUsername: (username) => set({ username }),
@@ -30,6 +31,7 @@ export const useUserStore = create((set) => ({
     setErrorMessage: (errorMessage) => set({ errorMessage: errorMessage }),
     setUserId: (userId) => set({ userId: userId }),
     setDashboard: (dashboard) => set({ dashboard: dashboard }),
+    setHivesSharedByMe: (hivesSharedByMe) => set({ hivesSharedByMe }),
 
     // Creates a function for getting the dashboard from the backend
     getDashboard: async () => {
@@ -311,6 +313,33 @@ export const useUserStore = create((set) => ({
 
         } catch (error) {
             console.error("Error deleting user:", error);
+        }
+    },
+
+    // Function to get hives shared by the user to an other user
+    getHivesSharedByUser: async (userId) => {
+        console.log(userId);
+        try {
+            // Makes a GET request to the backend to get all hives shared by the user
+            const response = await fetch(withEndpoint(`/users/${userId}/shared-hives`), {
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                set({
+                    hivesSharedByMe: data,
+                });
+                localStorage.setItem("sharedHives", JSON.stringify(data)); // Saves the shared hives data to local storage
+            } else {
+                console.error("Error fetching shared hives");
+            }
+
+        } catch (error) {
+            console.error("There was an error =>", error);
         }
     },
 

@@ -191,7 +191,7 @@ export const getUsersController = asyncHandler(async (req, res) => {
 // Creates a function that makes it possible to update the users information
 export const updateUserController = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
 
     try {
         const user = await User.findById(id);
@@ -214,13 +214,19 @@ export const updateUserController = asyncHandler(async (req, res) => {
             user.password = hashedPassword;
         }
 
+        // Check if the email is provided and if it's different from the current one
+        if (email && email !== user.email) {
+            user.email = email;
+        }
+
         await user.save();
 
         res.json({
             message: "User updated successfully",
             user: {
                 _id: user._id,
-                username: user.username
+                username: user.username,
+                email: user.email,
             }
         });
     } catch (error) {
@@ -273,6 +279,4 @@ export const getHivesSharedByUserController = asyncHandler(async (req, res) => {
         console.error("Error getting shared hives:", error);
         res.status(500).json({ error: "Internal server error" });
     };
-
-
 });
