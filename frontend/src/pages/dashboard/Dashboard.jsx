@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { useUserStore } from "../../stores/useUserStore";
-// import { useSearchStore } from "../../stores/useSearchStore";
 import { WelcomeSquare } from "../../components/elements/DashboardSquares/WelcomeSquare";
 import { CreateNewHive } from "../create/CreateNewHive";
 import "./dashboard.css";
@@ -17,17 +16,14 @@ import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import dayjs from "dayjs";
-// import { safelyParseJson } from "../../utils/safelyParseJson";
 
 // Component for the dashboard
 export const Dashboard = () => {
-    const { isLoggedIn, getDashboard, dashboard, loadingUser, getHivesSharedByUser, hivesSharedByMe } = useUserStore();
-    // const { searchHivesById } = useSearchStore();
+    const { isLoggedIn, getDashboard, dashboard, loadingUser } = useUserStore();
     const { loadingHives, getHivesSharedToMe, hivesSharedToMe } = useGiftStore();
     const [loggedInUser, setLoggedInUser] = useState(""); // Used to display the username in the dashboard
     const hivesAmount = dashboard.hivesCount; // Saves the amount of hives in a variable
     const giftsAmount = dashboard.giftsCount; // Saves the amount of gifts in a variable
-    // const sharedHives = dashboard.sharedHives; // Saves the amount of shared hives in a variable
     const allHives = JSON.parse(localStorage.getItem("hives"));
     const userId = localStorage.getItem("userId");
 
@@ -35,9 +31,9 @@ export const Dashboard = () => {
     useEffect(() => {
         getDashboard();
         getHivesSharedToMe(userId);
-        getHivesSharedByUser(userId);
+        // getHivesSharedByUser(userId);
         setLoggedInUser(localStorage.getItem("username"));
-    }, [])
+    }, [getDashboard, getHivesSharedToMe, userId])
 
     // Function to count overdue gifts in a hive
     const countOverdueGifts = (allHives) => {
@@ -62,28 +58,7 @@ export const Dashboard = () => {
     const handleShowingSharedHives = () => {
         const sharedToMe = hivesSharedToMe;
         console.log("hives shared to me", sharedToMe);
-
-        const sharedByMe = hivesSharedByMe;
-        console.log("hives shared by me", sharedByMe);
-
-        // if (sharedToMe === undefined) {
-        //     let sharedToMe = 0;
-        //     console.log(sharedToMe);
-        //     // return sharedToMe;
-
-        // }
-
-        // if (sharedByMe === undefined) {
-        //     let sharedByMe = 0;
-        //     console.log(sharedByMe);
-        //     // return sharedByMe;
-        // }
-
-        // const totalAmountOfSharedHives = sharedToMe.length + sharedByMe.length;
-        // return totalAmountOfSharedHives;
-        // const sharedByMe = hivesSharedByMe.hives;
-        // if (sharedToMe.length === 0) {
-        // console.log("No hives have been shared to you");
+        return sharedToMe.length;
     }
 
     return (

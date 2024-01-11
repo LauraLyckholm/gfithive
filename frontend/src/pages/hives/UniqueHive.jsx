@@ -15,6 +15,7 @@ import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import { formatTime } from "../../utils/formatTime";
 import { Tooltip } from "@mui/material";
+import "./hives.css";
 
 // Gets the url to the API from the env file
 const API_URL = import.meta.env.VITE_BACKEND_API;
@@ -49,7 +50,7 @@ export const UniqueHive = () => {
             }
         };
         handleHiveFetch();
-    }, []);
+    }, [id]);
 
     const handleSetAsBought = async (giftId, newBoughtStatus) => {
         try {
@@ -205,9 +206,6 @@ export const UniqueHive = () => {
                                                     className="icon update-icon"
                                                     src={update}
                                                     alt="Icon for updating the hives name"
-                                                // onClick={() => handleUpdateGift(gift._id, gift.gift)}
-
-                                                // onKeyDown={((event) => handleKeyPress(event, "update", gift._id))}
                                                 />
                                             </Tooltip>
                                         </Link>

@@ -4,6 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { customSwal } from "../../utils/customSwal";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
+
 import "./create.css";
 
 export const UpdateGiftInfo = () => {
@@ -91,7 +93,7 @@ export const UpdateGiftInfo = () => {
                     <input
                         type="text"
                         id="tags"
-                        placeholder="e.g. christmas, 2023"
+                        placeholder="e.g. Christmas, 2024 "
                         value={tags}
                         onChange={(e) => setTags(e.target.value)}
                         required />
@@ -99,23 +101,33 @@ export const UpdateGiftInfo = () => {
                 <div className="form-group">
                     <label htmlFor="dueDate">Due date</label>
                     <DatePicker
+                        className="customDatePickerInput"
                         id="dueDate"
                         value={dueDate}
                         onChange={setDueDate}
-                    // slots={{
-                    //     openPickerIcon: EditCalendarRoundedIcon,
-                    //     openPickerButton: StyledButton,
-                    //     day: StyledDay,
-                    // }}
-                    // slotProps={{
-                    //     openPickerIcon: { fontSize: "large" },
-                    //     openPickerButton: { color: "secondary" },
-                    //     textField: {
-                    //         variant: "filled",
-                    //         focused: true,
-                    //         color: "secondary",
-                    //     },
-                    // }}
+                        slots={{
+                            openPickerIcon: EditCalendarRoundedIcon
+                        }}
+                        slotProps={{
+                            openPickerIcon: { fontSize: "large" },
+                            openPickerButton: { color: "var(--primary)" },
+                            textField: {
+                                textField: {
+                                    variant: "outlined",
+                                    focused: true,
+                                },
+                                inputProps: {
+                                    style: {
+                                        background: "white",
+                                        border: "none",
+                                        padding: "30px",
+                                        fontSize: "18px",
+                                        fontFamily: "Poppins",
+                                        fontWeight: "400",
+                                    },
+                                },
+                            },
+                        }}
                     />
                 </div>
             </form>

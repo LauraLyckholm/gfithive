@@ -285,9 +285,8 @@ export const useGiftStore = create((set, get) => ({
 
             if (response.ok) {
                 const data = await response.json();
-                console.log("Data from giftStore", data);
                 set({
-                    hivesSharedToMe: data,
+                    hivesSharedToMe: data.hives,
                 });
             } else {
                 console.error("Error fetching hives");
