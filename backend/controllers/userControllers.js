@@ -291,7 +291,7 @@ export const getUsersSharedHivesController = asyncHandler(async (req, res) => {
 
     try {
         // Find the user
-        const user = await User.findById(userId).populate('sharedHives');
+        const user = await User.findById(userId).populate("sharedHives");
 
         // Get the users shared hives
         let usersSharedHives = user.sharedHives;
@@ -301,16 +301,10 @@ export const getUsersSharedHivesController = asyncHandler(async (req, res) => {
             return res.status(404).json({ error: "User not found or unauthorized." });
         }
 
-        // If the user has not shared any hives, return an error
-        if (usersSharedHives.length === 0) {
-            return res.status(404).json({ error: "User has not been shared any hives." });
-        }
-
         // Return the users shared hives
         res.json({
             success: true,
             response: {
-                message: "Shared hives found",
                 sharedHives: usersSharedHives
             }
         });

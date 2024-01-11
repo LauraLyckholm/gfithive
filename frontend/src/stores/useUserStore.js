@@ -303,25 +303,29 @@ export const useUserStore = create((set) => ({
     getHivesSharedByUser: async (userId) => {
         try {
             // Makes a GET request to the backend to get all hives shared by the user
-            const response = await fetch(withEndpoint(`/users/${userId}/shared-hives`), {
+            const response = await fetch(withEndpoint(`/users/shared-hives/${userId}`), {
                 headers: {
                     "Auth": localStorage.getItem("accessToken"),
                 },
             });
 
+            console.log(response);
+
             if (response.ok) {
                 const data = await response.json();
 
-                // set({
-                //     hivesSharedByMe: data,
-                // });
-                // localStorage.setItem("hivesSharedByMe", JSON.stringify(data)); // Saves the shared hives data to local storage
+                set({
+                    hivesSharedByMe: data,
+                });
+
                 console.log(data);
             } else {
                 console.error("Error fetching shared hives");
             }
 
-        } catch (error) {
+        }
+
+        catch (error) {
             console.error("There was an error =>", error);
         }
     },

@@ -331,10 +331,9 @@ export const unshareHiveController = asyncHandler(async (req, res) => {
     }
 });
 
-// Funciton to get the hives shared to the user
+// Function to get the hives shared to the user
 export const getHivesSharedToTheUserController = asyncHandler(async (req, res) => {
     const userId = req.params.id;
-    console.log(userId);
 
     // Find all hives and populate their associated gifts
     try {

@@ -274,10 +274,10 @@ export const useGiftStore = create((set, get) => ({
     },
 
     // Function to get hives shared to the user by an other user
-    getHivesSharedToMe: async () => {
+    getHivesSharedToMe: async (userId) => {
         try {
             // Makes a GET request to the backend to get all hives shared with the user
-            const response = await fetch(withEndpoint(`hives/shared`), {
+            const response = await fetch(withEndpoint(`hives/shared-with/${userId}`), {
                 headers: {
                     "Auth": localStorage.getItem("accessToken"),
                 },
@@ -286,16 +286,12 @@ export const useGiftStore = create((set, get) => ({
             if (response.ok) {
                 const data = await response.json();
 
-                // set({
-                //     hivesSharedToMe: data,
-                // });
-                // localStorage.setItem("hivesSharedToMe", JSON.stringify(data)); // Saves the shared hives data to local storage
-                console.log('data', data);
-
+                set({
+                    hivesSharedToMe: data,
+                });
             } else {
-                console.error("Error fetching shared hives");
+                console.error("Error fetching hives");
             }
-
         } catch (error) {
             console.error("There was an error =>", error);
         }
