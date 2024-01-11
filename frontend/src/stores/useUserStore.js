@@ -249,11 +249,10 @@ export const useUserStore = create((set) => ({
 
     // Creates a function that makes it possible to update a username and password
     updateUser: async (userId, updatedUserInfo) => {
+
         try {
             // Destructures username from the updatedUserInfo object
             const { username, email } = updatedUserInfo;
-            console.log("Sending update request with:", updatedUserInfo);
-
 
             const response = await fetch(withEndpoint(`users/${userId}`), {
                 method: "PUT",
@@ -267,7 +266,6 @@ export const useUserStore = create((set) => ({
             if (response.ok) {
                 const data = await response.json();
                 const successfullFetch = data.success;
-                console.log(data);
 
                 if (successfullFetch) {
                     set({
@@ -278,34 +276,10 @@ export const useUserStore = create((set) => ({
                     localStorage.setItem("username", data.user.username);
                     localStorage.setItem("email", data.user.email);
                 }
-
-                // Alerts to the user that the username has been updated
-                if (successfullFetch) {
-                    customSwal.fire({
-                        title: "User updated",
-                        text: `Your username has been updated to ${data.response.username}!`,
-                        icon: "success",
-                        confirmButtonText: "OK",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Redirect or navigate to the login page when the "OK" button is clicked
-                            window.location.href = "/dashboard"; // Change the URL as needed
-                        }
-                    });
-                }
-
             } else {
-                console.error("Error updating user");
-                throw new Error(`HTTP error! status: ${response.status}`);
+                console.error("Error updating user", response.data.message);
             }
-
         } catch (error) {
-            customSwal.fire({
-                title: "User update failed",
-                text: `${error}`,
-                icon: "error",
-                confirmButtonText: "OK",
-            });
             console.error("There was an error =>", error);
         }
     },
@@ -343,7 +317,8 @@ export const useUserStore = create((set) => ({
                 set({
                     hivesSharedByMe: data,
                 });
-                localStorage.setItem("sharedHives", JSON.stringify(data)); // Saves the shared hives data to local storage
+                localStorage.setItem("hivesSharedByMe", JSON.stringify(data)); // Saves the shared hives data to local storage
+
             } else {
                 console.error("Error fetching shared hives");
             }

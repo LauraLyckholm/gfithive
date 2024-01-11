@@ -210,7 +210,7 @@ export const updateUserController = asyncHandler(async (req, res) => {
         }
 
         // Check if the email is provided and if it's different from the current one
-        if (email && email.toLowerCase() !== user.email.toLowerCase()) {
+        if (email && email !== user.email) {
             const existingEmail = await User.findOne({ email: email.toLowerCase() });
             console.log(existingEmail, email);
             if (existingEmail) {

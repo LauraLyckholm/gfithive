@@ -3,16 +3,16 @@ import { useGiftStore } from "../../stores/useGiftStore";
 import { useUserStore } from "../../stores/useUserStore";
 
 export const SharedHives = () => {
-    const { getSharedHives, hivesSharedToMe } = useGiftStore();
+    const { getHivesSharedToMe, hivesSharedToMe } = useGiftStore();
     const { getHivesSharedByUser, hivesSharedByMe } = useUserStore();
     const userId = localStorage.getItem("userId");
 
     useEffect(() => {
         (async () => {
-            await getSharedHives();
-            await getHivesSharedByUser(userId);
-            // const hives = JSON.parse(localStorage.getItem("sharedHives") || "[]");
-            // setSharedHives(hives);
+            const sharedToMe = await getHivesSharedToMe();
+            const sharedByMe = await getHivesSharedByUser(userId);
+            localStorage.setItem("hivesSharedToMe", JSON.stringify(sharedToMe));
+            localStorage.setItem("hivesSharedByMe", JSON.stringify(sharedByMe));
         })();
     }, []);
 

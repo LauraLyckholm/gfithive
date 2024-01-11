@@ -1,10 +1,13 @@
 import { useUserStore } from "../../../stores/useUserStore";
 import { Button } from "../../../components/elements/Button/Button";
+import { customSwal } from "../../../utils/customSwal";
 
 export const UpdateUserInfo = ({ userId }) => {
+
     const { updateUser, username, setUsername, password, setPassword, email, setEmail } = useUserStore();
 
-    const handleUpdateUserInfo = async () => {
+    const handleUpdateUserInfo = async (event) => {
+        event.preventDefault();
         // Creates an object with the updated user info, empty values on default
         const updatedUserInfo = {};
 
@@ -22,7 +25,14 @@ export const UpdateUserInfo = ({ userId }) => {
         }
 
         if (Object.keys(updatedUserInfo).length > 0) {
-            await updateUser(userId, updatedUserInfo);
+            await updateUser(userId, updatedUserInfo).then(() => {
+                customSwal.fire({
+                    title: "Success!",
+                    text: "Your information has been updated",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                });
+            });
 
             // Update local storage and state if username was updated
             if (updatedUserInfo.username) {
@@ -39,7 +49,7 @@ export const UpdateUserInfo = ({ userId }) => {
 
     return (
         <section>
-            <form className="form-wrapper">
+            <form className="form-wrapper" onSubmit={handleUpdateUserInfo}>
                 <div className="form-group">
                     <label htmlFor="username">Change username</label>
                     <input
@@ -71,7 +81,7 @@ export const UpdateUserInfo = ({ userId }) => {
                     />
                 </div>
 
-                <Button handleOnClick={handleUpdateUserInfo} className={"primary"} btnText={"Update my info"} />
+                <Button className={"primary"} btnText={"Update my info"} />
             </form>
 
 

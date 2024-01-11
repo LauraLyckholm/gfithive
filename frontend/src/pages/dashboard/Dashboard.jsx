@@ -51,9 +51,10 @@ export const Dashboard = () => {
 
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
     const handleShowingSharedHives = () => {
-        const sharedHives = JSON.parse(localStorage.getItem("sharedHives") || "[]");
+        const hivesSharedToMe = JSON.parse(localStorage.getItem("hivesSharedToMe") || "[]");
+        const hivesSharedByMe = JSON.parse(localStorage.getItem("hivesSharedByMe") || "[]");
         // const sharedGiftsCount = sharedHives.reduce((total, hive) => total + hive.gifts.length, 0);
-        return sharedHives.length;
+        return hivesSharedToMe.length + hivesSharedByMe.length;
     }
 
 
