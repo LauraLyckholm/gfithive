@@ -205,7 +205,7 @@ export const UniqueHive = () => {
                                                     tabIndex="0"
                                                     className="icon update-icon"
                                                     src={update}
-                                                    alt="Icon for updating the hives name"
+                                                    alt="Icon for updating the gift"
                                                 />
                                             </Tooltip>
                                         </Link>

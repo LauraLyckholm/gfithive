@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useGiftStore } from "../../stores/useGiftStore";
 // import { Tooltip } from "@mui/material";
-// import update from "../../assets/update.svg";
+import update from "../../assets/update.svg";
 import dueIcon from "../../assets/due-icon.svg";
 import { Button } from "../../components/elements/Button/Button";
 import { Chip, Stack, Tooltip, Avatar } from "@mui/material";
@@ -12,17 +12,67 @@ import "./hives.css";
 
 
 export const SharedHives = () => {
-    const { getHivesSharedToMe, hivesSharedToMe, updateGift } = useGiftStore();
+    const { getHivesSharedToMe, hivesSharedToMe, updateGift, setHivesSharedToMe } = useGiftStore();
     const userId = localStorage.getItem("userId");
 
     useEffect(() => {
         getHivesSharedToMe(userId);
-        // Removed the console.log here, it won't show updated data immediately
     }, [getHivesSharedToMe, userId]);
 
     const handleSetAsBought = async (giftId, newBoughtStatus) => {
         try {
             await updateGift({ id: giftId, bought: newBoughtStatus });
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    };
+
+    const handleUpdateTags = async (giftId, tagToDelete) => {
+        try {
+            // Finds the gift that has the tags that should be updated
+            let giftToUpdate;
+            hivesSharedToMe.forEach((hive) => {
+                if (hive.gifts) {
+                    const foundGift = hive.gifts.find((gift) => gift._id === giftId);
+                    if (foundGift) {
+                        giftToUpdate = foundGift;
+                    }
+                }
+            });
+
+            if (!giftToUpdate) {
+                throw new Error("Gift not found");
+            }
+
+            // Filters out the tag that should be deleted
+            const updatedTags = giftToUpdate.tags.filter(tag => tag !== tagToDelete);
+
+            // Updates the gift with the new tags array
+            await updateGift({ id: giftId, tags: updatedTags });
+
+            // Update local state
+            const updatedHives = hivesSharedToMe.map(hive => {
+                if (hive.gifts) {
+                    return {
+                        ...hive,
+                        gifts: hive.gifts.map(gift => {
+                            if (gift._id === giftId) {
+                                return {
+                                    ...gift,
+                                    tags: updatedTags
+                                };
+                            }
+                            return gift;
+                        })
+                    };
+                }
+                return hive;
+            });
+
+            // Assuming you have a setter for hivesSharedToMe, use it here
+            setHivesSharedToMe(updatedHives);
+            // Updates the gift with the new tags array
+            await updateGift({ id: giftId, tags: updatedTags });
         } catch (error) {
             console.error("There was an error =>", error);
         }
@@ -38,8 +88,6 @@ export const SharedHives = () => {
         )
     };
 
-    console.log(hivesSharedToMe)
-
     return (
 
         <section>
@@ -47,13 +95,14 @@ export const SharedHives = () => {
                 <h1>Hives shared with me</h1>
             </div>
             {hivesSharedToMe.length > 0 ? (
-                <ul>
+                // <ul>
+                <>
                     {hivesSharedToMe.map((hive, index) => {
                         // const overdueCount = countOverdueGifts(hive);
                         return (
-                            <li key={hive._id}>
+                            <ul key={hive._id}>
                                 <h3 className="bold">{index + 1}. {hive.name}</h3>
-                                <p>{hive.gifts.map((gift) => {
+                                <li>{hive.gifts.map((gift) => {
                                     return (
                                         <ul className="list-item-pair" key={gift._id}>
                                             <div className="icon-pair">
@@ -90,7 +139,7 @@ export const SharedHives = () => {
                                                         <Chip
                                                             key={tag}
                                                             label={tag}
-                                                            // onDelete={() => handleUpdateTags(gift._id, tag)}
+                                                            onDelete={() => handleUpdateTags(gift._id, tag)}
                                                             sx={{
                                                                 backgroundColor: "var(--primary)",
                                                                 color: "var(--text)",
@@ -100,14 +149,25 @@ export const SharedHives = () => {
                                                     );
                                                 })}
                                             </Stack>
+                                            <Link to={`/hives/${hive._id}/${gift._id}/update-shared-gift`}>
+                                                <Tooltip title="Update gift">
+                                                    <img
+                                                        tabIndex="0"
+                                                        className="icon update-icon"
+                                                        src={update}
+                                                        alt="Icon for updating the gift"
+                                                    />
+                                                </Tooltip>
+                                            </Link>
                                         </ul>
 
                                     )
-                                })}</p>
-                            </li>
+                                })}</li>
+                            </ul>
                         );
                     })}
-                </ul>
+                    {/* </ul> */}
+                </>
             ) : (
                 <p>You have no hives shared with you</p>
             )}

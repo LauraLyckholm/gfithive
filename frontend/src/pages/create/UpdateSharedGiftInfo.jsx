@@ -5,19 +5,18 @@ import { customSwal } from "../../utils/customSwal";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
-
 import "./create.css";
 
-export const UpdateGiftInfo = () => {
+export const UpdateSharedGiftInfo = () => {
     const { giftName, setGiftName, updateGift, tags, setTags, dueDate, setDueDate } = useGiftStore();
-    const { id, giftId } = useParams();
-    const hiveId = id;
+    const { giftId } = useParams();
+    // const hiveId = id;
     const giftIdParam = giftId;
     const navigate = useNavigate();
 
     // Function to handle navigation back to the hive
     const handleOnclickNavigation = () => {
-        navigate(`/hives/${hiveId}`)
+        navigate(`/shared-hives`)
     };
 
     // function to handle adding a new gift
@@ -27,14 +26,13 @@ export const UpdateGiftInfo = () => {
         let giftData = {
             id: giftIdParam,
         };
-        console.log(id);
 
         if (giftName.trim()) {
             giftData.gift = giftName;
         }
 
-        if (tags.trim()) {
-            // Formats the tags so that they are saved as an array with several strings instead of one string. Filters out empty tags
+        // Check if tags is a string and not empty before splitting and trimming
+        if (typeof tags === "string" && tags.trim()) {
             giftData.tags = tags.split(",")
                 .map(tag => tag.trim())
                 .filter(tag => tag !== "");
@@ -69,7 +67,7 @@ export const UpdateGiftInfo = () => {
                     setGiftName("");
                     setTags("");
                     setDueDate("");
-                    navigate(`/hives/${hiveId}`);
+                    navigate(`/shared-hives`);
                 }
             });
         } catch (error) {
@@ -137,7 +135,7 @@ export const UpdateGiftInfo = () => {
 
             <div className="btns">
                 <Button handleOnClick={handleUpdateGift} className={"primary"} btnText={"Update gift"} />
-                <Button className={"secondary"} handleOnClick={handleOnclickNavigation} btnText={"Back to hive"} />
+                <Button className={"secondary"} handleOnClick={handleOnclickNavigation} btnText={"Back to shared hives"} />
             </div>
         </section>
     )

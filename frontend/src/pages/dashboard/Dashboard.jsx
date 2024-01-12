@@ -9,7 +9,7 @@ import "./dashboard.css";
 import { GridSquares } from "../../components/elements/DashboardSquares/GridSquares";
 import hiveIcon from "../../assets/hiveIcon.svg";
 import giftIcon from "../../assets/giftIcon.svg";
-import sharedIcon from "../../assets/sharedIcon.svg";
+import sharedIcon from "../../assets/shared-white.svg";
 import deadlineIcon from "../../assets/deadlineIcon.svg";
 import userIconLight from "../../assets/userIconLight.svg";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
@@ -57,7 +57,6 @@ export const Dashboard = () => {
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
     const handleShowingSharedHives = () => {
         const sharedToMe = hivesSharedToMe;
-        console.log("hives shared to me", sharedToMe);
         return sharedToMe.length;
     }
 
@@ -95,18 +94,20 @@ export const Dashboard = () => {
                                             </>
 
                                             <>
-                                                <Link className="button-square" to="/account">
-                                                    <GridSquares icon={userIconLight} text="My account" />
-                                                </Link>
-                                            </>
-                                            <>
                                                 <GridSquares icon={deadlineIcon} loggedInUser={loggedInUser} text={`${totalOverdueGifts === 1 ? "gift is due" : "gifts are due"}`} amount={totalOverdueGifts} />
                                             </>
+
                                             <>
-                                                <Link to="/shared-hives">
+                                                <Link className="button-square" to="/shared-hives">
                                                     <GridSquares icon={sharedIcon} loggedInUser={loggedInUser} amount={handleShowingSharedHives()} text="shared hives" />
                                                 </Link>
 
+                                            </>
+
+                                            <>
+                                                <Link className="button-square" to="/account">
+                                                    <GridSquares icon={userIconLight} text="My account" />
+                                                </Link>
                                             </>
                                         </section>
                                         <LinkToFAQ />

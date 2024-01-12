@@ -12,6 +12,7 @@ import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { Account } from "../pages/account/Account";
 import { UpdateGiftInfo } from "../pages/create/UpdateGiftInfo";
 import { SharedHives } from "../pages/hives/SharedHives";
+import { UpdateSharedGiftInfo } from "../pages/create/UpdateSharedGiftInfo";
 
 // Creates the routes for the application
 const routes = (
@@ -27,6 +28,7 @@ const routes = (
         <Route path="/account" element={<Account />} />
         <Route path="/shared-hives" element={<SharedHives />} />
         <Route path="/hives/:id/:giftId/update-gift" element={<UpdateGiftInfo />} />
+        <Route path="/hives/:id/:giftId/update-shared-gift" element={<UpdateSharedGiftInfo />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="*" element={<ErrorPage />} />
     </>
