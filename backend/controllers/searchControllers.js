@@ -2,7 +2,6 @@
 import { Gift } from "../models/Gift";
 import { Hive } from "../models/Hive";
 import asyncHandler from "express-async-handler";
-import mongoose from "mongoose";
 
 // ------------ CONTROLLERS ------------ //
 // Function to search for gifts and hives
