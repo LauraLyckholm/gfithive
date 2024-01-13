@@ -10,9 +10,11 @@ import { Gift } from "../models/Gift";
 export const registerUserController = asyncHandler(async (req, res) => {
     const { username, password, email } = req.body;
 
+    const lowerCaseUsername = username.toLowerCase();
+
     try {
         // Check if the user already exists in the database, by finding a user with the same username from the database
-        const usernameExists = await User.findOne({ username });
+        const usernameExists = await User.findOne({ username: { $regex: new RegExp("^" + lowerCaseUsername + "$", "i") } });
         const emailExists = await User.findOne({ email });
 
 
@@ -57,6 +59,17 @@ export const registerUserController = asyncHandler(async (req, res) => {
                 validationSuccess: false,
                 response: {
                     message: "Password must be at least 7 characters long, include uppercase and lowercase letters and least one number."
+                }
+            });
+        }
+
+        // Validate username
+        if (username.length < 5 || username.length > 20) {
+            return res.status(400).json({
+                success: false,
+                validationSuccess: false,
+                response: {
+                    message: "Username must be between 5 and 20 characters long."
                 }
             });
         }

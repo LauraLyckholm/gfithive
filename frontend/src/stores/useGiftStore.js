@@ -19,6 +19,7 @@ export const useGiftStore = create((set, get) => ({
     loadingHives: false,
     dueDate: null,
     hivesSharedToMe: [],
+    currentGift: null,
 
     setGifts: (gifts) => set({ gifts }),
     setHives: (hives) => set({ hives }),
@@ -30,6 +31,9 @@ export const useGiftStore = create((set, get) => ({
     setLoadingHives: (loadingHives) => set({ loadingHives }),
     setDueDate: (dueDate) => set({ dueDate }),
     setHivesSharedToMe: (hivesSharedToMe) => set({ hivesSharedToMe }),
+    selectGiftForEditing: (giftId) => set({ currentGift: giftId }),
+    clearCurrentGift: () => set({ currentGift: null }),
+
 
     // Function for getting all hives from the backend
     getHives: async () => {

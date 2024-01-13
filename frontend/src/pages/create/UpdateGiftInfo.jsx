@@ -7,9 +7,10 @@ import dayjs from "dayjs";
 import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
 
 import "./create.css";
+import { useEffect } from "react";
 
 export const UpdateGiftInfo = () => {
-    const { giftName, setGiftName, updateGift, tags, setTags, dueDate, setDueDate } = useGiftStore();
+    const { giftName, setGiftName, updateGift, tags, setTags, dueDate, setDueDate, getHives, hives } = useGiftStore();
     const { id, giftId } = useParams();
     const hiveId = id;
     const giftIdParam = giftId;
@@ -19,6 +20,25 @@ export const UpdateGiftInfo = () => {
     const handleOnclickNavigation = () => {
         navigate(`/hives/${hiveId}`)
     };
+
+    // Fetches the hives when the component mounts
+    useEffect(() => {
+        getHives();
+    }, []);
+
+    // Fetches the gift when the component mounts and sets the gift name and tags to the current values
+    useEffect(() => {
+        if (hives && hives.length > 0) {
+            hives.map((hive) => {
+                hive.gifts.map((gift) => {
+                    if (gift._id === giftIdParam) {
+                        setGiftName(gift.gift);
+                        setTags(gift.tags.join(", ")); // Assuming tags is an array
+                    }
+                });
+            });
+        }
+    }, []);
 
     // function to handle adding a new gift
     const handleUpdateGift = async (event) => {

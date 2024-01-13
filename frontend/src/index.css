@@ -11,7 +11,7 @@
   --placeholder-text: #00000080;
 
   /* Font */
-  --font: "Poppins", sans-serif;
+  --font: "Poppins", Arial, Helvetica, sans-serif;
 
   /* Other styles */
   --border-radius: 8px;
