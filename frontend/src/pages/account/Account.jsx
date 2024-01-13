@@ -5,6 +5,7 @@ import { customSwal } from "../../utils/customSwal";
 import { UpdateUserInfo } from "../../components/elements/InputFields/UpdateUserInfo";
 import "./account.css";
 
+// Component for the account page
 export const Account = () => {
     const { deleteUser, setIsLoggedIn } = useUserStore();
     const userId = localStorage.getItem("userId");

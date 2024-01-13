@@ -1,6 +1,7 @@
 import hiveIcon from "../../assets/hiveIcon.svg";
 import "./error-page.css";
 
+// Component for the error page
 export const ErrorPage = () => {
     return (
         <section className="main-wrapper">

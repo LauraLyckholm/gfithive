@@ -2,6 +2,7 @@ import "./search.css";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../../../stores/useUserStore";
 
+// Component for the search results dropdown
 export const SearchResultsDropdown = ({ results, searchPerformed, hideDropDown }) => {
     const { isLoggedIn } = useUserStore();
     // Destructures the results object

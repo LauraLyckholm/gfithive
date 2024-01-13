@@ -2,6 +2,7 @@ import { useUserStore } from "../../../stores/useUserStore";
 import { Button } from "../../../components/elements/Button/Button";
 import { customSwal } from "../../../utils/customSwal";
 
+// Component for updating a user's information
 export const UpdateUserInfo = ({ userId }) => {
 
     const { updateUser, username, setUsername, password, setPassword, email, setEmail } = useUserStore();
