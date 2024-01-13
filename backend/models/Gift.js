@@ -8,8 +8,6 @@ const GiftItemSchema = new Schema({
     },
     gift: {
         type: String,
-        minlength: 2,
-        maxlength: 50,
     },
     tags: {
         type: Array,
