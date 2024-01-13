@@ -121,9 +121,6 @@ export const CreateNewHive = () => {
                             openPickerIcon: EditCalendarRoundedIcon,
                         }}
                         slotProps={{
-                            actionBar: {
-                                actions: ["clear", "cancel"]
-                            },
                             openPickerButton: { color: "primary" },
                             textField: {
                                 variant: "outlined",

@@ -134,9 +134,6 @@ export const UpdateGiftInfo = () => {
                             openPickerIcon: EditCalendarRoundedIcon,
                         }}
                         slotProps={{
-                            actionBar: {
-                                actions: ["clear", "cancel"]
-                            },
                             openPickerButton: { color: "primary" },
                             textField: {
                                 variant: "outlined",
