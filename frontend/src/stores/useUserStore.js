@@ -128,7 +128,6 @@ export const useUserStore = create((set) => ({
                 email: "",
                 password: "",
                 loadingUser: false,
-                // errorMessage: "Username already exists, please choose another one"
             })
             console.error("There was an error =>", error);
         }

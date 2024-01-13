@@ -2,12 +2,20 @@ import { useUserStore } from "../../stores/useUserStore";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import "../login/login.css";
+import { useEffect } from "react";
 
 // Component for the registration page
 export const Register = () => {
 
     // Destructures the function loginUser and some other states from the useUserStore hook
     const { registerUser, username, setUsername, email, setEmail, password, setPassword, errorMessage, setErrorMessage, successfullFetch } = useUserStore();
+
+    useEffect(() => {
+        setErrorMessage("");
+        setUsername("");
+        setEmail("");
+        setPassword("");
+    }, []);
 
     // Function to handle the login using the loginUser function from the useUserStore hook
     const handleRegister = async (event) => {

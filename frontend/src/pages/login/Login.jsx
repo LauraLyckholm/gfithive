@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useEffect } from "react";
 import { useUserStore } from "../../stores/useUserStore";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,12 @@ export const Login = () => {
 
     // Destructures the function loginUser and some other states from the useUserStore hook
     const { loginUser, username, setUsername, password, setPassword, errorMessage, setErrorMessage } = useUserStore();
+
+    useEffect(() => {
+        setErrorMessage("");
+        setUsername("");
+        setPassword("");
+    }, []);
 
     // Function to handle the login using the loginUser function from the useUserStore hook
     const handleLogin = async (event) => {

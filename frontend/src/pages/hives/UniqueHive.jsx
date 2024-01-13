@@ -77,6 +77,7 @@ export const UniqueHive = () => {
 
             // Updates the gift with the new tags array
             await updateGift({ id: giftId, tags: updatedTags });
+            handleHiveFetch();
         } catch (error) {
             console.error("There was an error =>", error);
         }
