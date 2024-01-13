@@ -9,8 +9,7 @@ import { Chip, Stack, Tooltip, Avatar } from "@mui/material";
 import { formatTime } from "../../utils/formatTime";
 import "./hives.css";
 
-
-
+// Component for the list of shared hives
 export const SharedHives = () => {
     const { getHivesSharedToMe, hivesSharedToMe, updateGift, setHivesSharedToMe } = useGiftStore();
     const userId = localStorage.getItem("userId");
@@ -27,6 +26,7 @@ export const SharedHives = () => {
         }
     };
 
+    // Function to handle updating the tags
     const handleUpdateTags = async (giftId, tagToDelete) => {
         try {
             // Finds the gift that has the tags that should be updated
@@ -89,16 +89,13 @@ export const SharedHives = () => {
     };
 
     return (
-
         <section>
             <div className="unique-hive-heading">
                 <h1>Hives shared with me</h1>
             </div>
             {hivesSharedToMe.length > 0 ? (
-                // <ul>
                 <>
                     {hivesSharedToMe.map((hive, index) => {
-                        // const overdueCount = countOverdueGifts(hive);
                         return (
                             <ul key={hive._id}>
                                 <h3 className="bold">{index + 1}. {hive.name}</h3>
@@ -166,7 +163,6 @@ export const SharedHives = () => {
                             </ul>
                         );
                     })}
-                    {/* </ul> */}
                 </>
             ) : (
                 <p>You have no hives shared with you</p>

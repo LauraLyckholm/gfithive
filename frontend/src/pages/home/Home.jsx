@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-// import { HiveImage } from "../../components/elements/ImageComponents/HiveImage";
 import { LinkToFAQ } from "../../components/elements/Links/LinkToFAQ";
 import { useUserStore } from "../../stores/useUserStore";
 import Logo from "../../assets/gifthive-logo.png";
 import "./home.css";
 import { Dashboard } from "../dashboard/Dashboard";
-// import { useEffect } from "react";
 
 // Component for the home page
 export const Home = () => {
@@ -23,7 +21,6 @@ export const Home = () => {
             {isLoggedIn ?
                 <Dashboard />
                 : <>
-                    {/* <HiveImage /> */}
                     <section className="main-content">
                         <div className="content">
                             <h1>Welcome to</h1>

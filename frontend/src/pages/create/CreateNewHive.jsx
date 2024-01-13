@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
@@ -7,10 +6,19 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
 import dayjs from "dayjs";
 import "./create.css";
+import { useEffect } from "react";
 
+// Component for creating a new hive
 export const CreateNewHive = () => {
     const { hiveName, setHiveName, giftName, setGiftName, tagNames, setTagNames, addHive, dueDate, setDueDate } = useGiftStore();
     const navigate = useNavigate();
+
+    // Sets all the form fields to empty when the component mounts
+    useEffect(() => {
+        setGiftName("");
+        setTagNames("");
+        setDueDate("");
+    }, [])
 
     // Function to handle adding a new hive
     const handleAddHive = async (event) => {
@@ -105,30 +113,21 @@ export const CreateNewHive = () => {
                 <div className="form-group">
                     <label htmlFor="dueDate">Set due date</label>
                     <DatePicker
+                        className="customDatePickerInput"
                         id="dueDate"
                         value={dueDate}
                         onChange={setDueDate}
                         slots={{
-                            openPickerIcon: EditCalendarRoundedIcon
+                            openPickerIcon: EditCalendarRoundedIcon,
                         }}
                         slotProps={{
-                            openPickerIcon: { fontSize: "large" },
-                            openPickerButton: { color: "var(--primary)" },
-                            textfield: {
-                                textfield: {
-                                    variant: "outlined",
-                                    focused: true,
-                                },
-                                inputProps: {
-                                    style: {
-                                        background: "white",
-                                        border: "none",
-                                        padding: "30px",
-                                        fontSize: "18px",
-                                        fontFamily: "Poppins",
-                                        fontWeight: "400",
-                                    },
-                                },
+                            actionBar: {
+                                actions: ["clear", "cancel"]
+                            },
+                            openPickerButton: { color: "primary" },
+                            textField: {
+                                variant: "outlined",
+                                fullWidth: true,
                             },
                         }}
                     />

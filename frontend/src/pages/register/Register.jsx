@@ -1,7 +1,6 @@
 import { useUserStore } from "../../stores/useUserStore";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-// import { HiveImage } from "../../components/elements/ImageComponents/HiveImage";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import "../login/login.css";
@@ -10,7 +9,7 @@ import "../login/login.css";
 export const Register = () => {
 
     // Destructures the function loginUser and some other states from the useUserStore hook
-    const { registerUser, username, setUsername, email, setEmail, password, setPassword, loading, errorMessage, setErrorMessage, successfullFetch } = useUserStore();
+    const { registerUser, username, setUsername, email, setEmail, password, setPassword, loadingUser, errorMessage, setErrorMessage, successfullFetch } = useUserStore();
 
     // Function to handle the login using the loginUser function from the useUserStore hook
     const handleRegister = async (event) => {
@@ -31,6 +30,7 @@ export const Register = () => {
         }
     }
 
+    // Function to handle the removal of the errormessage when the user clicks on the register link
     const handleClearOnNavigate = () => {
         setErrorMessage("");
     };
@@ -38,10 +38,9 @@ export const Register = () => {
     return (
         <>
             {/* Shows a spinning animation when the data is loading */}
-            {loading ? <Lottie animationData={loadingSpinner} className="spinner" /> :
+            {loadingUser ? <Lottie animationData={loadingSpinner} className="spinner" /> :
                 <>
                     <h1>Register for an account</h1>
-                    {/* <HiveImage /> */}
                     <form className="form-wrapper">
                         <div className="form-group">
                             <label htmlFor="username">Username</label>

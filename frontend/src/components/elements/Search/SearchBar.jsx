@@ -2,7 +2,6 @@ import "./search.css";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-// import SearchIcon from "@mui/icons-material/Search";
 import searchIcon from "../../../assets/search-icon.svg";
 import { useSearchStore } from "../../../stores/useSearchStore";
 import { SearchResultsDropdown } from "./SearchResultsDropdown";
@@ -47,16 +46,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+// Component for the search bar
 export const SearchBar = () => {
     const { searchTerm, setSearchTerm, searchItems, searchData, searchPerformed } = useSearchStore();
     const [showDropdown, setShowDropdown] = useState(false);
 
+    // Function that handles the search
     const handleSearch = () => {
         searchItems(searchTerm);
         setSearchTerm("");
         setShowDropdown(true)
     }
 
+    // Function that hides the dropdown
     const hideDropdown = () => {
         setShowDropdown(false);
     };
@@ -68,8 +70,6 @@ export const SearchBar = () => {
             handleSearch(searchTerm);
         }
     };
-
-
 
     return (
         <Search>

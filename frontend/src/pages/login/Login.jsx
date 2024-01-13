@@ -3,7 +3,6 @@ import { useUserStore } from "../../stores/useUserStore";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
-// import { HiveImage } from "../../components/elements/ImageComponents/HiveImage";
 import Lottie from "lottie-react";
 import loadingSpinner from "../../assets/loading-spinner.json";
 import "./login.css";
@@ -50,7 +49,6 @@ export const Login = () => {
             ) : (
                 <>
                     <h1>Welcome back! Let&apos;s log in!</h1>
-                    {/* <HiveImage /> */}
                     <form className="form-wrapper">
                         <div className="form-group">
                             <label htmlFor="username">Username</label>

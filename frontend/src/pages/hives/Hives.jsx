@@ -8,11 +8,11 @@ import { HiveListComponent } from "./HiveListComponent";
 
 // Component for the hives page, that displays all the users hives
 export const Hives = () => {
-    const { loading } = useUserStore();
+    const { loadingUser } = useUserStore();
 
     return (
         <>
-            {loading ? <Lottie animationData={loadingSpinner} className="spinner" /> :
+            {loadingUser ? <Lottie animationData={loadingSpinner} className="spinner" /> :
                 <div>
                     <h1>Hives</h1>
                     <HiveListComponent />

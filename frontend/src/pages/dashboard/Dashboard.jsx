@@ -53,7 +53,6 @@ export const Dashboard = () => {
     // Function to count the total amount of overdue gifts
     const totalOverdueGifts = allHives ? countOverdueGifts(allHives).reduce((sum, count) => sum + count, 0) : 0;
 
-
     // Function to handle showing the amount of shared hives, both shared by the user and shared to the user, in the dashboard
     const handleShowingSharedHives = () => {
         const sharedToMe = hivesSharedToMe;

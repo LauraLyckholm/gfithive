@@ -10,7 +10,6 @@ export const SearchResultsDropdown = ({ results, searchPerformed, hideDropDown }
 
     // Check if both hives and gifts are empty
     const noResults = (!hives || hives.length === 0) && (!gifts || gifts.length === 0);
-    console.log(results);
 
     const onClickHideDropdown = () => {
         hideDropDown();

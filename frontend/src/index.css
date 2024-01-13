@@ -81,7 +81,7 @@ p {
 /* ------------ OVERALL ELEMENTS ------------ */
 *:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(222, 70, 0, 0.5);
+  box-shadow: 0 0 0 2px rgba(222, 70, 0, 0.8);
 }
 
 button {
@@ -190,7 +190,7 @@ div:where(.swal2-container) .swal2-input:focus,
 div:where(.swal2-container) .swal2-input:active, 
 input:focus, 
 input:active {
-  border: 2px solid var(--primary);
+  border: 2px solid var(--primary); 
   outline: none;
   box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.5);
   padding: 15px 18px;

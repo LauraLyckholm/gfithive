@@ -3,7 +3,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { authenticateUser } from "../middleware/authenticateUser";
 import {
-    // getUsersController,
+    // getUsersController, // Commented out right now, I'm leaving it here for developmental purposes
     registerUserController,
     loginUserController,
     getDashboardController,
@@ -27,7 +27,8 @@ userRouter.get("/", asyncHandler(async (req, res) => {
     }
 }));
 
-// userRouter.get("/users", getUsersController);
+// ------------ ROUTES ------------ //
+// userRouter.get("/users", getUsersController); // Commented out right now, I'm leaving it here for developmental purposes
 userRouter.get("/dashboard", authenticateUser, getDashboardController);
 userRouter.get("/users/shared-hives/:id", authenticateUser, getUsersSharedHivesController);
 userRouter.post("/register", registerUserController);

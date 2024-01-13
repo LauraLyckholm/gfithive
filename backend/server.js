@@ -1,6 +1,4 @@
 // ------------ IMPORTS ------------ //
-// import express from "express";
-// import cors from "cors";
 import listEndpoints from "express-list-endpoints";
 import dotenv from "dotenv";
 dotenv.config();
@@ -18,17 +16,9 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
-// const corsOptions = {
-//   origin: "https://gifthive.netlify.app",
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   credentials: true,
-// };
-
-
 // ------------ MIDDLEWARE ------------ //
 // Uses the imported routes in the app
 // Middlewares to enable cors and json body parsing
-// app.use(cors(corsOptions));
 app.use(cors());
 app.use(express.json());
 app.use(serviceDown); // Middleware to check if the database is running

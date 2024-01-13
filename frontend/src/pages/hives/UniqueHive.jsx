@@ -52,6 +52,7 @@ export const UniqueHive = () => {
         handleHiveFetch();
     }, [id]);
 
+    // Function to handle the updating of the bought status using the updateGift function from the useGiftStore hook
     const handleSetAsBought = async (giftId, newBoughtStatus) => {
         try {
             await updateGift({ id: giftId, bought: newBoughtStatus });
@@ -60,6 +61,7 @@ export const UniqueHive = () => {
         }
     };
 
+    // Function to handle the updating of tags using the updateGift function from the useGiftStore hook
     const handleUpdateTags = async (giftId, tagToDelete) => {
         try {
             // Finds the gift that has the tags that should be updated

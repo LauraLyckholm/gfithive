@@ -5,3 +5,9 @@ h2 {
 .heading-pair {
     margin: 1rem 0 2rem 0;
 }
+
+.account-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

@@ -298,46 +298,6 @@ export const useUserStore = create((set) => ({
         }
     },
 
-    // Function to get hives shared by the user to an other user
-    // getHivesSharedByUser: async (userId) => {
-    //     try {
-    //         // Makes a GET request to the backend to get all hives shared by the user
-    //         const response = await fetch(withEndpoint(`/users/shared-hives/${userId}`), {
-    //             headers: {
-    //                 "Auth": localStorage.getItem("accessToken"),
-    //             },
-    //         });
-
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             console.log("Data from userstore = shared by me", data);
-    //             set({
-    //                 hivesSharedByMe: data.sharedHives,
-    //             });
-
-    //             // if (data.sharedHives === undefined) {
-    //             //     set({
-    //             //         hivesSharedByMe: [{}],
-    //             //     });
-    //             //     console.log(get().hivesSharedByMe);
-    //             //     console.log(data);
-    //             // } else {
-    //             //     set({
-    //             //         hivesSharedByMe: data,
-    //             //     });
-    //             // }
-
-    //         } else {
-    //             console.error("Error fetching shared hives");
-    //         }
-
-    //     }
-
-    //     catch (error) {
-    //         console.error("There was an error =>", error);
-    //     }
-    // },
-
     // Function to check if there's a stored token in localStorage, to allow for refresh of secret page
     initAuth: () => {
         const storedToken = localStorage.getItem("accessToken");

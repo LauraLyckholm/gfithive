@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore";
 import { Button } from "../../components/elements/Button/Button";
 import { customSwal } from "../../utils/customSwal";
@@ -46,6 +46,9 @@ export const Account = () => {
         // Checks if "Enter" key is pressed
         if (event.key === "Enter") {
             // If the action is update, the handleUpdateGift function will be called
+            if (action === "back") {
+                navigate("/dashboard");
+            }
             if (action === "remove") {
                 handleRemoveUser();
             }
@@ -60,15 +63,16 @@ export const Account = () => {
                 <p>Username: {currentUsername}</p>
                 <p>Email: {currentEmail}</p>
             </div>
-            <UpdateUserInfo userId={userId} />
-            <div className="btns"
-                onKeyDown={(event) => handleKeyPress(event, "remove")}
-            >
-                {/* <Button className={"primary"} handleOnClick={handleUpdateUsername} btnText={"Change username"} /> */}
+            <div className="account-btns">
+                <UpdateUserInfo userId={userId} />
+                <Link to={`/dashboard`}>
+                    <Button className={"primary"} btnText={"Back to the dashboard"} onKeyDown={(event) => handleKeyPress(event, "back")} />
+                </Link>
                 <Button
                     className={"secondary"}
+                    onKeyDown={(event) => handleKeyPress(event, "remove")}
                     handleOnClick={handleRemoveUser}
-                    btnText={"Remove account"} />
+                    btnText={"Want to remove your account?"} />
             </div>
         </section>
     )

@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
 import "./create.css";
 
+// Component for updating a gift on the shared hives page
 export const UpdateSharedGiftInfo = () => {
     const { giftName, setGiftName, updateGift, tags, setTags, dueDate, setDueDate, hivesSharedToMe } = useGiftStore();
     const { giftId } = useParams();
@@ -122,26 +123,16 @@ export const UpdateSharedGiftInfo = () => {
                         value={dueDate}
                         onChange={setDueDate}
                         slots={{
-                            openPickerIcon: EditCalendarRoundedIcon
+                            openPickerIcon: EditCalendarRoundedIcon,
                         }}
                         slotProps={{
-                            openPickerIcon: { fontSize: "large" },
-                            openPickerButton: { color: "var(--primary)" },
+                            actionBar: {
+                                actions: ["clear", "cancel"]
+                            },
+                            openPickerButton: { color: "primary" },
                             textField: {
-                                textfield: {
-                                    variant: "outlined",
-                                    focused: true,
-                                },
-                                inputProps: {
-                                    style: {
-                                        background: "white",
-                                        border: "none",
-                                        padding: "30px",
-                                        fontSize: "18px",
-                                        fontFamily: "Poppins",
-                                        fontWeight: "400",
-                                    },
-                                },
+                                variant: "outlined",
+                                fullWidth: true,
                             },
                         }}
                     />

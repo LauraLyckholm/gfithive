@@ -21,4 +21,5 @@ searchRouter.get("/", asyncHandler(async (req, res) => {
     }
 }));
 
+// ------------ ROUTES ------------ //
 searchRouter.get("/search", authenticateUser, searchControllers);

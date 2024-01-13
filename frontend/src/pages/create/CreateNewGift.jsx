@@ -3,23 +3,9 @@ import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams, useNavigate } from "react-router-dom";
 import { customSwal } from "../../utils/customSwal";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-// import { PickersDay } from "@mui/x-date-pickers/PickersDay";
-// import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
-// import { styled } from "@mui/material/styles";
-// import IconButton from "@mui/material/IconButton";
+import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
 import dayjs from "dayjs";
 import "./create.css";
-
-// const StyledButton = styled(IconButton)(({ theme }) => ({
-//     borderRadius: theme.shape.borderRadius,
-// }));
-// const StyledDay = styled(PickersDay)(({ theme }) => ({
-//     borderRadius: theme.shape.borderRadius,
-//     color:
-//         theme.palette.mode === "light"
-//             ? theme.palette.secondary.dark
-//             : theme.palette.secondary.light,
-// }));
 
 // Component for creating a new gift
 export const CreateNewGift = () => {
@@ -116,23 +102,23 @@ export const CreateNewGift = () => {
                 <div className="form-group">
                     <label htmlFor="dueDate">Set due date</label>
                     <DatePicker
+                        className="customDatePickerInput"
                         id="dueDate"
                         value={dueDate}
                         onChange={setDueDate}
-                    // slots={{
-                    //     openPickerIcon: EditCalendarRoundedIcon,
-                    //     openPickerButton: StyledButton,
-                    //     day: StyledDay,
-                    // }}
-                    // slotProps={{
-                    //     openPickerIcon: { fontSize: "large" },
-                    //     openPickerButton: { color: "secondary" },
-                    //     textField: {
-                    //         variant: "filled",
-                    //         focused: true,
-                    //         color: "secondary",
-                    //     },
-                    // }}
+                        slots={{
+                            openPickerIcon: EditCalendarRoundedIcon,
+                        }}
+                        slotProps={{
+                            actionBar: {
+                                actions: ["clear", "cancel"]
+                            },
+                            openPickerButton: { color: "primary" },
+                            textField: {
+                                variant: "outlined",
+                                fullWidth: true,
+                            },
+                        }}
                     />
                 </div>
             </form>

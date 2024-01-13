@@ -5,10 +5,10 @@ import { customSwal } from "../../utils/customSwal";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
-
 import "./create.css";
 import { useEffect } from "react";
 
+// Component for updating a gift
 export const UpdateGiftInfo = () => {
     const { giftName, setGiftName, updateGift, tags, setTags, dueDate, setDueDate, getHives, hives } = useGiftStore();
     const { id, giftId } = useParams();
@@ -47,7 +47,6 @@ export const UpdateGiftInfo = () => {
         let giftData = {
             id: giftIdParam,
         };
-        console.log(id);
 
         if (giftName.trim()) {
             giftData.gift = giftName;
@@ -60,9 +59,12 @@ export const UpdateGiftInfo = () => {
                 .filter(tag => tag !== "");
         }
 
-        if (dueDate && !dayjs(dueDate).isBefore(dayjs())) {
-            giftData.dueDate = dueDate;
-        } else if (dueDate) {
+        // Check if dueDate is not set
+        if (!dueDate) {
+            giftData.dueDate = null;  // Set dueDate to null to remove it
+        } else if (!dayjs(dueDate).isBefore(dayjs())) {
+            giftData.dueDate = dueDate;  // Set dueDate if it's valid
+        } else {
             customSwal.fire({
                 title: "Oops...",
                 text: "The due date must be in the future!",
@@ -129,26 +131,16 @@ export const UpdateGiftInfo = () => {
                         value={dueDate}
                         onChange={setDueDate}
                         slots={{
-                            openPickerIcon: EditCalendarRoundedIcon
+                            openPickerIcon: EditCalendarRoundedIcon,
                         }}
                         slotProps={{
-                            openPickerIcon: { fontSize: "large" },
-                            openPickerButton: { color: "var(--primary)" },
-                            textfield: {
-                                textfield: {
-                                    variant: "outlined",
-                                    focused: true,
-                                },
-                                inputProps: {
-                                    style: {
-                                        background: "white",
-                                        border: "none",
-                                        padding: "30px",
-                                        fontSize: "18px",
-                                        fontFamily: "Poppins",
-                                        fontWeight: "400",
-                                    },
-                                },
+                            actionBar: {
+                                actions: ["clear", "cancel"]
+                            },
+                            openPickerButton: { color: "primary" },
+                            textField: {
+                                variant: "outlined",
+                                fullWidth: true,
                             },
                         }}
                     />

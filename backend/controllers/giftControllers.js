@@ -1,9 +1,12 @@
+// ------------ IMPORTS ------------ //
 import { Gift } from "../models/Gift";
 import { User } from "../models/User";
 import { Hive } from "../models/Hive";
 import asyncHandler from "express-async-handler";
 import mongoose from "mongoose";
 
+// ------------ CONTROLLERS ------------ //
+// Function to get all hives and their associated gifts
 export const getHivesController = asyncHandler(async (req, res) => {
     const userId = req.user._id;
     // Find all hives and populate their associated gifts in ascending order
@@ -11,6 +14,7 @@ export const getHivesController = asyncHandler(async (req, res) => {
     res.json(hives);
 });
 
+// Function to get a specific hive and its associated gifts
 export const getIndividualHiveController = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const userId = req.user._id;
@@ -19,6 +23,7 @@ export const getIndividualHiveController = asyncHandler(async (req, res) => {
     res.json(hive);
 });
 
+// Function to create a new gift item
 export const createGiftItemController = asyncHandler(async (req, res) => {
     // Retrieves the information sent by the client
     const { gift, tags, bought, hiveId, dueDate } = req.body;
@@ -65,6 +70,7 @@ export const createGiftItemController = asyncHandler(async (req, res) => {
     }
 });
 
+// Function to create a new hive with gifts and it's associated fields
 export const createNewController = asyncHandler(async (req, res) => {
     const { gift, tags, bought, name, dueDate } = req.body;
     const userId = req.user._id;
@@ -117,6 +123,7 @@ export const createNewController = asyncHandler(async (req, res) => {
     }
 });
 
+// Function to update a gift item
 export const updateGiftItemController = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { gift, tags, bought, dueDate } = req.body;
@@ -144,6 +151,7 @@ export const updateGiftItemController = asyncHandler(async (req, res) => {
     }
 });
 
+// Function to update a hive name
 export const updateHiveName = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
@@ -167,6 +175,7 @@ export const updateHiveName = asyncHandler(async (req, res) => {
     }
 });
 
+// Function to delete a gift item
 export const deleteGiftController = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const userId = req.user._id;
@@ -199,6 +208,7 @@ export const deleteGiftController = asyncHandler(async (req, res) => {
     }
 });
 
+// Function to delete a hive and its associated gifts
 export const deleteHiveController = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const userId = req.user._id; // Get the user's ID
@@ -236,6 +246,7 @@ export const deleteHiveController = asyncHandler(async (req, res) => {
     }
 });
 
+// Function to share a specific hiveid with a specific user (the ones whose email you enter)
 export const shareHiveController = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { shareToEmail } = req.body;

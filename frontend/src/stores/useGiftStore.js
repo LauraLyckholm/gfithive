@@ -245,7 +245,6 @@ export const useGiftStore = create((set, get) => ({
 
     // Function to share a hive
     shareHive: async (hiveId, email) => {
-        console.log(hiveId);
         try {
             // Makes a POST request to the backend to share a hive
             const response = await fetch(withEndpoint(`hives/${hiveId}/share`), {

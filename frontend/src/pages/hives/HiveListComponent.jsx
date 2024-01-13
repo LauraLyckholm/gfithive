@@ -22,11 +22,10 @@ export const HiveListComponent = () => {
     // Saves the hives from the local storage in a variable
     const savedHives = JSON.parse(localStorage.getItem("hives"));
 
+    // Fetches the hives when the component mounts
     useEffect(() => {
         getHives();
     }, [getHives]);
-
-
 
     // Function to show the amount of gifts in each hive
     const showGiftAmount = (hive) => {
@@ -214,7 +213,6 @@ export const HiveListComponent = () => {
                         </li>
                     );
                 })}
-
             </ul>
         </>
     )
