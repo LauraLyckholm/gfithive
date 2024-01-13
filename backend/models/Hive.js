@@ -5,8 +5,6 @@ const HiveSchema = new Schema({
     name: {
         type: String,
         required: true,
-        minlength: 2,
-        maxlength: 14,
     },
     gifts: [{
         type: mongoose.SchemaTypes.ObjectId,
