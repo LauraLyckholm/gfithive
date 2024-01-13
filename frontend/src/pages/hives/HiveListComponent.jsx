@@ -193,7 +193,6 @@ export const HiveListComponent = () => {
                                 <p className="bold">{hive.name}</p>
                             </Link>
                             <p className="italic-text">{showGiftAmount(hive)} gifts</p>
-                            {/* <p className="italic-text disabled">{handleFormatTime(hive.dueDate)}</p> */}
 
                             <p className="due-text">
                                 {overdueCount > 0 ? `${overdueCount} due` : null}
