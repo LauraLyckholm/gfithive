@@ -26,31 +26,32 @@ const withEndpoint = (endpoint) => `${API_URL}/gift-routes/${endpoint}`;
 export const UniqueHive = () => {
     const { id } = useParams();
     const [hive, setHive] = useState(null);
-    const { getHives, deleteGift, updateGift, shareHive } = useGiftStore();
+    const { deleteGift, updateGift, shareHive } = useGiftStore();
 
-    // Fetches the hives when the component mounts, and saves the data to a local state for the hives
+    // Fetches the hives when the component mounts
     useEffect(() => {
-        const handleHiveFetch = async () => {
-            try {
-                const response = await fetch(withEndpoint(`hives/${id}`), {
-                    headers: {
-                        "Auth": localStorage.getItem("accessToken"),
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setHive(data);
-                } else {
-                    console.error("Error fetching hive with that id");
-                }
-
-            } catch (error) {
-                console.error("There was an error =>", error);
-            }
-        };
         handleHiveFetch();
-    }, [id]);
+    }, []);
+
+    const handleHiveFetch = async () => {
+        try {
+            const response = await fetch(withEndpoint(`hives/${id}`), {
+                headers: {
+                    "Auth": localStorage.getItem("accessToken"),
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setHive(data);
+            } else {
+                console.error("Error fetching hive with that id");
+            }
+
+        } catch (error) {
+            console.error("There was an error =>", error);
+        }
+    };
 
     // Function to handle the updating of the bought status using the updateGift function from the useGiftStore hook
     const handleSetAsBought = async (giftId, newBoughtStatus) => {
@@ -95,7 +96,7 @@ export const UniqueHive = () => {
         if (result.isConfirmed) {
             try {
                 await deleteGift(giftId);
-                getHives();
+                handleHiveFetch();
             } catch (error) {
                 console.error("There was an error =>", error);
             }
