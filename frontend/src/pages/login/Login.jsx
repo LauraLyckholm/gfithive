@@ -33,6 +33,8 @@ export const Login = () => {
                 setErrorMessage("");
                 return;
             } else {
+                setUsername(username);
+                setPassword(password);
                 errorMessage;
             }
         } catch (error) {
