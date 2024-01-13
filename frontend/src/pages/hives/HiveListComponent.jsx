@@ -3,6 +3,7 @@ import { useUserStore } from "../../stores/useUserStore";
 import { Link, useNavigate } from "react-router-dom";
 import trashcanIcon from "../../assets/trash.svg";
 import update from "../../assets/update.svg"
+import shareIcon from "../../assets/share-icon-yellow.svg";
 import "./hives.css";
 import { customSwal } from "../../utils/customSwal";
 // import { formatTime } from "../../mixins/formatTime";
@@ -12,7 +13,7 @@ import { Tooltip } from "@mui/material";
 
 // Component for the list of hives, that gets rendered on /hives
 export const HiveListComponent = () => {
-    const { getHives, deleteHive, updateHiveName } = useGiftStore();
+    const { getHives, deleteHive, updateHiveName, shareHive } = useGiftStore();
     const { dashboard } = useUserStore();
     const hivesAmount = dashboard.hivesCount; // Saves the amount of hives in a variable
 
@@ -123,6 +124,44 @@ export const HiveListComponent = () => {
         }
     };
 
+    // Function to handle the sharing of a hive
+    const handleShare = async (hiveId) => {
+        const result = await customSwal.fire({
+            title: "Share your hive",
+            input: "email",
+            inputLabel: "To whom would you like to share your hive? (Email) 🐝",
+            inputPlaceholder: "e.g. email@hives.com",
+            confirmButtonText: "Share!",
+            cancelButtonText: "Never mind..",
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return "You need to write something!";
+                }
+            },
+        });
+
+        if (result.isConfirmed) {
+            try {
+                // The email entered by the user is available in result.value
+                await shareHive(hiveId, result.value);
+
+                customSwal.fire({
+                    title: "Shared!",
+                    text: "Your hive has successfully been shared! 🐝",
+                    icon: "success",
+                });
+            } catch (error) {
+                customSwal.fire({
+                    title: "Error!",
+                    text: "Something went wrong, your hive could not be shared 🐝",
+                    icon: "error",
+                });
+                console.error("There was an error =>", error);
+            }
+        }
+    };
+
     return (
         <>
             <ul>
@@ -130,16 +169,27 @@ export const HiveListComponent = () => {
                     const overdueCount = countOverdueGifts(hive);
                     return (
                         <li className="grid-list-items" key={hive._id}>
-                            <Tooltip title="Update name">
-                                <img
-                                    tabIndex="0"
-                                    className="icon"
-                                    src={update}
-                                    alt="Icon for updating the hives name"
-                                    onClick={() => handleUpdateHiveName(hive._id)} // If user clicks on the icon, the handleUpdateHiveName function will be called
-                                    onKeyDown={(event) => handleKeyPress(event, "update", hive._id)} // If user presses "Enter" on the icon, the handleUpdateHiveName function will be called
-                                />
-                            </Tooltip>
+                            <div className="icon-pair">
+                                <Tooltip title="Update name">
+                                    <img
+                                        tabIndex="0"
+                                        className="icon"
+                                        src={update}
+                                        alt="Icon for updating the hives name"
+                                        onClick={() => handleUpdateHiveName(hive._id)} // If user clicks on the icon, the handleUpdateHiveName function will be called
+                                        onKeyDown={(event) => handleKeyPress(event, "update", hive._id)} // If user presses "Enter" on the icon, the handleUpdateHiveName function will be called
+                                    />
+                                </Tooltip>
+                                <Tooltip title="Share your hive">
+                                    <img
+                                        onClick={() => handleShare(hive._id)} // If user clicks on the icon, the handleShare function will be called
+                                        tabIndex="0"
+                                        className="icon share-icon"
+                                        src={shareIcon}
+                                        alt="Icon for sharing hives"
+                                    />
+                                </Tooltip>
+                            </div>
                             <Link to={`/hives/${hive._id}`}>
                                 <p className="bold">{hive.name}</p>
                             </Link>

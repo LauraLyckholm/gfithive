@@ -134,7 +134,7 @@ export const UpdateGiftInfo = () => {
                         slotProps={{
                             openPickerIcon: { fontSize: "large" },
                             openPickerButton: { color: "var(--primary)" },
-                            textField: {
+                            textfield: {
                                 textfield: {
                                     variant: "outlined",
                                     focused: true,

@@ -276,15 +276,23 @@ export const deleteUserController = asyncHandler(async (req, res) => {
             return res.status(404).json({ error: "User not found or unauthorized." });
         }
 
-        // Find all hives associated with the user
-        const hives = await Hive.find({ userId: user._id });
+        // Find all hives shared by the user
+        const sharedHives = await Hive.find({ sharedWith: { $in: [user._id] } });
+        for (const hive of sharedHives) {
+            // Remove the user from the sharedWith array of each hive
+            const index = hive.sharedWith.indexOf(user._id);
+            if (index > -1) {
+                hive.sharedWith.splice(index, 1);
+                await hive.save();
+            }
+        }
 
-        // Delete gifts associated with each hive
-        for (const hive of hives) {
+        // Delete gifts associated with each of the user's hives
+        for (const hive of user.hives) {
             await Gift.deleteMany({ hiveId: hive._id });
         }
 
-        // Delete hives
+        // Delete the user's hives
         await Hive.deleteMany({ userId: user._id });
 
         // Delete the user

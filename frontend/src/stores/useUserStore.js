@@ -190,7 +190,6 @@ export const useUserStore = create((set) => ({
                     userId: data.response._id,
                     email: data.response.email,
                 })
-                console.log(data);
                 // Saves the accessToken in localStorage
                 localStorage.setItem("accessToken", data.response.accessToken);
                 localStorage.setItem("username", username);

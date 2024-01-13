@@ -10,6 +10,7 @@ export const SearchResultsDropdown = ({ results, searchPerformed, hideDropDown }
 
     // Check if both hives and gifts are empty
     const noResults = (!hives || hives.length === 0) && (!gifts || gifts.length === 0);
+    console.log(results);
 
     const onClickHideDropdown = () => {
         hideDropDown();
@@ -25,7 +26,15 @@ export const SearchResultsDropdown = ({ results, searchPerformed, hideDropDown }
                 <>
                     {hives && hives.map(hive => (
                         <div key={hive._id} className="search-result-item">
-                            <p onClick={onClickHideDropdown}>Hive: <Link to={`/hives/${hive._id}`} className="link" >{hive.name}</Link></p>
+                            <p onClick={onClickHideDropdown}>
+                                {hive.sharedWith.length !== 0 ? "Shared hive: " : "Hive: "}
+                                <Link
+                                    to={hive.sharedWith.length !== 0 ? `/shared-hives` : `/hives/${hive._id}`}
+                                    className="link"
+                                >
+                                    {hive.name}
+                                </Link>
+                            </p>
                         </div>
                     ))}
                     {gifts && gifts.map(gift => (

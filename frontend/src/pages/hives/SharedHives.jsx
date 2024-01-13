@@ -149,7 +149,7 @@ export const SharedHives = () => {
                                                     );
                                                 })}
                                             </Stack>
-                                            <Link to={`/hives/${hive._id}/${gift._id}/update-shared-gift`}>
+                                            <Link className="shared-update-icon" to={`/hives/${hive._id}/${gift._id}/update-shared-gift`}>
                                                 <Tooltip title="Update gift">
                                                     <img
                                                         tabIndex="0"

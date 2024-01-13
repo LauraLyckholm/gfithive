@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { useParams, useNavigate } from "react-router-dom";
@@ -8,7 +9,7 @@ import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
 import "./create.css";
 
 export const UpdateSharedGiftInfo = () => {
-    const { giftName, setGiftName, updateGift, tags, setTags, dueDate, setDueDate } = useGiftStore();
+    const { giftName, setGiftName, updateGift, tags, setTags, dueDate, setDueDate, hivesSharedToMe } = useGiftStore();
     const { giftId } = useParams();
     // const hiveId = id;
     const giftIdParam = giftId;
@@ -18,6 +19,20 @@ export const UpdateSharedGiftInfo = () => {
     const handleOnclickNavigation = () => {
         navigate(`/shared-hives`)
     };
+
+    // Fetches the gift when the component mounts and sets the gift name and tags to the current values
+    useEffect(() => {
+        if (hivesSharedToMe && hivesSharedToMe.length > 0) {
+            hivesSharedToMe.map((hive) => {
+                hive.gifts.map((gift) => {
+                    if (gift._id === giftIdParam) {
+                        setGiftName(gift.gift);
+                        setTags(gift.tags.join(", ")); // Assuming tags is an array
+                    }
+                });
+            });
+        }
+    }, []);
 
     // function to handle adding a new gift
     const handleUpdateGift = async (event) => {

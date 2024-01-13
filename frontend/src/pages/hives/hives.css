@@ -12,9 +12,13 @@
 
 .grid-list-items {
     display: grid;
-    grid-template-columns: 1.5rem 1fr 1fr 1fr 1.5rem;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr 0.5fr;
     gap: 1rem;
     margin: 0.5rem 0;
+}
+
+.grid-list-items img.icon {
+    justify-self: end;
 }
 
 .list-item-pair {
@@ -28,6 +32,11 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto ;
     margin: 0.5rem 0;
+}
+
+.shared-update-icon {
+    display: flex;
+    justify-content: end;
 }
 
 .icon-pair {
@@ -47,10 +56,6 @@
 
 .update-icon {
     margin-top: 7px;
-}
-
-.share-icon {
-    margin-top: 3px;
 }
 
 .unique-hive-heading {

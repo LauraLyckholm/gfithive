@@ -3,10 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/elements/Button/Button";
 import { useGiftStore } from "../../stores/useGiftStore";
 import { customSwal } from "../../utils/customSwal";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import EditCalendarRoundedIcon from "@mui/icons-material/EditCalendarRounded";
+import dayjs from "dayjs";
 import "./create.css";
 
 export const CreateNewHive = () => {
-    const { hiveName, setHiveName, giftName, setGiftName, tagNames, setTagNames, addHive } = useGiftStore();
+    const { hiveName, setHiveName, giftName, setGiftName, tagNames, setTagNames, addHive, dueDate, setDueDate } = useGiftStore();
     const navigate = useNavigate();
 
     // Function to handle adding a new hive
@@ -25,7 +28,20 @@ export const CreateNewHive = () => {
                 name: hiveName,
                 gift: giftName || null, // Gift is optional
                 tags: formattedTags || null, // Tags are optional
+                dueDate: dueDate || null, // Due date is optional
+
             };
+
+            // Check if the due date is in the past
+            if (dueDate && dayjs(dueDate).isBefore(dayjs())) {
+                customSwal.fire({
+                    title: "Oops...",
+                    text: "The due date must be in the future!",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+                return; // Exit the function early
+            }
 
             const success = await addHive(newHive);
 
@@ -34,6 +50,7 @@ export const CreateNewHive = () => {
                 setHiveName("");
                 setGiftName("");
                 setTagNames("");
+                setDueDate("");
 
                 // Alert user and navigate
                 await customSwal.fire({
@@ -84,6 +101,37 @@ export const CreateNewHive = () => {
                         value={tagNames}
                         onChange={(e) => setTagNames(e.target.value)}
                         required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="dueDate">Set due date</label>
+                    <DatePicker
+                        id="dueDate"
+                        value={dueDate}
+                        onChange={setDueDate}
+                        slots={{
+                            openPickerIcon: EditCalendarRoundedIcon
+                        }}
+                        slotProps={{
+                            openPickerIcon: { fontSize: "large" },
+                            openPickerButton: { color: "var(--primary)" },
+                            textfield: {
+                                textfield: {
+                                    variant: "outlined",
+                                    focused: true,
+                                },
+                                inputProps: {
+                                    style: {
+                                        background: "white",
+                                        border: "none",
+                                        padding: "30px",
+                                        fontSize: "18px",
+                                        fontFamily: "Poppins",
+                                        fontWeight: "400",
+                                    },
+                                },
+                            },
+                        }}
+                    />
                 </div>
             </form>
             <div className="btns">

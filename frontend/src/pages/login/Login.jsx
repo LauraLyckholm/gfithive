@@ -12,7 +12,7 @@ export const Login = () => {
     const navigate = useNavigate();
 
     // Destructures the function loginUser and some other states from the useUserStore hook
-    const { loginUser, username, setUsername, password, setPassword, loading, errorMessage, setErrorMessage } = useUserStore();
+    const { loginUser, username, setUsername, password, setPassword, errorMessage, setErrorMessage, loadingUser } = useUserStore();
 
     // Function to handle the login using the loginUser function from the useUserStore hook
     const handleLogin = async (event) => {
@@ -45,7 +45,7 @@ export const Login = () => {
     return (
         <>
             {/* Shows a spinning animation when the data is loading */}
-            {loading ? (
+            {loadingUser ? (
                 <Lottie animationData={loadingSpinner} className="spinner" />
             ) : (
                 <>
